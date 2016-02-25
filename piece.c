@@ -80,9 +80,9 @@ void copy_piece (cpiece src, piece dst){ // On copie les données qui définisse
  */
 void move_piece (piece p, dir d, int distance){ // On suppose que rien ne bloque la pièce
 	if (!is_horizontal(p)) { // Si la pièce est verticale
-		if (dir == DOWN)
+		if (dir == UP)
 			p->x -= distance ;
-		else if (dir == UP)
+		else if (dir == DOWN)
 			p->x += distance ;
 	} else { // Si la pièce est horizontale
 		if (dir == LEFT)
@@ -114,7 +114,7 @@ bool intersect(cpiece p1, cpiece p2){
 			return get_y(p1) + size_p1 > get_y(p2) ; // On vérifie que le point de gauche de p2 est contenu dans p1
 		else // p1 horizontal, p2 vertical
 			return get_x(p1) >= get_x(p2) && get_x(p1) < get_x(p2) + size_p2 // On vérifie que l'ordonnée du point du bas de p1 est contenue dans p2,
-			&& get_y(p2) >= get_y(p1) && get_y(p2) < get_y(p1) + size_p1 ; // et que l'abscisse du point de gauche de p2 est contenue dans p1
+				&& get_y(p2) >= get_y(p1) && get_y(p2) < get_y(p1) + size_p1 ; // et que l'abscisse du point de gauche de p2 est contenue dans p1
 	else
 		if (!is_horizontal(p2)) // Si les 2 sont Verticales, on vérifie si elles se croisent
 			if (get_y(p1) != get_y(p2)) // Leurs coordonnées horizontales
@@ -126,7 +126,7 @@ bool intersect(cpiece p1, cpiece p2){
 			return get_x(p1) + size_p1 > get_x(p2) ; // On vérifie que le point du bas de p2 est contenu dans p1
 		else // p1 vertical, p2 horizontal
 			return get_y(p1) >= get_y(p2) && get_y(p1) < get_y(p2) + size_p2 // On vérifie que l'abscisse du point de gauche de p1 est contenue dans p2,
-			&& get_x(p2) >= get_x(p1) && get_x(p2) < get_x(p1) + size_p1 ; // et que l'ordonnée du point du bas de p2 est contenue dans p1
+				&& get_x(p2) >= get_x(p1) && get_x(p2) < get_x(p1) + size_p1 ; // et que l'ordonnée du point du bas de p2 est contenue dans p1
 }
 
 /**
