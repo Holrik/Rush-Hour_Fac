@@ -158,11 +158,11 @@ bool play_move(game g, int piece_num, dir d, int distance){
 	}
 	copy_piece(game_piece(g, piece_num), p) ;
 
-	for (j = 0; j < distance; j++) {
+	for (int j = 0; j < distance; j++) {
 		move_piece(p, dir, 1); // A chaque case traversée par la copie de notre pièce,
 		int i = 0;
 		while (i < game_nb_pieces(g)) {
-			if (intersect(p, game_piece(g, i)) && i != piece_num) // vérifie pour chaque piéces si elles s'intersectent
+			if (intersect(p, game_piece(g, i)) && i != piece_num) // on vérifie pour chaque pièce du jeu si elle intersect la copie
 				return false;
 			i++;
 		}
@@ -183,5 +183,3 @@ bool play_move(game g, int piece_num, dir d, int distance){
 int game_nb_moves(cgame g){
 	return g->nb_moves ;
 }
-
-#endif
