@@ -157,29 +157,12 @@ bool play_move(game g, int piece_num, dir d, int distance){
 		return NULL ;
 	}
 	copy_piece(game_piece(g, piece_num), p) ;
-	/*for (i = 0 ; i < distance ; i++) {
-		move_piece(p, dir, 1) ; // A chaque case traversée par la copie de notre pièce,
-		int i = 0;
-		while (i < piece_num) { // on vérifie si elle intersect une autre pièce
-			if (intersect(p, game_piece(g,i)))
-				return false ;
-			i++ ;
-		}
-		i++ ; // On évite de vérifier si la copie croise la pièce dont elle est issue
-		while (i < game_nb_pieces(g)) {
-			if (intersect(p, game_piece(g, i)))
-				return false ;
-			i++ ;
-		}
-	}
-	*/
 
-	//Solution plus efficace
-	for (i = 0; i < distance; i++) {
+	for (j = 0; j < distance; j++) {
 		move_piece(p, dir, 1); // A chaque case traversée par la copie de notre pièce,
 		int i = 0;
 		while (i < game_nb_pieces(g)) {
-			if (intersect(p, game_piece(g, i)) && i != piece_num)
+			if (intersect(p, game_piece(g, i)) && i != piece_num) // vérifie pour chaque piéces si elles s'intersectent
 				return false;
 			i++;
 		}
