@@ -11,9 +11,21 @@ void afficher(cgame g){
             tab[i][j]= -1;
         } 
     }
-    
+    int taille =-1;
     for (int l=0; l<g->nb_pieces, l++){
-        
+        if((g->pieces+l)->small == true){
+             taille = 2;
+        }else{
+            taille=3;
+        }
+       for (int k=0; k<taille; k++ ){
+           
+           if((g->pieces+l)->horizontal == true){
+                tab[get_x(g->pieces+l)+k][get_y(g->pieces+l)]=l;
+           }else{
+                tab[get_x(g->pieces+l)][get_y(g->pieces+l)+k]=l;
+           }
+       }
     }
     
     
