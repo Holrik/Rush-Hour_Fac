@@ -19,7 +19,7 @@ while (game_over_hr(g))
        fgets(nums, 2, stdin); //a tester
        numi= atoi(nums);
         printf("Veuillez entrer la direction du déplacement:");
-       fgets(direc, 10, stdin); //a tester printf("Veuillez entrer le numero de la voiture:");
+       fgets(direc, 10, stdin); //a tester 
 
            
         if(direc == "UP"){
@@ -33,7 +33,7 @@ while (game_over_hr(g))
         }
         
         if(direci > -1){
-            printf("Veuillez entrer le nombre de déplacement:");
+            printf("Veuillez entrer la distance du déplacement:");
            fgets(dists, 1, stdin); 
             disti= atoi(deps);
             
