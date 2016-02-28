@@ -54,8 +54,8 @@ void afficher(cgame g){
 }
 
 // manque la création et l'affichage!!
-void main (){
-game g = new_game_hr (); // aremplir avec ce qu'il faut
+int main (){
+game g = new_game_hr (); // à remplir avec ce qu'il faut
 char * nums;
 int numi;
 char * direc;
@@ -64,7 +64,7 @@ char * dists;
 int disti;
 afficher();
 
-//temps que ce n'est pas la fin on fait le corp du programme
+//tant que ce n'est pas la fin on fait le corps du programme
 while (game_over_hr(g))
     {
         printf("Veuillez entrer le numero de la voiture:");
@@ -94,6 +94,6 @@ while (game_over_hr(g))
             afficher();
         }
     }
-   prinft("vous avez finis en:"+ g->nb_moves+ "coup(s)"); 
+   prinft("Vous avez fini en: "+ g->nb_moves+ " coup(s)"); 
 }
 
