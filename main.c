@@ -4,7 +4,9 @@
 #include "piece.h"
 #include "game.h"
 
+//génére l'affichage dans la console
 void afficher(cgame g){
+    // créé un tableau en mémoire remplis par défaut de -1
     int tab [TAILLE_PLATEAU][TAILLE_PLATEAU];
     for(int i=0; i <TAILLE_PLATEAU; i++){
         for(int j=0; j <TAILLE_PLATEAU; j++){
@@ -12,6 +14,7 @@ void afficher(cgame g){
         } 
     }
    
+   // met les voitures à leurs place dans le tableau
     for (int l=0; l<g->nb_pieces, l++){
          int taille =0;
         if((g->pieces+l)->small == true){
@@ -60,6 +63,8 @@ int direci =-1;
 char * dists;
 int disti;
 afficher();
+
+//temps que ce n'est pas la fin on fait le corp du programme
 while (game_over_hr(g))
     {
         printf("Veuillez entrer le numero de la voiture:");
