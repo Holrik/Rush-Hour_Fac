@@ -2,7 +2,7 @@
 #define _GAME_H_
 #include <stdbool.h>
 #include "piece.h"
-
+#define TAILLE_PLATEAU 6
 /**
  * @file game.h
  *
