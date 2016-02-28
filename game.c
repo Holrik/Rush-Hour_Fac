@@ -107,7 +107,7 @@ cpiece game_piece(cgame g, int piece_num){
  * @return true if the piece number 0 has coordinates (4,3)
 */
 bool game_over_hr(cgame g){
-	return get_y(game_piece(g, 0)) == 4 ; // A moins d'un bug, x vaut forcément 3, car la pièce est Horizontale et initialisée à x=3, y=0.
+	return get_x(game_piece(g, 0)) == 4 ; // A moins d'un bug, x vaut forcément 3, car la pièce est Horizontale et initialisée à x=3, y=0.
 }
 
 
@@ -130,16 +130,16 @@ bool play_move(game g, int piece_num, dir d, int distance){
 	
 	// 1) Vérification que la pièce reste sur le plateau
 	if (dir == RIGHT)
-		if (get_y(game_piece(g, piece_num)) + get_width(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
+		if (get_x(game_piece(g, piece_num)) + get_width(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
 			return false ;
 	else if (dir == LEFT)
-		if (get_y(game_piece(g, piece_num)) - distance < 0)
+		if (get_x(game_piece(g, piece_num)) - distance < 0)
 			return false ;
 	else if (dir == DOWN)
-		if (get_x(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
+		if (get_y(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
 			return false ;
 	else // dir == UP
-		if (get_x(game_piece(g, piece_num)) + distance < 0)
+		if (get_y(game_piece(g, piece_num)) + distance < 0)
 			return false ;
 	
 	// 2) On vérifie que la direction est compatible
