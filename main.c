@@ -11,8 +11,9 @@ void afficher(cgame g){
             tab[i][j]= -1;
         } 
     }
-    int taille =-1;
+   
     for (int l=0; l<g->nb_pieces, l++){
+         int taille =0;
         if((g->pieces+l)->small == true){
              taille = 2;
         }else{
