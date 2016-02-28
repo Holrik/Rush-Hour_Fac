@@ -6,9 +6,9 @@
 
 
 void main (){
-bool trouve = false;
+game g = new_game_hr (); // aremplir avec ce qu'il faut
 char * buf;
-while (!trouve)
+while (game_over_hr(g))
     {
        fgets(buf, 10, stdin); //a tester
 
