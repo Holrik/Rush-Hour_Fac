@@ -171,6 +171,7 @@ bool play_move(game g, int piece_num, dir d, int distance){
 	delete_piece(p) ;
 	// Après les 3 vérifications, si tout est bon, on déplace la pièce
 	move_piece(game_piece(g, piece_num), dir, distance) ;
+	(game->nb_moves)++ ; // et on incrémente le compteur de mouvements
 	return true ;
 }
 
