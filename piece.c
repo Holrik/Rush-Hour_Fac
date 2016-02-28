@@ -81,9 +81,9 @@ void copy_piece (cpiece src, piece dst){ // On copie les données qui définisse
 void move_piece (piece p, dir d, int distance){ // On suppose que rien ne bloque la pièce
 	if (!is_horizontal(p)) { // Si la pièce est verticale
 		if (dir == UP)
-			p->y -= distance ;
-		else if (dir == DOWN)
 			p->y += distance ;
+		else if (dir == DOWN)
+			p->y -= distance ;
 	} else { // Si la pièce est horizontale
 		if (dir == LEFT)
 			p->x -= distance ;
