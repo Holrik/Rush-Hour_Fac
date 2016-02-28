@@ -4,18 +4,17 @@
 #include "piece.h"
 #include "game.h"
 
-
+// manque la création et l'affichage!!
 void main (){
 game g = new_game_hr (); // aremplir avec ce qu'il faut
 char * nums;
 int numi;
 char * direc;
-int direci;
+int direci =-1;
 char * dists;
 int disti;
 while (game_over_hr(g))
     {
-        debut:
         printf("Veuillez entrer le numero de la voiture:");
        fgets(nums, 2, stdin); //a tester
        numi= atoi(nums);
@@ -31,14 +30,17 @@ while (game_over_hr(g))
             direci=1;
         }else if(direc == "RIGHT"){
             direci=3;
-        }else {
-            goto debut;
         }
+        
+        if(direci > -1){
             printf("Veuillez entrer le nombre de déplacement:");
            fgets(dists, 1, stdin); 
             disti= atoi(deps);
             
             play_move(g, numi,direci,depi);
+            
+            //affichage!!
+        }
     }
     
 }
