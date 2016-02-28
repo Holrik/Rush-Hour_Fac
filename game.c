@@ -133,11 +133,11 @@ bool play_move(game g, int piece_num, dir d, int distance){
 	else if (dir == LEFT)
 		if (get_x(game_piece(g, piece_num)) - distance < 0)
 			return false ;
-	else if (dir == DOWN)
+	else if (dir == UP)
 		if (get_y(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
 			return false ;
-	else // dir == UP
-		if (get_y(game_piece(g, piece_num)) + distance < 0)
+	else // dir == DOWN
+		if (get_y(game_piece(g, piece_num)) - distance < 0)
 			return false ;
 	
 	// 2) On vérifie que la direction est compatible
