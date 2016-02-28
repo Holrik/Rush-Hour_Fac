@@ -24,10 +24,10 @@ void afficher(cgame g){
         }
        for (int k=0; k<taille; k++ ){
            
-           if((g->pieces+l)->horizontal == true){
-                tab[get_x(g->pieces+l)+k][get_y(g->pieces+l)]=l;
+           if((is_horizontal(game_piece(g, l)) == true){
+                tab[get_x(game_piece(g, l)) +k][get_y(game_piece(g, l))]=l;
            }else{
-                tab[get_x(g->pieces+l)][get_y(g->pieces+l)+k]=l;
+                tab[get_x(game_piece(g, l))][get_y(game_piece(g, l)) +k]=l;
            }
        }
     }
