@@ -1,4 +1,4 @@
-#include "piece.c"
+#include "piece.h"
 #include "game.h"
 
 /**
