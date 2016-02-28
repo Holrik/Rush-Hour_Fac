@@ -33,24 +33,33 @@ void afficher(cgame g){
     }
     
     
-    for(int k=0; k <TAILLE_PLATEAU; k++){
-     printf("--");
+    printf("  ");
+    for(int i=0; i <TAILLE_PLATEAU; i++){
+     printf("   %d" + i);
     }
     printf("\n");
+    
      for(int i=0; i <TAILLE_PLATEAU; i++){
-          printf("||");
+        printf("   ");
+        for(int i=0; i <TAILLE_PLATEAU; i++){
+            printf("****");
+        }
+        printf("*\n");
+        printf("%d:|", i);
         for(int j=0; j <TAILLE_PLATEAU; j++){
             if(tab[i][j]==-1){
-                printf(" ");
+                printf("   |");
             }else{
-                printf(tab[i][j]);
+                printf(" %d |", tab[i][j]);
             }
         } 
-        printf("|| \n");
+        printf("\n");
     }
-     for(int k=0; k <TAILLE_PLATEAU; k++){
-     printf("--");
+    printf("   *");
+     for(int i=0; i <TAILLE_PLATEAU; i++){
+     printf("****");
     }
+    printf("\n");
 }
 
 // manque la création et l'affichage!!
@@ -65,7 +74,7 @@ int disti;
 afficher();
 
 //tant que ce n'est pas la fin on fait le corps du programme
-while (game_over_hr(g))
+while (!game_over_hr(g))
     {
         printf("Veuillez entrer le numero de la voiture:");
        fgets(nums, 2, stdin); //a tester
@@ -94,6 +103,6 @@ while (game_over_hr(g))
             afficher();
         }
     }
-   prinft("Vous avez fini en: "+ g->nb_moves+ " coup(s)"); 
+   printf("Vous avez fini en: "+ g->nb_moves+ " coup(s)"); 
 }
 
