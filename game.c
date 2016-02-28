@@ -7,8 +7,6 @@
  * @brief This file describes the board of a rush-our game, the state of a game and all functions needed to manipulate it.
  **/
 
- 
-#define TAILLE_PLATEAU 6
 
 /**
  * @struct game_s
