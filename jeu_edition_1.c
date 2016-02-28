@@ -6,7 +6,7 @@
 
 //génére l'affichage dans la console
 void afficher(cgame g){
-    // créé un tableau en mémoire remplis par défaut de -1
+    // crée en mémoire un tableau rempli de -1 par défaut
     int tab [TAILLE_PLATEAU][TAILLE_PLATEAU];
     for(int i=0; i <TAILLE_PLATEAU; i++){
         for(int j=0; j <TAILLE_PLATEAU; j++){
@@ -17,10 +17,10 @@ void afficher(cgame g){
    // met les voitures à leurs place dans le tableau
     for (int l=0; l<g->nb_pieces, l++){
          int taille =0;
-        if((g->pieces+l)->small == true){
+        if((game_piece(g, l))->small == true){
              taille = 2;
         }else{
-            taille=3;
+            taille = 3;
         }
        for (int k=0; k<taille; k++ ){
            
