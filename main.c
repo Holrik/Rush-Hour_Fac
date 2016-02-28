@@ -4,6 +4,39 @@
 #include "piece.h"
 #include "game.h"
 
+void afficher(cgame g){
+    int tab [TAILLE_PLATEAU][TAILLE_PLATEAU];
+    for(int i=0; i <TAILLE_PLATEAU; i++){
+        for(int j=0; j <TAILLE_PLATEAU; j++){
+            tab[i][j]= -1;
+        } 
+    }
+    
+    for (int l=0; l<g->nb_pieces, l++){
+        
+    }
+    
+    
+    for(int k=0; k <TAILLE_PLATEAU; k++){
+     printf("--");
+    }
+    printf("\n");
+     for(int i=0; i <TAILLE_PLATEAU; i++){
+          printf("||");
+        for(int j=0; j <TAILLE_PLATEAU; j++){
+            if(tab[i][j]==-1){
+                printf(" ");
+            }else{
+                printf(tab[i][j]);
+            }
+        } 
+        printf("|| \n");
+    }
+     for(int k=0; k <TAILLE_PLATEAU; k++){
+     printf("--");
+    }
+}
+
 // manque la création et l'affichage!!
 void main (){
 game g = new_game_hr (); // aremplir avec ce qu'il faut
@@ -13,6 +46,7 @@ char * direc;
 int direci =-1;
 char * dists;
 int disti;
+afficher();
 while (game_over_hr(g))
     {
         printf("Veuillez entrer le numero de la voiture:");
@@ -39,9 +73,9 @@ while (game_over_hr(g))
             
             play_move(g, numi,direci,depi);
             
-            //affichage!!
+            afficher();
         }
     }
-    
+   prinft("vous avez finis en:"+ g->nb_moves+ "coup(s)"); 
 }
 
