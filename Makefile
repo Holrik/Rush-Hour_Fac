@@ -10,7 +10,7 @@ test_piece1: piece.h piece.c test_piece1.c
 	gcc $(CFLAGS) $^ -o $@
 
 
-test_game: piece.h piece.c game.h test_game.c
+test_game: piece.h piece.c game.h game.c test_game.c
 	gcc $(CFLAGS) $^ -o $@
 
 .PHONY: clean
