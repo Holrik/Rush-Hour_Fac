@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "piece.h"
 #include "game.h"
 
@@ -24,7 +26,7 @@ typedef struct game_s{
 	piece *pieces ;
 	int nb_pieces ;
 	int nb_moves ;
-}
+};
 
 
 /**
@@ -68,14 +70,14 @@ void delete_game (game g){
  */
 void copy_game (cgame src, game dst){
 	if (game_nb_pieces(src) != game_nb_pieces(dst)) { // Si src et dst n'avaient pas le même nombre de pièces, 
-		dst->pieces = (piece*) realloc(dst->pieces , nb_pieces * sizeof(piece)) ; // alors on réalloue de la mémoire pour copier les pièces.
+		dst->pieces = (piece*) realloc(dst->pieces , game_nb_pieces(src) * sizeof(piece)) ; // alors on réalloue de la mémoire pour copier les pièces.
 		while (dst->pieces == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
-			dst->pieces = (piece*) realloc(dst->pieces , nb_pieces * sizeof(piece)) ;
+			dst->pieces = (piece*) realloc(dst->pieces , game_nb_pieces(src) * sizeof(piece)) ;
 		}
 	}
 	dst->nb_pieces = game_nb_pieces(src) ;
 	dst->nb_moves = game_nb_moves(src) ;
-	for (int i = 0 ; i < nb_pieces ; i++) { // On copie une à une les pièces données en paramètre vers la structure game_s
+	for (int i = 0 ; i < game_nb_pieces(dst) ; i++) { // On copie une à une les pièces données en paramètre vers la structure game_s
 		copy_piece( *(src->pieces +i) , *(dst->pieces+i) ) ;
 	}
 }
@@ -127,37 +129,35 @@ bool play_move(game g, int piece_num, dir d, int distance){
 		return false ;
 	
 	// 1) Vérification que la pièce reste sur le plateau
-	if (dir == RIGHT)
+	if (d == RIGHT) {
 		if (get_x(game_piece(g, piece_num)) + get_width(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
 			return false ;
-	else if (dir == LEFT)
+	} else if (d == LEFT) {
 		if (get_x(game_piece(g, piece_num)) - distance < 0)
 			return false ;
-	else if (dir == UP)
+	} else if (d == UP) {
 		if (get_y(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
 			return false ;
-	else // dir == DOWN
+	} else { // d == DOWN
 		if (get_y(game_piece(g, piece_num)) - distance < 0)
 			return false ;
+	}
 	
 	// 2) On vérifie que la direction est compatible
-	if (is_horizontal(game_piece(g, piece_num)))
-		if (dir != RIGHT && dir != LEFT)
+	if (is_horizontal(game_piece(g, piece_num))) {
+		if (d != RIGHT && d != LEFT)
 			return false ;
-	else
-		if (dir != UP && dir != DOWN)
+	} else {
+		if (d != UP && d != DOWN)
 			return false ;
+	}
 	
 	// 3) Vérification des Intersections avec "bool intersect(cpiece p1, cpiece p2)"
-	piece p = malloc(sizeof(struct piece_s)); // On alloue dynamiquement une structure piece_s
-	if (p == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
-		fprintf(stderr, "probleme d'allocation\n");
-		return NULL ;
-	}
+	piece p = new_piece_rh(0, 0, true, true) ;
 	copy_piece(game_piece(g, piece_num), p) ;
 
 	for (int j = 0; j < distance; j++) {
-		move_piece(p, dir, 1); // A chaque case traversée par la copie de notre pièce,
+		move_piece(p, d, 1); // A chaque case traversée par la copie de notre pièce,
 		int i = 0;
 		while (i < game_nb_pieces(g)) {
 			if (intersect(p, game_piece(g, i)) && i != piece_num) // on vérifie pour chaque pièce du jeu si elle intersect la copie
@@ -170,8 +170,8 @@ bool play_move(game g, int piece_num, dir d, int distance){
 
 	delete_piece(p) ;
 	// Après les 3 vérifications, si tout est bon, on déplace la pièce
-	move_piece(game_piece(g, piece_num), dir, distance) ;
-	(game->nb_moves)+= distance ; // et on incrémente le compteur de mouvements
+	move_piece((piece)game_piece(g, piece_num), d, distance) ;
+	g->nb_moves += distance ; // et on incrémente le compteur de mouvements
 	return true ;
 }
 
