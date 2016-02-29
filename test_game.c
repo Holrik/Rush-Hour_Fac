@@ -7,9 +7,9 @@
 
 //retourne vrai si le game a bien été crée
 bool test_new_game (){
-	piece* pieces = malloc(2*sizeof(piece)) ;
-	*pieces = new_piece_rh(0,3,true,true) ;
-	*(pieces+1) = new_piece_rh(2,4,false, true) ;
+	piece* p = malloc(2*sizeof(piece)) ;
+	*p = new_piece_rh(0,3,true,true) ;
+	*(p+1) = new_piece_rh(2,4,false, true) ;
 	//piece p[] = {new_piece_rh(0,3,true,true), new_piece_rh(2,4,false, true)} ; // peut aussi être instancié ainsi, mais rend le delete plus compliqué(free d'un tableau)
 	game g = new_game_hr (2, pieces);
 	bool b = (g != NULL);
@@ -20,29 +20,44 @@ bool test_new_game (){
 
 //retourne vrai si le game a bien été supprimé
 bool test_delete_game(){
-	piece* pieces = malloc(2*sizeof(piece)) ;
-	*pieces = new_piece_rh(0,3,true,true) ;
-	*(pieces+1) = new_piece_rh(2,4,false, true) ;
+	piece* p = malloc(2*sizeof(piece)) ;
+	*p = new_piece_rh(0,3,true,true) ;
+	*(p+1) = new_piece_rh(2,4,false, true) ;
 	game g = new_game_hr (2, pieces);
 	delete_game(g);
 	return g == NULL;
 }
 
+bool pieces_identiques(cpiece p1, cpiece p2) {
+	return get_x(p1) == get_x(p2)
+		  && get_y(p1) == get_y(p2)
+		  && get_height(p1) == get_height(p2)
+		  && get_width(p1) == get_width(p2)
+}
+
 
 //retourne vrai si la copie est bien la copie exact de l'original 
 bool test_copy_game(){
-	game gsrc = new_game_hr (3, [new_piece_rh(0,3,true,true), new_piece_rh(2,4,false, true),new_piece_rh(3,1,true,false)]);
-	game gdst = new_game_hr (2, [new_piece_rh(0,3,true,true), new_piece_rh(2,4,false, true)]);
+	piece* psrc = malloc(2*sizeof(piece)) ;
+	*psrc = new_piece_rh(0,3,true,true) ;
+	*(psrc+1) = new_piece_rh(2,4,false, true) ;
+	*(psrc+2) = new_piece_rh(3,1,false, true) ;
+	piece* pdst = malloc(3*sizeof(piece)) ;
+	*pdst = new_piece_rh(0,3,true,true) ;
+	*(pdst+1) = new_piece_rh(2,4,false, true) ;
+	game gsrc = new_game_hr (3, psrc);
+	game gdst = new_game_hr (2, pdst);
+	
 	copy_game (gsrc, gdst);
-	if (gdst->nb_pieces != gsrc->nb_pieces){
+	if (game_nb_pieces(gdst) != game_nb_pieces(gsrc)){
 		return false;
 	}
-	for (int i = 0 ; i < (gdst)->nb_pieces; i++) { 
-		if(*(gdst->pieces +i) != *(gsrc->pieces+i)) {
+	for (int i = 0 ; i < game_nb_pieces(gdst); i++) { 
+		if(!pieces_identiques(game_piece(gdst, i), game_piece(gsrc, i))) {
 	  		return false;
 		}
 	}
-	bool b = (gdst->nb_moves == gsrc->nb_moves);
+	bool b = (game_nb_moves(gdst) == game_nb_moves(gsrc));
 	delete_game(gdst);
 	delete_game(gsrc);
 	return b ;
@@ -50,7 +65,10 @@ bool test_copy_game(){
 
 // retourne vrai si le nombre de pièces retourné par la fonction est correct
 bool test_game_nb_pieces(){
-	game g = new_game_hr (2, [new_piece_rh(0,3,true,true), new_piece_rh(2,4,false, true)]);
+	piece* p = malloc(2*sizeof(piece)) ;
+	*p = new_piece_rh(0,3,true,true) ;
+	*(p+1) = new_piece_rh(2,4,false, true) ;
+	game g = new_game_hr (2, pieces);
 	bool b = (2==game_nb_pieces(*g));
 	delete_game(g);
 	return b ;
@@ -60,7 +78,10 @@ bool test_game_nb_pieces(){
 // retourne true si la pièce est bien récupérée
 bool test_game_piece(){
 	piece test = new_piece_rh(0,3,true,true);
-	game g = new_game_hr (2, [test, new_piece_rh(2,4,false, true)]);
+	piece* p = malloc(2*sizeof(piece)) ;
+	*p = test ;
+	*(p+1) = new_piece_rh(2,4,false, true) ;
+	game g = new_game_hr (2, pieces);
 	bool b = (test == game_piece(g, 0));
 	delete_game(g);
 	return b ;
@@ -68,7 +89,7 @@ bool test_game_piece(){
 
 
 // retourne true si le game_over_hr return true pour la voiture rouge ayant les coordonnées (4, 3)
-bool test_game_over_hr(){
+bool test_game_over_hr(){//////////////////////////////////////////////////////////////////////////////CONTINUER LES MODIFS ICI
 	game g = new_game_hr (2, [test, new_piece_rh(4,3,false, true)]);
 	bool b = game_over_hr(g) ;
 	delete_game(g) ;
