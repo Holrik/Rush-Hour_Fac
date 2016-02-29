@@ -1,4 +1,4 @@
-1) Vérifier que toutes les fonctions de piece.c fonctionnent.
+1) FAIT - Vérifier que toutes les fonctions de piece.c fonctionnent.
    Vérifier que toutes les fonctions de game.c fonctionnent.
    Vérifier que test-game.c fonctionne.
 
