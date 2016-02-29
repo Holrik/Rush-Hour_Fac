@@ -7,8 +7,6 @@
 
 //retourne vrai si le game a bien été crée
 bool test_new_game (){
-	Erreur : A la ligne suivante, il faut renvoyer un POINTEUR sur une structure
-	et non pas une structure directement(idem dans tout le programme)
 	game *g = new_game_hr (2, {new_piece_rh(0,3,true,true), new_piece_rh(2,4,false, true)});
 	bool b = (*g != NULL);
 	delete_game(*g) ;

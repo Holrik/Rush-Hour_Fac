@@ -107,7 +107,7 @@ cpiece game_piece(cgame g, int piece_num){
  * @return true if the piece number 0 has coordinates (4,3)
 */
 bool game_over_hr(cgame g){
-	return get_x(game_piece(g, 0)) == 4 ; // A moins d'un bug, y vaut forcément 3, car la pièce est Horizontale et initialisée à x=3, y=0.
+	return get_x(game_piece(g, 0)) == 4 ; // A moins d'un bug, y vaut forcément 3, car la pièce est Horizontale et initialisée à x=0, y=3.
 }
 
 
