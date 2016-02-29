@@ -4,3 +4,5 @@
 
 
 2) Compléter jeu_edition_1.c
+
+3) test_game.c a vérifier, j'ai essayé de le modifié avec tes directives
