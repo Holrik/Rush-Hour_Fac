@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "piece.h"
 
 
@@ -80,14 +82,14 @@ void copy_piece (cpiece src, piece dst){ // On copie les données qui définisse
  */
 void move_piece (piece p, dir d, int distance){ // On suppose que rien ne bloque la pièce
 	if (!is_horizontal(p)) { // Si la pièce est verticale
-		if (dir == UP)
+		if (d == UP)
 			p->y += distance ;
-		else if (dir == DOWN)
+		else if (d == DOWN)
 			p->y -= distance ;
 	} else { // Si la pièce est horizontale
-		if (dir == LEFT)
+		if (d == LEFT)
 			p->x -= distance ;
-		else if (dir == RIGHT)
+		else if (d == RIGHT)
 			p->x += distance ;
 	}
 }
@@ -103,8 +105,8 @@ bool intersect(cpiece p1, cpiece p2){
 		size_p1 = 3 ;
 	if (!p2->small)
 		size_p2 = 3 ;
-	if (is_horizontal(p1))
-		if (is_horizontal(p2)) // Si les 2 sont Horizontales, on vérifie si elles se croisent
+	if (is_horizontal(p1)) {
+		if (is_horizontal(p2)) { // Si les 2 sont Horizontales, on vérifie si elles se croisent
 			if (get_y(p1) != get_y(p2)) // Leurs coordonnées verticales
 				return false ;
 			if (get_x(p1) == get_x(p2)) // Leurs coordonnées horizontales
@@ -112,11 +114,12 @@ bool intersect(cpiece p1, cpiece p2){
 			if (get_x(p1) > get_x(p2)) 
 				return get_x(p1) < get_x(p2) + size_p2 ; // On vérifie que le point de gauche de p1 est contenu dans p2
 			return get_x(p1) + size_p1 > get_x(p2) ; // On vérifie que le point de gauche de p2 est contenu dans p1
-		else // p1 horizontal, p2 vertical
+		} else { // p1 horizontal, p2 vertical
 			return get_y(p1) >= get_y(p2) && get_y(p1) < get_y(p2) + size_p2 // On vérifie que l'ordonnée du point du bas de p1 est contenue dans p2,
 				&& get_x(p2) >= get_x(p1) && get_x(p2) < get_x(p1) + size_p1 ; // et que l'abscisse du point de gauche de p2 est contenue dans p1
-	else
-		if (!is_horizontal(p2)) // Si les 2 sont Verticales, on vérifie si elles se croisent
+		}
+	} else {
+		if (!is_horizontal(p2)) { // Si les 2 sont Verticales, on vérifie si elles se croisent
 			if (get_x(p1) != get_x(p2)) // Leurs coordonnées horizontales
 				return false ;
 			if (get_y(p1) == get_y(p2)) // Leurs coordonnées verticales
@@ -124,9 +127,11 @@ bool intersect(cpiece p1, cpiece p2){
 			if (get_y(p1) > get_y(p2)) 
 				return get_y(p1) < get_y(p2) + size_p2 ; // On vérifie que le point du de p1 est contenu dans p2
 			return get_y(p1) + size_p1 > get_y(p2) ; // On vérifie que le point du bas de p2 est contenu dans p1
-		else // p1 vertical, p2 horizontal
+		} else { // p1 vertical, p2 horizontal
 			return get_x(p1) >= get_x(p2) && get_x(p1) < get_x(p2) + size_p2 // On vérifie que l'abscisse du point de gauche de p1 est contenue dans p2,
 				&& get_y(p2) >= get_y(p1) && get_y(p2) < get_y(p1) + size_p1 ; // et que l'ordonnée du point du bas de p2 est contenue dans p1
+		}
+	}
 }
 
 /**
@@ -171,5 +176,3 @@ int get_width(cpiece p){
 bool is_horizontal(cpiece p){
 	return p->horizontal ;
 }
-
-#endif
