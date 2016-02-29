@@ -2,9 +2,6 @@ CFLAGS = -g -Wall
 CPPFLAGS =
 LDFLAGS =
 
-all: test_piece1 test_game
-	make $^
-
 test_piece1: piece.h piece.c test_piece1.c
 	gcc $(CFLAGS) $^ -o $@
 
