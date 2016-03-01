@@ -22,7 +22,7 @@
  * cgame is a pointer toward a constant game.
  *
  **/
-typedef struct game_s{
+struct game_s{
 	piece *pieces ;
 	int nb_pieces ;
 	int nb_moves ;
@@ -47,7 +47,7 @@ game new_game_hr (int nb_pieces, piece *pieces){
 	for (int i = 0 ; i < nb_pieces ; i++) { // On copie une à une les pièces données en paramètre vers la structure game_s
 		*(g->pieces +i) = *(pieces+i) ;
 	}
-	g->nb_pieces = 0 ;
+	g->nb_pieces = nb_pieces ;
 	g->nb_moves = 0 ;
 	return g ;
 }
@@ -69,16 +69,27 @@ void delete_game (game g){
  * @param dst the copied game.
  */
 void copy_game (cgame src, game dst){
-	if (game_nb_pieces(src) != game_nb_pieces(dst)) { // Si src et dst n'avaient pas le même nombre de pièces, 
+	if (game_nb_pieces(src) != game_nb_pieces(dst)) { // Si src et dst n'avaient pas le même nombre de pièces,
+	  	int ecart_nb_pieces = game_nb_pieces(src) - game_nb_pieces(dst);
+	  	int nb_pieces = game_nb_pieces(dst);
+		for (int i = 0 ; i < -ecart_nb_pieces ; i++){ // si dst est plus grand que src
+		  delete_piece(*(dst->pieces + nb_pieces + i));
+		}
+		
 		dst->pieces = (piece*) realloc(dst->pieces , game_nb_pieces(src) * sizeof(piece)) ; // alors on réalloue de la mémoire pour copier les pièces.
-		while (dst->pieces == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
-			dst->pieces = (piece*) realloc(dst->pieces , game_nb_pieces(src) * sizeof(piece)) ;
+		if (dst->pieces == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
+			fprintf(stderr, "probleme d'allocation\n");
+			return ;
+		}
+		
+		for (int i = 0 ; i < ecart_nb_pieces ; i++){ // si dst était plus petit que src
+		  *(dst->pieces + nb_pieces + i) = new_piece_rh(0, 0, true, true);
 		}
 	}
 	dst->nb_pieces = game_nb_pieces(src) ;
 	dst->nb_moves = game_nb_moves(src) ;
 	for (int i = 0 ; i < game_nb_pieces(dst) ; i++) { // On copie une à une les pièces données en paramètre vers la structure game_s
-		copy_piece( *(src->pieces +i) , *(dst->pieces+i) ) ;
+		copy_piece( game_piece(src, i) , *(dst->pieces+i) ) ;
 	}
 }
 

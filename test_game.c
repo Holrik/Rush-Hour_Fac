@@ -11,7 +11,8 @@ bool test_new_game (){
 	*p = new_piece_rh(0,3,true,true) ;
 	*(p+1) = new_piece_rh(2,4,false, true) ;
 	//piece p[] = {new_piece_rh(0,3,true,true), new_piece_rh(2,4,false, true)} ; // peut aussi être instancié ainsi, mais rend le delete plus compliqué(free d'un tableau)
-	game g = new_game_hr (2, pieces);
+	
+	game g = new_game_hr (2, p);
 	bool b = (g != NULL);
 	delete_game(g) ;
 	return b;
@@ -19,20 +20,21 @@ bool test_new_game (){
 
 
 //retourne vrai si le game a bien été supprimé
-bool test_delete_game(){
+/*bool test_delete_game(){
 	piece* p = malloc(2*sizeof(piece)) ;
 	*p = new_piece_rh(0,3,true,true) ;
 	*(p+1) = new_piece_rh(2,4,false, true) ;
-	game g = new_game_hr (2, pieces);
+	
+	game g = new_game_hr (2, p);
 	delete_game(g);
 	return g == NULL;
-}
+}*/
 
 bool pieces_identiques(cpiece p1, cpiece p2) {
 	return get_x(p1) == get_x(p2)
 		  && get_y(p1) == get_y(p2)
 		  && get_height(p1) == get_height(p2)
-		  && get_width(p1) == get_width(p2)
+	       	  && get_width(p1) == get_width(p2) ;
 }
 
 
@@ -45,9 +47,10 @@ bool test_copy_game(){
 	piece* pdst = malloc(3*sizeof(piece)) ;
 	*pdst = new_piece_rh(0,3,true,true) ;
 	*(pdst+1) = new_piece_rh(2,4,false, true) ;
+	
 	game gsrc = new_game_hr (3, psrc);
 	game gdst = new_game_hr (2, pdst);
-	
+        
 	copy_game (gsrc, gdst);
 	if (game_nb_pieces(gdst) != game_nb_pieces(gsrc)){
 		return false;
@@ -68,8 +71,9 @@ bool test_game_nb_pieces(){
 	piece* p = malloc(2*sizeof(piece)) ;
 	*p = new_piece_rh(0,3,true,true) ;
 	*(p+1) = new_piece_rh(2,4,false, true) ;
-	game g = new_game_hr (2, pieces);
-	bool b = (2==game_nb_pieces(*g));
+	
+	game g = new_game_hr (2, p);
+	bool b = (2 == game_nb_pieces(g));
 	delete_game(g);
 	return b ;
 }
@@ -81,7 +85,7 @@ bool test_game_piece(){
 	piece* p = malloc(2*sizeof(piece)) ;
 	*p = test ;
 	*(p+1) = new_piece_rh(2,4,false, true) ;
-	game g = new_game_hr (2, pieces);
+	game g = new_game_hr (2, p);
 	bool b = (test == game_piece(g, 0));
 	delete_game(g);
 	return b ;
@@ -89,8 +93,11 @@ bool test_game_piece(){
 
 
 // retourne true si le game_over_hr return true pour la voiture rouge ayant les coordonnées (4, 3)
-bool test_game_over_hr(){//////////////////////////////////////////////////////////////////////////////CONTINUER LES MODIFS ICI
-	game g = new_game_hr (2, [test, new_piece_rh(4,3,false, true)]);
+bool test_game_over_hr(){
+	piece* p = malloc(sizeof(piece)) ;
+	*p = new_piece_rh(4,3,true,true) ;
+	
+	game g = new_game_hr (1, p);
 	bool b = game_over_hr(g) ;
 	delete_game(g) ;
 	return b ;
@@ -99,7 +106,11 @@ bool test_game_over_hr(){///////////////////////////////////////////////////////
 
 // retourne true si les movements valides s'effectuent et pas les movements invalides
 bool test_play_move(){
-	game g = new_game_hr (2, [new_piece_rh(0,3,true,true), new_piece_rh(2,4,false, true)]);
+	piece* p = malloc(2*sizeof(piece)) ;
+	*p = new_piece_rh(0,3,true,true) ;
+	*(p+1) = new_piece_rh(2,4,false, true) ;
+	
+	game g = new_game_hr (2, p);
 	bool b = play_move(g, 0, RIGHT, 2) ;
 	b = b && !play_move(g, 1, UP, 1) ;
 	b = b && !play_move(g, 0, UP, 1) ;
@@ -109,10 +120,14 @@ bool test_play_move(){
 
 
 // retourne true si le nb de mouvements retournés correspond au nb de moves
-bool game_nb_moves() {
-	game g = new_game_hr (2, [new_piece_rh(0,3,true,true), new_piece_rh(2,4,false, true)]);
+bool test_game_nb_moves() {
+	piece* p = malloc(2*sizeof(piece)) ;
+	*p = new_piece_rh(0,3,true,true) ;
+	*(p+1) = new_piece_rh(2,4,false, true) ;
+	
+	game g = new_game_hr (2, p);
 	bool b = (game_nb_moves(g) == 0) ;
-	play_move(*g, 0, RIGHT, 2) ;
+	play_move(g, 0, RIGHT, 2) ;
 	b = b && (game_nb_moves(g) == 2) ;
 	delete_game(g) ;
 	return b ;
@@ -129,13 +144,13 @@ bool test_equality_bool(bool expected, bool value, char * msg) {
 int main() {
 	bool result = true ;
 	result = result && test_equality_bool(true, test_new_game(), "new_game");
-	result = result && test_equality_bool(true, test_delete_game(), "delete_game");
+	//result = result && test_equality_bool(true, test_delete_game(), "delete_game");
 	result = result && test_equality_bool(true, test_copy_game(), "copy_game");
 	result = result && test_equality_bool(true, test_game_nb_pieces(), "game_nb_pieces");
 	result = result && test_equality_bool(true, test_game_piece(), "game_piece");
 	result = result && test_equality_bool(true, test_game_over_hr(), "game_over_hr");
 	result = result && test_equality_bool(true, test_play_move(), "play_move");
-	result = result && test_equality_bool(true, test_nb_moves(), "nb_moves");
+	result = result && test_equality_bool(true, test_game_nb_moves(), "game_nb_moves");
 	
 	if (result) {
 		printf("Youpi !\n");
