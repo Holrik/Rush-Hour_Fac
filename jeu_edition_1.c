@@ -39,13 +39,13 @@ void afficher(cgame g){
     }
     printf("\n");
     
-     for(int i=0; i <TAILLE_PLATEAU; i++){
+     for(int i = TAILLE_PLATEAU-1; i >= 0; i++){
         printf("   ");
-        for(int i=0; i <TAILLE_PLATEAU; i++){
+        for(int j=0; j <TAILLE_PLATEAU; j++){
             printf("****");
         }
         printf("*\n");
-        printf("%d:|", i);
+        printf("%d: |", i);
         for(int j=0; j <TAILLE_PLATEAU; j++){
             if(tab[i][j]==-1){
                 printf("   |");
@@ -53,6 +53,8 @@ void afficher(cgame g){
                 printf(" %d |", tab[i][j]);
             }
         } 
+        if (i == 3)
+            printf(" ->");
         printf("\n");
     }
     printf("   *");
@@ -95,14 +97,14 @@ while (!game_over_hr(g))
         
         if(direci > -1){
             printf("Veuillez entrer la distance du déplacement:");
-           fgets(dists, 1, stdin); 
+            fgets(dists, 1, stdin); 
             disti= atoi(deps);
             
             play_move(g, numi,direci,depi);
             
-            afficher();
+            afficher(g);
         }
     }
-   printf("Vous avez fini en: "+ g->nb_moves+ " coup(s)"); 
+   printf("Vous avez fini en %d coup(s)", game_nb_moves(g)); 
 }
 
