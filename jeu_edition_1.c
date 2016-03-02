@@ -24,11 +24,11 @@ void afficher(cgame g){
         }
        for (int k=0; k<taille; k++ ){
            
-           if((is_horizontal(game_piece(g, l)) == true){
+	 if(is_horizontal(game_piece(g, l))){
                 tab[get_x(game_piece(g, l)) +k][get_y(game_piece(g, l))]=l;
-           }else{
+         }else{
                 tab[get_x(game_piece(g, l))][get_y(game_piece(g, l)) +k]=l;
-           }
+         }
        }
     }
     
@@ -64,18 +64,27 @@ void afficher(cgame g){
     printf("\n");
 }
 
-// manque la création et l'affichage!!
+// Manque la création et l'affichage!!
 int main (){
-game g = new_game_hr (); // à remplir avec ce qu'il faut
-char * nums;
-int numi;
-char * direc;
-int direci =-1;
-char * dists;
-int disti;
-afficher();
+  piece* p = malloc(2*sizeof(piece)) ;
+        *p = new_piece_rh(0,3,true,true) ;
+	*(p+1) = new_piece_rh(2,4,false, true) ;
+	*(p+2) = new_piece_rh(3,1,false, true) ;
+	
+  game g = new_game_hr (3, p); // à remplir avec ce qu'il faut | TODO
+  
+  char * nums; // Numéro voiture à déplacer en STRING
+  int numi; // Numéro voiture à déplacer en INT
+  
+  char * direc; // UP/DOWN/LEFT/RIGHT
+  int direci =-1; // Direction de la voiture à partir de direc
+  
+  char * dists; // Distance déplacement en STRING
+  int disti; // Distance déplacement en INT
+  
+  afficher(g);
 
-//tant que ce n'est pas la fin on fait le corps du programme
+// Tant que ce n'est pas la fin on fait le corps du programme
 while (!game_over_hr(g))
     {
         printf("Veuillez entrer le numero de la voiture:");
@@ -95,16 +104,19 @@ while (!game_over_hr(g))
             direci=3;
         }
         
-        if(direci > -1){
+        if(direci < 0){
+	  printf("Mauvaise direction. Veuillez entrer UP/DOWN/LEFT/RIGHT.");
+	}else{
             printf("Veuillez entrer la distance du déplacement:");
+	    
             fgets(dists, 1, stdin); 
-            disti= atoi(deps);
+            disti= atoi(dists);
             
-            play_move(g, numi,direci,depi);
+            play_move(g, numi, direci, disti);
             
             afficher(g);
-        }
+        } 
     }
-   printf("Vous avez fini en %d coup(s)", game_nb_moves(g)); 
+   printf("Vous avez fini en %d coups.", game_nb_moves(g)); 
 }
 
