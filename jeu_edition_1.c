@@ -15,12 +15,12 @@ void afficher(cgame g){
     }
    
    // met les voitures à leurs place dans le tableau
-    for (int l=0; l<g->nb_pieces, l++){
+    for (int l = 0 ; l < game_nb_pieces(g) ; l++){
          int taille =0;
-        if((game_piece(g, l))->small == true){
-             taille = 2;
+	 if(is_horizontal(game_piece(g, l))){
+             taille = get_width(game_piece(g, l));
         }else{
-            taille = 3;
+            taille = get_height(game_piece(g, l));
         }
        for (int k=0; k<taille; k++ ){
            
