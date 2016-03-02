@@ -40,11 +40,11 @@ bool pieces_identiques(cpiece p1, cpiece p2) {
 
 //retourne vrai si la copie est bien la copie exact de l'original 
 bool test_copy_game(){
-	piece* psrc = malloc(2*sizeof(piece)) ;
+	piece* psrc = malloc(3*sizeof(piece)) ;
 	*psrc = new_piece_rh(0,3,true,true) ;
 	*(psrc+1) = new_piece_rh(2,4,false, true) ;
 	*(psrc+2) = new_piece_rh(3,1,false, true) ;
-	piece* pdst = malloc(3*sizeof(piece)) ;
+	piece* pdst = malloc(2*sizeof(piece)) ;
 	*pdst = new_piece_rh(0,3,true,true) ;
 	*(pdst+1) = new_piece_rh(2,4,false, true) ;
 	
