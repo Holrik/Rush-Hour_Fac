@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <time.h>
+//#include <time.h> // A quoi ça sert ???
 #include <stdio.h>
 #include <string.h> // A enlever quand le main sera modifié
 #include "piece.h"
@@ -35,7 +35,7 @@ void afficher(cgame g){
     
     
     printf("  ");
-    for(int i=0; i <TAILLE_PLATEAU; i++){
+    for(int i = 0; i < TAILLE_PLATEAU; i++){
      printf("   %d" + i);
     }
     printf("\n");
@@ -74,7 +74,7 @@ int main (){
 	
   game g = new_game_hr (3, p); // à remplir avec ce qu'il faut | TODO
   
-  char * nums = ""; // Numéro voiture à déplacer en STRING
+  char nums[2] = ""; // Numéro voiture à déplacer en STRING
   int numi; // Numéro voiture à déplacer en INT
   
   char * direc = ""; // UP/DOWN/LEFT/RIGHT

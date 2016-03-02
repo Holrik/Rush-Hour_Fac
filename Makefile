@@ -1,9 +1,12 @@
+ROOT = .
 LIBS = game
+LIBDIR = -L $(ROOT)
 CFLAGS = -g -Wall
-CPPFLAGS =
+CPPFLAGS = -I$(ROOT)
 LDFLAGS = -lgame
 
 SRCS=$(wildcard *.c) # tous les .c
+OBJS=$(SRCS:.c=.o)
 DEPS=$(SRCS:.c=.d)
 
 all: libgame.a test_piece1 test_game jeu_edition_1
@@ -15,14 +18,14 @@ libgame.a: piece.o game.o
 	done
 
 test_piece1: test_piece1.o
-	$(CC) $^ -L. $(LDFLAGS)  -o $@
+	$(CC) $^ $(LIBDIR) $(LDFLAGS)  -o $@
 
-test_game: piece.c game.c test_game.c
-	$(CC) $(CFLAGS) $^ -o $@
+test_game: test_game.o
+	$(CC) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 
 jeu_edition_1 : jeu_edition_1.c
-	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 %.d: %.c
 	$(CC) -MM $(CPPFLAGS) $< > $@
