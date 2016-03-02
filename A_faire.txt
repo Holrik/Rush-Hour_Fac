@@ -7,6 +7,10 @@
    - Modifier le main de jeu_edition_1.c pour le séparer en plusieurs fonctions.
    - Vérifier que jeu_edition_1 fonctionne.
 
+
+3) Générer Makefile qui fait tout ce qui est nécessaire(.o, .a, exécutables), (gérer arborescence)
+
+
 3) PARTIE 1 :
 - Générer bibliothèque libgame.a (implémentant les fonctions décrites dans piece.h et game.h)
 - Générer un exécutable permettant de jouer à Rush Hour dans la console
