@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
+#include <string.h> // A enlever quand le main sera modifié
 #include "piece.h"
 #include "game.h"
 
 //génére l'affichage dans la console
 void afficher(cgame g){
-    // crée en mémoire un tableau rempli de -1 par défaut
+    // Crée en mémoire un tableau rempli de -1 par défaut
     int tab [TAILLE_PLATEAU][TAILLE_PLATEAU];
     for(int i=0; i <TAILLE_PLATEAU; i++){
         for(int j=0; j <TAILLE_PLATEAU; j++){
@@ -14,7 +15,7 @@ void afficher(cgame g){
         } 
     }
    
-   // met les voitures à leurs place dans le tableau
+   // Met les voitures à leurs place dans le tableau
     for (int l = 0 ; l < game_nb_pieces(g) ; l++){
          int taille =0;
 	 if(is_horizontal(game_piece(g, l))){
@@ -39,7 +40,7 @@ void afficher(cgame g){
     }
     printf("\n");
     
-     for(int i = TAILLE_PLATEAU-1; i >= 0; i++){
+     for(int i = TAILLE_PLATEAU-1; i >= 0; i--){
         printf("   ");
         for(int j=0; j <TAILLE_PLATEAU; j++){
             printf("****");
@@ -73,50 +74,68 @@ int main (){
 	
   game g = new_game_hr (3, p); // à remplir avec ce qu'il faut | TODO
   
-  char * nums; // Numéro voiture à déplacer en STRING
+  char * nums = ""; // Numéro voiture à déplacer en STRING
   int numi; // Numéro voiture à déplacer en INT
   
-  char * direc; // UP/DOWN/LEFT/RIGHT
-  int direci =-1; // Direction de la voiture à partir de direc
+  char * direc = ""; // UP/DOWN/LEFT/RIGHT
+  int direci = -1; // Direction de la voiture à partir de direc
   
-  char * dists; // Distance déplacement en STRING
+  char * dists = ""; // Distance déplacement en STRING
   int disti; // Distance déplacement en INT
   
   afficher(g);
 
-// Tant que ce n'est pas la fin on fait le corps du programme
+// Tant que ce n'est pas la fin, on fait le corps du programme
 while (!game_over_hr(g))
     {
-        printf("Veuillez entrer le numero de la voiture:");
-       fgets(nums, 2, stdin); //a tester
-       numi= atoi(nums);
-        printf("Veuillez entrer la direction du déplacement:");
-       fgets(direc, 10, stdin); //a tester 
+        printf("Veuillez entrer le numero de la voiture: ");
 
-           
-        if(direc == "UP"){
-            direci=0;
-        }else if(direc == "DOWN"){
-            direci=2;
-        }else if(direc == "LEFT"){
-            direci=1;
-        }else if(direc == "RIGHT"){
-            direci=3;
-        }
-        
-        if(direci < 0){
-	  printf("Mauvaise direction. Veuillez entrer UP/DOWN/LEFT/RIGHT.");
-	}else{
-            printf("Veuillez entrer la distance du déplacement:");
+	while (fgets(nums, 2, stdin) == NULL){
+	  printf("Veuillez rentrer un numéro entre 0 et %d.\n", game_nb_pieces(g)-1);
+	}
+
+	numi = atoi(nums);
+
+	
+        printf("Veuillez entrer la direction du déplacement: ");
+        fgets(direc, 10, stdin); //TEST 
+
+	while(direc == NULL
+	      || strcmp(direc, "UP")!= 0
+	      || strcmp(direc, "DOWNUP")!= 0
+	      || strcmp(direc, "LEFT")!= 0
+	      || strcmp(direc, "RIGHT")!= 0){
+
+	  printf("Direction incorrecte. Veuillez entrer UP/DOWN/LEFT/RIGHT.\n");
+	  fgets(direc, 10, stdin);	  
+	}
+
+	if(strcmp(direc, "UP")){
+	    direci = 0;
+	} else if(strcmp(direc, "LEFT")){
+	    direci = 1;
+	} else if(strcmp(direc, "DOWN")){
+	    direci = 2;
+	} else {
+	    direci = 3;
+	}
+
+	printf("Veuillez entrer la distance du déplacement: ");
+
+	// TODO - Vérifier entrées utilisateur
+	while(fgets(dists, 1, stdin) == NULL){
+
+	  printf("Veuillez entrer une distance de déplacement correcte: ");
+	  
+	}
 	    
-            fgets(dists, 1, stdin); 
-            disti= atoi(dists);
+        disti= atoi(dists);
             
-            play_move(g, numi, direci, disti);
+        play_move(g, numi, direci, disti);
             
-            afficher(g);
-        } 
+        afficher(g);
+        
     }
-   printf("Vous avez fini en %d coups.", game_nb_moves(g)); 
+   printf("Vous avez fini en %d coups.\n", game_nb_moves(g)); 
 }
 
