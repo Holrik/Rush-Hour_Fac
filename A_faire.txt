@@ -11,7 +11,7 @@
 3) Générer Makefile qui fait tout ce qui est nécessaire(.o, .a, exécutables), (gérer arborescence)
 
 
-3) PARTIE 1 :
+4) PARTIE 1 :
 - Générer bibliothèque libgame.a (implémentant les fonctions décrites dans piece.h et game.h)
 - Générer un exécutable permettant de jouer à Rush Hour dans la console
 - Déposer le code dans Moodle au plus tard ledimanche 6 mars sous la forme d'une archive <grp>_<nom1>_<nom2>_<nom3>.tar.gz
