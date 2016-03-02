@@ -74,13 +74,13 @@ int main (){
 	
   game g = new_game_hr (3, p); // à remplir avec ce qu'il faut | TODO
   
-  char nums[2] = ""; // Numéro voiture à déplacer en STRING
+  char nums[4] = ""; // Numéro voiture à déplacer en STRING
   int numi; // Numéro voiture à déplacer en INT
   
-  char * direc = ""; // UP/DOWN/LEFT/RIGHT
+  char direc[10] = ""; // UP/DOWN/LEFT/RIGHT
   int direci = -1; // Direction de la voiture à partir de direc
   
-  char * dists = ""; // Distance déplacement en STRING
+  char dists[4] = ""; // Distance déplacement en STRING
   int disti; // Distance déplacement en INT
   
   afficher(g);
@@ -90,7 +90,7 @@ while (!game_over_hr(g))
     {
         printf("Veuillez entrer le numero de la voiture: ");
 
-	while (fgets(nums, 2, stdin) == NULL){
+	while (fgets(nums, 4, stdin) == NULL){
 	  printf("Veuillez rentrer un numéro entre 0 et %d.\n", game_nb_pieces(g)-1);
 	}
 
@@ -123,7 +123,7 @@ while (!game_over_hr(g))
 	printf("Veuillez entrer la distance du déplacement: ");
 
 	// TODO - Vérifier entrées utilisateur
-	while(fgets(dists, 1, stdin) == NULL){
+	while(fgets(dists, 4, stdin) == NULL){
 
 	  printf("Veuillez entrer une distance de déplacement correcte: ");
 	  
