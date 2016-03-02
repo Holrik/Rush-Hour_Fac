@@ -3,7 +3,9 @@
    FAIT - Vérifier que test-game.c fonctionne.
 
 
-2) Compléter jeu_edition_1.c
+2) - Compléter jeu_edition_1.c
+   - Modifier le main de jeu_edition_1.c pour le séparer en plusieurs fonctions.
+   - Vérifier que jeu_edition_1 fonctionne.
 
 3) PARTIE 1 :
 - Générer bibliothèque libgame.a (implémentant les fonctions décrites dans piece.h et game.h)

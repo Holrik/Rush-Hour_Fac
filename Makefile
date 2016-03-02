@@ -1,21 +1,35 @@
+LIBS = game
 CFLAGS = -g -Wall
 CPPFLAGS =
-LDFLAGS =
+LDFLAGS = -lgame
 
-all: test_piece1 test_game jeu_edition_1
+SRCS=$(wildcard *.c) # tous les .c
+DEPS=$(SRCS:.c=.d)
+
+all: libgame.a test_piece1 test_game jeu_edition_1
 
 
-test_piece1: piece.c test_piece1.c
-	gcc $(CFLAGS) $^ -o $@
+libgame.a: piece.o game.o
+	for i in $^ ; do \
+		ar -rs $@ $$i ; \
+	done
 
+test_piece1: test_piece1.o
+	$(CC) $^ -L. $(LDFLAGS)  -o $@
 
 test_game: piece.c game.c test_game.c
-	gcc $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 
-jeu_edition_1 : piece.c game.c jeu_edition_1.c
-	gcc $(CFLAGS) $^ -o $@
+jeu_edition_1 : jeu_edition_1.c
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
+
+%.d: %.c
+	$(CC) -MM $(CPPFLAGS) $< > $@
+
+-include $(DEPS)
 
 .PHONY: clean
 clean:
-	-rm -f test_piece1 test_game
+	rm -f test_piece1 test_game
+	rm -f $(DEPS) $(OBJS)  *~
