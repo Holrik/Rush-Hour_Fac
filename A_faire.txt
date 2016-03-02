@@ -1,8 +1,11 @@
 1) FAIT(99.9% sûr) - Vérifier que toutes les fonctions de piece.c fonctionnent.
    FAIT(presque sûr) - Vérifier que toutes les fonctions de game.c fonctionnent.
-   Vérifier que test-game.c fonctionne.
+   FAIT - Vérifier que test-game.c fonctionne.
 
 
 2) Compléter jeu_edition_1.c
 
-3) test_game.c a vérifier, j'ai essayé de le modifié avec tes directives
+3) PARTIE 1 :
+- Générer bibliothèque libgame.a (implémentant les fonctions décrites dans piece.h et game.h)
+- Générer un exécutable permettant de jouer à Rush Hour dans la console
+- Déposer le code dans Moodle au plus tard ledimanche 6 mars sous la forme d'une archive <grp>_<nom1>_<nom2>_<nom3>.tar.gz
