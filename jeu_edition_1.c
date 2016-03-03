@@ -93,13 +93,13 @@ int choixVoiture(cgame g){
 
 //-----------------------------------------------------------------//
 
-int deplacementVoiture(cgame g){
+int choixDirection(cgame g){
 
-  char direc[10] = ""; // UP/DOWN/LEFT/RIGHT
+  /* char direc[10] = ""; // UP/DOWN/LEFT/RIGHT
   
   printf("Veuillez entrer la direction du déplacement: ");
 
-  /* while(fgets(direc, 10, stdin) == NULL
+   while(fgets(direc, 10, stdin) == NULL
 	|| strcmp(direc, "UP")!= 0
         || strcmp(direc, "DOWN")!= 0
         || strcmp(direc, "LEFT")!= 0
@@ -123,7 +123,7 @@ int deplacementVoiture(cgame g){
 
 //-----------------------------------------------------------------//
 
-int distanceDeplacement(cgame g){
+int choixDistance(cgame g){
 
   char dists[4] = ""; // Distance déplacement en STRING
 
@@ -159,9 +159,9 @@ int main (){
 while (!game_over_hr(g))
     {
        
-      play_move(g, choixVoiture(g), choixDirection(g), distanceDeplacement(g));
+      play_move(g, choixVoiture(g), choixDirection(g), choixDistance(g));
             
-        afficher(g);
+      afficher(g);
         
     }
    printf("Vous avez fini en %d coups.\n", game_nb_moves(g)); 
