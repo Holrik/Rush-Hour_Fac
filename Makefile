@@ -24,7 +24,7 @@ test_game: test_game.o
 	$(CC) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 
-rush-hour_1 : rush-hour_1.c niveaux.o
+rush-hour_1 : rush-hour_1.c niveaux.o affichage.o
 	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 %.d: %.c
