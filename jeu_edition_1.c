@@ -95,30 +95,29 @@ int choixVoiture(cgame g){
 
 int choixDirection(cgame g){
 
-  /* char direc[10] = ""; // UP/DOWN/LEFT/RIGHT
+  char direc[10] = ""; // UP/DOWN/LEFT/RIGHT
   
   printf("Veuillez entrer la direction du déplacement: ");
 
    while(fgets(direc, 10, stdin) == NULL
-	|| strcmp(direc, "UP")!= 0
-        || strcmp(direc, "DOWN")!= 0
-        || strcmp(direc, "LEFT")!= 0
-        || strcmp(direc, "RIGHT")!= 0)
-  {
+	|| (strcmp(direc, "UP\n")!= 0
+          && strcmp(direc, "DOWN\n")!= 0
+          && strcmp(direc, "LEFT\n")!= 0
+          && strcmp(direc, "RIGHT\n")!= 0))
+    {
     printf("Direction incorrecte. Veuillez entrer UP/DOWN/LEFT/RIGHT.\n");
-  }
-
-  if(strcmp(direc, "UP")){
+    }
+   
+   
+  if(strcmp(direc, "UP\n") == 0){
     return 0;
-  } else if(strcmp(direc, "LEFT")){
+  } else if(strcmp(direc, "LEFT\n") == 0){
     return 1;
-  } else if(strcmp(direc, "DOWN")){
+  } else if(strcmp(direc, "DOWN\n") == 0){
     return 2;
   } else {
     return 3;
-  } */
-
-  return 2;
+  }
 }
 
 //-----------------------------------------------------------------//
