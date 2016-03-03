@@ -134,7 +134,7 @@ int choixDistance(cgame g){
 	|| (!isdigit(dists[0])
 	|| dists[1] != '\n') // Ne permet qu'un chiffre dans le nombre de la distance (A améliorer ?)
 	|| atoi(dists) < 0
-	|| atoi(dists) >= game_nb_pieces(g))
+	|| atoi(dists) >= TAILLE_PLATEAU)
   {
     printf("Distance incorrecte. Veuillez entrer une distance de déplacement entre 1 et %d: ", TAILLE_PLATEAU);
   }
@@ -158,8 +158,11 @@ int main (){
 // Tant que ce n'est pas la fin, on fait le corps du programme
 while (!game_over_hr(g))
     {
-       
-      play_move(g, choixVoiture(g), choixDirection(g), choixDistance(g));
+      int i_cV = choixVoiture(g) ;
+      int i_cDir = choixDirection(g) ;
+      int i_cDis = choixDistance(g) ;
+      
+      play_move(g, i_cV, i_cDir, i_cDis);
             
       afficher(g);
         
