@@ -9,7 +9,7 @@ SRCS=$(wildcard *.c) # tous les .c
 OBJS=$(SRCS:.c=.o)
 DEPS=$(SRCS:.c=.d)
 
-all: libgame.a test_piece1 test_game jeu_edition_1
+all: libgame.a test_piece1 test_game rush-hour_1
 
 
 libgame.a: piece.o game.o
