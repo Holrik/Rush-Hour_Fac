@@ -97,27 +97,26 @@ int choixDirection(cgame g){
 
   char direc[10] = ""; // UP/DOWN/LEFT/RIGHT
   
-  printf("Veuillez entrer la direction du déplacement: ");
+  printf("Veuillez entrer la direction du déplacement (UP/DOWN/LEFT/RIGHT): ");
 
-   while(fgets(direc, 10, stdin) == NULL
-	|| (strcmp(direc, "UP\n")!= 0
-          && strcmp(direc, "DOWN\n")!= 0
-          && strcmp(direc, "LEFT\n")!= 0
-          && strcmp(direc, "RIGHT\n")!= 0))
-    {
-    printf("Direction incorrecte. Veuillez entrer UP/DOWN/LEFT/RIGHT.\n");
+  while(true){
+
+    fgets(direc, 10, stdin);
+    
+    if(!strcmp(direc, "UP\n")){
+      return 0;
+    } else if(!strcmp(direc, "LEFT\n")){
+      return 1;
+    } else if(!strcmp(direc, "DOWN\n")){
+      return 2;
+    } else if(!strcmp(direc, "RIGHT\n")){
+      return 3;
     }
-   
-   
-  if(strcmp(direc, "UP\n") == 0){
-    return 0;
-  } else if(strcmp(direc, "LEFT\n") == 0){
-    return 1;
-  } else if(strcmp(direc, "DOWN\n") == 0){
-    return 2;
-  } else {
-    return 3;
+
+    printf("Veuillez saisir une direction correcte (UP/DOWN/LEFT/RIGHT) : ");
+
   }
+
 }
 
 //-----------------------------------------------------------------//
@@ -142,14 +141,13 @@ int choixDistance(cgame g){
 
 //-----------------------------------------------------------------//
 
-// Manque la création et l'affichage!!
 int main (){
-  piece* p = malloc(2*sizeof(piece)) ;
+  piece* p = malloc(2*sizeof(piece)) ; // TODO: Faire fonction pour créer les pièces/game en fonction d'un niveau 
         *p = new_piece_rh(0,3,true,true) ;
 	*(p+1) = new_piece_rh(2,2,false, false) ;
 	*(p+2) = new_piece_rh(3,1,false, false) ;
 	
-  game g = new_game_hr (3, p); // à remplir avec ce qu'il faut | TODO
+  game g = new_game_hr (3, p); // TODO: à remplir avec ce qu'il faut
 
   
   afficher(g);
