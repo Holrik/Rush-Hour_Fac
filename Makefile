@@ -34,5 +34,6 @@ jeu_edition_1 : jeu_edition_1.c
 
 .PHONY: clean
 clean:
-	rm -f test_piece1 test_game
+	rm -f test_piece1 test_game jeu_edition_1
+	rm -f libgame.a
 	rm -f $(DEPS) $(OBJS)  *~

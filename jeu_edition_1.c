@@ -2,6 +2,7 @@
 //#include <time.h> // A quoi ça sert ???
 #include <stdio.h>
 #include <string.h> // A enlever quand le main sera modifié
+#include <ctype.h>
 #include "piece.h"
 #include "game.h"
 
@@ -26,9 +27,11 @@ void afficher(cgame g){
        for (int k=0; k<taille; k++ ){
            
 	 if(is_horizontal(game_piece(g, l))){
-                tab[get_x(game_piece(g, l)) +k][get_y(game_piece(g, l))]=l;
+	   // On met y puis x car pour chaque ligne tab[y] du tableau on lira
+	   // sa case tab[y][x]
+                tab[get_y(game_piece(g, l))][get_x(game_piece(g, l)) +k]=l;
          }else{
-                tab[get_x(game_piece(g, l))][get_y(game_piece(g, l)) +k]=l;
+                tab[get_y(game_piece(g, l)) +k][get_x(game_piece(g, l))]=l;
          }
        }
     }
@@ -69,8 +72,8 @@ void afficher(cgame g){
 int main (){
   piece* p = malloc(2*sizeof(piece)) ;
         *p = new_piece_rh(0,3,true,true) ;
-	*(p+1) = new_piece_rh(2,4,false, true) ;
-	*(p+2) = new_piece_rh(3,1,false, true) ;
+	*(p+1) = new_piece_rh(2,2,false, false) ;
+	*(p+2) = new_piece_rh(3,1,false, false) ;
 	
   game g = new_game_hr (3, p); // à remplir avec ce qu'il faut | TODO
   
@@ -90,24 +93,25 @@ while (!game_over_hr(g))
     {
         printf("Veuillez entrer le numero de la voiture: ");
 
-	while (fgets(nums, 4, stdin) == NULL){
-	  printf("Veuillez rentrer un numéro entre 0 et %d.\n", game_nb_pieces(g)-1);
+	while (fgets(nums, 4, stdin) == NULL
+	       || (!isdigit(nums[0]) || nums[1] != '\n') // Ne permet qu'un chiffre dans le nombre de la voiture (A améliorer ?)
+	       || atoi(nums) < 0
+	       || atoi(nums) >= game_nb_pieces(g)){
+	  printf("Raté ! Veuillez entrer un numéro entre 0 et %d : ", game_nb_pieces(g)-1);
 	}
 
 	numi = atoi(nums);
 
 	
         printf("Veuillez entrer la direction du déplacement: ");
-        fgets(direc, 10, stdin); //TEST 
 
-	while(direc == NULL
-	      || strcmp(direc, "UP")!= 0
-	      || strcmp(direc, "DOWNUP")!= 0
+	while(fgets(direc, 10, stdin) == NULL
+	      || strcmp(direc, "UP\n\0")!= 0
+	      || strcmp(direc, "DOWN")!= 0
 	      || strcmp(direc, "LEFT")!= 0
 	      || strcmp(direc, "RIGHT")!= 0){
 
 	  printf("Direction incorrecte. Veuillez entrer UP/DOWN/LEFT/RIGHT.\n");
-	  fgets(direc, 10, stdin);	  
 	}
 
 	if(strcmp(direc, "UP")){
@@ -123,9 +127,12 @@ while (!game_over_hr(g))
 	printf("Veuillez entrer la distance du déplacement: ");
 
 	// TODO - Vérifier entrées utilisateur
-	while(fgets(dists, 4, stdin) == NULL){
+	while(fgets(dists, 4, stdin) == NULL
+	       || (!isdigit(dists[0]) || dists[1] != '\n') // Ne permet qu'un chiffre dans le nombre de la distance (A améliorer ?)
+	       || atoi(dists) < 0
+	       || atoi(dists) >= game_nb_pieces(g)){
 
-	  printf("Veuillez entrer une distance de déplacement correcte: ");
+	  printf("Distance incorrecte. Veuillez entrer une distance de déplacement entre 1 et %d: ", TAILLE_PLATEAU);
 	  
 	}
 	    
