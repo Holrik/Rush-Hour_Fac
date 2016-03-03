@@ -99,7 +99,7 @@ int deplacementVoiture(){
   
   printf("Veuillez entrer la direction du déplacement: ");
 
-  while(fgets(direc, 10, stdin) == NULL
+  /* while(fgets(direc, 10, stdin) == NULL
 	|| strcmp(direc, "UP")!= 0
         || strcmp(direc, "DOWN")!= 0
         || strcmp(direc, "LEFT")!= 0
@@ -116,9 +116,9 @@ int deplacementVoiture(){
     return 2;
   } else {
     return 3;
-  }
+  } */
 
-  return -1;
+  return 2;
 }
 
 //-----------------------------------------------------------------//
@@ -159,7 +159,7 @@ int main (){
 while (!game_over_hr(g))
     {
        
-        play_move(g, numi, direci, disti);
+      play_move(g, choixVoiture(), choixDirection(), distanceDeplacement());
             
         afficher(g);
         
