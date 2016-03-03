@@ -1,17 +1,18 @@
 #include <stdlib.h>
 //#include <time.h> // A quoi ça sert ???
 #include <stdio.h>
-#include <string.h> // A enlever quand le main sera modifié
+#include <string.h>
 #include <ctype.h>
 #include "piece.h"
+#include "niveaux.h"
 #include "game.h"
 
 //génére l'affichage dans la console
-void afficher(cgame g){
+void afficher(game g){
     // Crée en mémoire un tableau rempli de -1 par défaut
     int tab [TAILLE_PLATEAU][TAILLE_PLATEAU];
-    for(int i=0; i <TAILLE_PLATEAU; i++){
-        for(int j=0; j <TAILLE_PLATEAU; j++){
+    for(int i=0; i < TAILLE_PLATEAU; i++){
+        for(int j=0; j < TAILLE_PLATEAU; j++){
             tab[i][j]= -1;
         } 
     }
@@ -39,13 +40,13 @@ void afficher(cgame g){
      for(int i = TAILLE_PLATEAU-1; i >= 0; i--){
         printf("   ");
 	
-        for(int j=0; j <TAILLE_PLATEAU; j++){
+        for(int j=0; j < TAILLE_PLATEAU; j++){
             printf("****");
         }
 	
         printf("*\n%d: |", i);
 	
-        for(int j=0; j <TAILLE_PLATEAU; j++){
+        for(int j=0; j < TAILLE_PLATEAU; j++){
             if(tab[i][j]==-1){
                 printf("   |");
             }else{
@@ -59,7 +60,7 @@ void afficher(cgame g){
     }
     printf("   *");
     
-    for(int i=0; i <TAILLE_PLATEAU; i++){
+    for(int i=0; i < TAILLE_PLATEAU; i++){
      printf("****");
     }
     
@@ -142,14 +143,9 @@ int choixDistance(cgame g){
 //-----------------------------------------------------------------//
 
 int main (){
-  piece* p = malloc(2*sizeof(piece)) ; // TODO: Faire fonction pour créer les pièces/game en fonction d'un niveau 
-        *p = new_piece_rh(0,3,true,true) ;
-	*(p+1) = new_piece_rh(2,2,false, false) ;
-	*(p+2) = new_piece_rh(3,1,false, false) ;
-	
-  game g = new_game_hr (3, p); // TODO: à remplir avec ce qu'il faut
 
-  
+  game g = choixNiveaux();
+
   afficher(g);
 
 // Tant que ce n'est pas la fin, on fait le corps du programme
