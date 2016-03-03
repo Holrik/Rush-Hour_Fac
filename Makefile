@@ -24,7 +24,7 @@ test_game: test_game.o
 	$(CC) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 
-jeu_edition_1 : jeu_edition_1.c
+rush-hour_1 : rush-hour_1.c
 	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 %.d: %.c
@@ -34,6 +34,6 @@ jeu_edition_1 : jeu_edition_1.c
 
 .PHONY: clean
 clean:
-	rm -f test_piece1 test_game jeu_edition_1
+	rm -f test_piece1 test_game rush-hour_1
 	rm -f libgame.a
 	rm -f $(DEPS) $(OBJS)  *~
