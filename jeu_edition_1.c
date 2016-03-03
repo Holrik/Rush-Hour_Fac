@@ -74,7 +74,7 @@ void afficher(cgame g){
 
 //-----------------------------------------------------------------//
 
-int choixVoiture(){
+int choixVoiture(cgame g){
 
   char nums[4] = "";
   printf("Veuillez entrer le numero de la voiture: ");
@@ -93,7 +93,7 @@ int choixVoiture(){
 
 //-----------------------------------------------------------------//
 
-int deplacementVoiture(){
+int deplacementVoiture(cgame g){
 
   char direc[10] = ""; // UP/DOWN/LEFT/RIGHT
   
@@ -123,7 +123,7 @@ int deplacementVoiture(){
 
 //-----------------------------------------------------------------//
 
-int distanceDeplacement(){
+int distanceDeplacement(cgame g){
 
   char dists[4] = ""; // Distance déplacement en STRING
 
@@ -159,7 +159,7 @@ int main (){
 while (!game_over_hr(g))
     {
        
-      play_move(g, choixVoiture(), choixDirection(), distanceDeplacement());
+      play_move(g, choixVoiture(g), choixDirection(g), distanceDeplacement(g));
             
         afficher(g);
         
