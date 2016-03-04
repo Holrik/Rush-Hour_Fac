@@ -58,6 +58,7 @@ game choixNiveaux(){
   }
 
   game g = new_game_hr (6, p);
+  free(p) ;
 
   return g;
 

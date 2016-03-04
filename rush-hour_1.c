@@ -95,7 +95,8 @@ while (!game_over_hr(g))
             
       afficher(g);
         
-    }
-   printf("Vous avez fini en %d coups.\n", game_nb_moves(g)); 
+      }
+   printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
+   delete_game(g) ;
 }
 
