@@ -15,6 +15,7 @@ bool test_new_game (){
 	game g = new_game_hr (2, p);
 	bool b = (g != NULL);
 	delete_game(g) ;
+	free(p) ;
 	return b;
 }
 
@@ -63,6 +64,8 @@ bool test_copy_game(){
 	bool b = (game_nb_moves(gdst) == game_nb_moves(gsrc));
 	delete_game(gdst);
 	delete_game(gsrc);
+	free(psrc) ;
+	free(pdst) ;
 	return b ;
 }
 
@@ -75,6 +78,7 @@ bool test_game_nb_pieces(){
 	game g = new_game_hr (2, p);
 	bool b = (2 == game_nb_pieces(g));
 	delete_game(g);
+	free(p) ;
 	return b ;
 }
 
@@ -88,6 +92,7 @@ bool test_game_piece(){
 	game g = new_game_hr (2, p);
 	bool b = (test == game_piece(g, 0));
 	delete_game(g);
+	free(p) ;
 	return b ;
 }
 
@@ -100,6 +105,7 @@ bool test_game_over_hr(){
 	game g = new_game_hr (1, p);
 	bool b = game_over_hr(g) ;
 	delete_game(g) ;
+	free(p) ;
 	return b ;
 }
 
@@ -115,6 +121,7 @@ bool test_play_move(){
 	b = b && !play_move(g, 1, UP, 1) ;
 	b = b && !play_move(g, 0, UP, 1) ;
 	delete_game(g) ;
+	free(p) ;
 	return b ;
 }
 
@@ -130,8 +137,9 @@ bool test_game_nb_moves() {
 	play_move(g, 0, RIGHT, 2) ;
 	b = b && (game_nb_moves(g) == 2) ;
 	delete_game(g) ;
+	free(p) ;
 	return b ;
-}
+	}
 
 
 

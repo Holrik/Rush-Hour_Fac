@@ -23,9 +23,9 @@
  *
  **/
 struct game_s{
-	piece *pieces ;
-	int nb_pieces ;
-	int nb_moves ;
+  piece *pieces;
+  int nb_pieces;
+  int nb_moves;
 };
 
 
