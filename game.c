@@ -223,12 +223,16 @@ game new_game (int width, int height, int nb_pieces, piece *pieces){
 /**
  *@brief return the width of the grid
  */
-int game_width(cgame g);
+int game_width(cgame g){
+  return width ;
+}
 
 /**
  *@brief return the height of the grid
  */
-int game_height(cgame g);
+int game_height(cgame g){
+  return height ;
+}
 
 /**
  * @brief return the number of then piece located on this square (-1 if no piece is present)
@@ -236,4 +240,14 @@ int game_height(cgame g);
  * @param x-coor of the square
  * @param y-coor of the square
  */
-int game_square_piece (game g, int x, int y);
+int game_square_piece (game g, int x, int y){
+  piece p = new_piece(x, y, 1, 1, true, true) ;
+  for (int i = 0 ; i < game_nb_pieces(g) ; i++) {
+    if (intersect(p, game_piece(g, i))) { // on vérifie pour chaque pièce du jeu si elle intersect la copie
+      delete_piece(p) ;
+      return false;
+    }
+  }
+  delete_piece(p) ;
+  return true ;
+}
