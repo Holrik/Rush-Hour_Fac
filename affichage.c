@@ -1,9 +1,10 @@
 #include "affichage.h"
+#include "game.h"
 
 //génére l'affichage dans la console
 void afficher(cgame g){
   int width=game_width(g);
-  int height= game_heigh(g);
+  int height= game_height(g);
     // Crée en mémoire un tableau rempli de -1 par défaut
     int tab [width][height];
     for(int i=0; i < width ; i++){
@@ -43,7 +44,7 @@ void afficher(cgame g){
       for(int j= 0; j<pieceH; j++){
 	tab[get_y(game_piece(g, l))][get_x(game_piece(g, l)) +j]=l;
       }
-      
+    } 
      for(int i = width -1; i >= 0; i--){
         printf("   ");
 	
@@ -78,5 +79,5 @@ void afficher(cgame g){
     }
     
     printf("\n\n");
-}
+
 }
