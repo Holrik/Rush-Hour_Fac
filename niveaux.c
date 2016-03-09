@@ -1,21 +1,5 @@
 #include "niveaux.h"
 
-game choixNiveaux(int jeu){
-  // si jeu vaux 1  alors on lance le sélectionneur de niveau
-  // du Rush hour sinon si il vaux 0 c'est celui de l'âne rouge
-
-  switch(jeu){
-    case 1:
-          choixNiveauxRH();
-    break;
-
-  case 0:
-         choixNiveauxAR();
-      break;
-  default:
-    printf("choix du jeu incorrect");
-  }
-}
 
 
 game choixNiveauxRH(){
@@ -48,7 +32,7 @@ game choixNiveauxRH(){
 	//*(p+3) = new_piece(3,0,true, true) ;
 	*(p+3) = new_piece(3,0,2,1,true, false) ;
 	//*(p+4) = new_piece(3,3,false, false) ;
-	*(p+3) = new_piece(3,0,1,3,false, true) ;
+	*(p+4) = new_piece(3,0,1,3,false, true) ;
 	//*(p+5) = new_piece(5,1,false, false) ;
 	*(p+5) = new_piece(5,1,1,3,false, true) ;
 
@@ -162,4 +146,22 @@ game choixNiveauxAR(){
 
   return g;
 
+}
+
+
+game choixNiveaux(int jeu){
+  // si jeu vaux 1  alors on lance le sélectionneur de niveau
+  // du Rush hour sinon si il vaux 0 c'est celui de l'âne rouge
+
+  switch(jeu){
+    case 1:
+          choixNiveauxRH();
+    break;
+
+  case 0:
+         choixNiveauxAR();
+      break;
+  default:
+    printf("choix du jeu incorrect");
+  }
 }
