@@ -83,9 +83,10 @@ int choixDistance(cgame g){
 	|| (!isdigit(dists[0])
 	|| dists[1] != '\n') // Ne permet qu'un chiffre dans le nombre de la distance (A améliorer ?)
 	|| atoi(dists) < 0
-	|| atoi(dists) >= TAILLE_PLATEAU)
+	|| (atoi(dists) >= game_width(g) && atoi(dists) >=game_height(g) )
+	)
   {
-    printf("Distance incorrecte. Veuillez entrer une distance de déplacement entre 1 et %d: ", TAILLE_PLATEAU);
+    printf("Distance incorrecte. Veuillez entrer une distance de déplacement entre 1 et %d pour un déplacement un longueur et entre 1 et %d pour un déplacement en hauteur: ",game_width(g), game_height(g) );
   }
   return atoi(dists); 
 }
