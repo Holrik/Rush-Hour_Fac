@@ -2,8 +2,8 @@
 
 //génére l'affichage dans la console
 void afficher(cgame g){
-  int width=g->width;
-  int height= g->height;
+  int width=game_width(g);
+  int height= game_heigh(g);
     // Crée en mémoire un tableau rempli de -1 par défaut
     int tab [width][height];
     for(int i=0; i < width ; i++){
