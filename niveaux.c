@@ -14,8 +14,8 @@ game choixNiveauxRH(){
   while(fgets(s_niv, 4, stdin) == NULL
 	|| (!isdigit(s_niv[0])
 	|| s_niv[1] != '\n')
-	|| atoi(s_niv) < 0
-	|| atoi(s_niv) >= TAILLE_PLATEAU)
+	|| atoi(s_niv) < 1
+	|| atoi(s_niv) > 3 )
   {
     printf("Veuillez choisir un niveau CORRECT (1 à 3): ");
   }
@@ -76,7 +76,7 @@ game choixNiveauxRH(){
     printf("Niveau incorrect");
   }
 
-  game g = new_game_hr (6, p);
+  game g = new_game (6,6,6, p);
   free(p) ;
 
   return g;
@@ -96,8 +96,8 @@ game choixNiveauxAR(){
   while(fgets(s_niv, 4, stdin) == NULL
 	|| (!isdigit(s_niv[0])
 	|| s_niv[1] != '\n')
-	|| atoi(s_niv) < 0
-	|| atoi(s_niv) >= TAILLE_PLATEAU)
+	|| atoi(s_niv) < 1
+	|| atoi(s_niv) > 3)
   {
     printf("Veuillez choisir un niveau CORRECT (1 à 3): ");
   }
@@ -141,7 +141,7 @@ game choixNiveauxAR(){
     printf("Niveau incorrect");
   }
 
-  game g = new_game_hr (6, p);
+  game g = new_game (4,5,6, p);
   free(p) ;
 
   return g;
