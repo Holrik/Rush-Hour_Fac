@@ -143,13 +143,13 @@ bool play_move(game g, int piece_num, dir d, int distance){
 	
 	// 1) Vérification que la pièce reste sur le plateau
 	if (d == RIGHT) {
-		if (get_x(game_piece(g, piece_num)) + get_width(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
+	  if (get_x(game_piece(g, piece_num)) + get_width(game_piece(g, piece_num)) + distance >game_width(g) )
 			return false ;
 	} else if (d == LEFT) {
 		if (get_x(game_piece(g, piece_num)) - distance < 0)
 			return false ;
 	} else if (d == UP) {
-		if (get_y(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > TAILLE_PLATEAU)
+	  if (get_y(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > game_height(g))
 			return false ;
 	} else { // d == DOWN
 		if (get_y(game_piece(g, piece_num)) - distance < 0)
@@ -224,14 +224,14 @@ game new_game (int width, int height, int nb_pieces, piece *pieces){
  *@brief return the width of the grid
  */
 int game_width(cgame g){
-  return width ;
+  return g->width ;
 }
 
 /**
  *@brief return the height of the grid
  */
 int game_height(cgame g){
-  return height ;
+  return g->height ;
 }
 
 /**
