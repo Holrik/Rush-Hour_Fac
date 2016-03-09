@@ -149,7 +149,7 @@ game choixNiveauxAR(){
 }
 
 
-voidgame choixNiveaux(int jeu){
+game choixNiveaux(int jeu){
   // si jeu vaux 1  alors on lance le sélectionneur de niveau
   // du Rush hour sinon si il vaux 0 c'est celui de l'âne rouge
 
