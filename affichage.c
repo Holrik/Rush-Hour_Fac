@@ -79,3 +79,4 @@ void afficher(cgame g){
     
     printf("\n\n");
 }
+}
