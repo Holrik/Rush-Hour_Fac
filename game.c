@@ -25,6 +25,8 @@
 struct game_s{
   piece *pieces;
   int nb_pieces;
+  int width ;
+  int height ;
   int nb_moves;
 };
 
@@ -193,3 +195,45 @@ bool play_move(game g, int piece_num, dir d, int distance){
 int game_nb_moves(cgame g){
 	return g->nb_moves ;
 }
+
+
+
+
+///////////// version 2 /////////////////
+
+
+game new_game (int width, int height, int nb_pieces, piece *pieces){
+  game g = malloc(sizeof(struct game_s)) ; // On alloue dynamiquement une structure game_s
+  g->pieces = malloc(nb_pieces * sizeof(piece)) ; // On alloue dynamiquement un tableau des pièces
+  if (g == NULL || g->pieces == NULL){ // Il faut vérifier que les allocations se sont faites correctement
+    fprintf(stderr, "probleme d'allocation\n");
+    return NULL ;
+  }
+  for (int i = 0 ; i < nb_pieces ; i++) { // On copie une à une les pièces données en paramètre vers la structure game_s
+    *(g->pieces +i) = *(pieces+i) ;
+  }
+  g->nb_pieces = nb_pieces ;
+  g->width = width ;
+  g->height = height ;
+  g->nb_moves = 0 ;
+  return g ;
+}
+
+
+/**
+ *@brief return the width of the grid
+ */
+int game_width(cgame g);
+
+/**
+ *@brief return the height of the grid
+ */
+int game_height(cgame g);
+
+/**
+ * @brief return the number of then piece located on this square (-1 if no piece is present)
+ * @param game
+ * @param x-coor of the square
+ * @param y-coor of the square
+ */
+int game_square_piece (game g, int x, int y);
