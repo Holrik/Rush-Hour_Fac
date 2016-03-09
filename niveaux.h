@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-game choixNiveaux();
+game choixNiveaux(int jeu);
+game choixNiveauxRH();
+game choixNiveauxAR();
 
 #endif

@@ -12,9 +12,9 @@
 int choixJeu(){
 
   char nums[4] = "";
-  printf("Veuillez entrer le numéro du jeu choisis(0:ANE ROUGE, 1:RUSH_HOUR): ");
+  printf("Veuillez entrer le numéro du jeu choisi (0:ANE ROUGE, 1:RUSH_HOUR): ");
 
-  while (fgets(nums, , stdin) == NULL
+  while (fgets(nums,4 , stdin) == NULL
 	 || (!isdigit(nums[0]) || nums[1] != '\n') // Ne permet qu'un chiffre  AA
 	 || atoi(nums) < 0
 	 || atoi(nums)>1)
