@@ -41,8 +41,10 @@ struct piece_s {
  * @param horizontal indicates whether the vehicle can move horizontally or vertically
  * @return a pointer toward the generated piece
  */
+
 piece new_piece_rh (int x, int y, bool small, bool horizontal){
-  
+  // V1
+  /*
 	piece p = malloc(sizeof(struct piece_s)); // On alloue dynamiquement une structure piece_s
 	
 	if (p == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
@@ -55,8 +57,9 @@ piece new_piece_rh (int x, int y, bool small, bool horizontal){
 	p->y = y ;
 	p->small = small;
 	p->horizontal = horizontal;
-	
-	return p ;
+*/	
+	return NULL ;
+
 }
 
 
@@ -74,10 +77,12 @@ void delete_piece (piece p){ // Supprimer la pièce
  * @param[in]  dst the copied piece
  */
 void copy_piece (cpiece src, piece dst){ // On copie les données qui définissent la pièce
-	dst->x  =  get_x(src) ;
-	dst->y  =  get_y(src) ;
-	dst->small  =  src->small ;
-	dst->horizontal =  is_horizontal(src) ;
+  dst->x  = get_x(src) ;
+  dst->y  = get_y(src) ;
+  dst->width  = get_width(src) ;
+  dst->height = get_height(src);
+  dst->move_x = can_move_x(src);
+  dst->move_y = can_move_y(src);
 }
 
 /**
@@ -91,7 +96,7 @@ void move_piece (piece p, dir d, int distance){ // On suppose que rien ne bloque
 
   // On vérifie d'abord la direction entrée
   if(d == LEFT){
-    if(can_move_x(p)){ // Ensuite si elle peut effectuer ce mouvement
+    if(can_move_x(p)){ // Ensuite si la pièce peut effectuer ce mouvement
       p->x -= distance;
     }
   } else if(d == RIGHT){
@@ -116,6 +121,26 @@ void move_piece (piece p, dir d, int distance){ // On suppose que rien ne bloque
  */
 bool intersect(cpiece p1, cpiece p2){
 
+  for(int y1 = get_y(p1); y1 < get_y(p1) + get_height(p1); y1++){ // y de p1
+
+    for(int x1 = get_x(p1); x1 < get_x(p1) + get_width(p1); x1++){ // x de p1
+
+      for(int y2 = get_y(p2); y2 < get_y(p2) + get_height(p2); y2++){ // y de p2
+
+	for(int x2 = get_x(p2); x2 < get_x(p2) + get_width(p2); x2++){ // x de p2
+
+	  if(x1 == x2 && y1 == y2){
+	    return false;
+	  }
+	  
+	}
+      }
+    }
+  }
+
+  return true;
+
+  // V1
   /*
 	int size_p1 = 2 ;
 	int size_p2 = 2 ;
@@ -152,42 +177,42 @@ bool can_move_y(cpiece p);
 		}
 	}*/
 
-  return true;
 }
 
 /**
  * @brief Returns the abscissa of leftmost point of the piece p.
  */
 int get_x(cpiece p){
-	return p->x ;
+  return p->x ;
 }
 
 /**
  * @brief Returns the ordinate of lowest point of the piece p.
  */
 int get_y(cpiece p){
-	return p->y ;
+  return p->y ;
 }
 
 /**
  * @brief Returns the different of ordinates of the uppermost and the lowest points of the piece p.
  */
 int get_height(cpiece p){
-	return p->height;
+  return p->height;
 }
 
 /**
  * @brief Returns the different of abscissas of the leftmost and the rightmost points of the piece p.
  */
 int get_width(cpiece p){
-	return p->width;
+  return p->width;
 }
 
 /**
  * @brief Returns true if the piece is
  */
 bool is_horizontal(cpiece p){
-	return p->horizontal ;
+  //return p->horizontal ; // V1
+  return 0;
 }
 
 
@@ -196,22 +221,22 @@ bool is_horizontal(cpiece p){
 
 piece new_piece (int x, int y, int width, int height, bool move_x, bool move_y){
   
-	piece p = malloc(sizeof(struct piece_s)); // On alloue dynamiquement une structure piece_s
+  piece p = malloc(sizeof(struct piece_s)); // On alloue dynamiquement une structure piece_s
 	
-	if (p == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
-		fprintf(stderr, "probleme d'allocation\n");
-		return NULL ;
-	}
+  if (p == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
+    fprintf(stderr, "probleme d'allocation\n");
+    return NULL ;
+  }
 	
-	// Tout s'est bien passé, on définit donc la pièce
-	p->x = x ;
-	p->y = y ;
-	p->width = width;
-	p->height = height;
-	p->move_x = move_x;
-	p->move_y = move_y;
+  // Tout s'est bien passé, on définit donc la pièce
+  p->x = x ;
+  p->y = y ;
+  p->width = width;
+  p->height = height;
+  p->move_x = move_x;
+  p->move_y = move_y;
 	
-	return p ;
+  return p ;
 }
 
 bool can_move_x(cpiece p){
