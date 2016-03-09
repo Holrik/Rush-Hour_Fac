@@ -9,7 +9,21 @@
 #include "affichage.h"
 
 
+int choixJeu(){
 
+  char nums[4] = "";
+  printf("Veuillez entrer le numéro du jeu choisis(0:ANE ROUGE, 1:RUSH_HOUR): ");
+
+  while (fgets(nums, , stdin) == NULL
+	 || (!isdigit(nums[0]) || nums[1] != '\n') // Ne permet qu'un chiffre  AA
+	 || atoi(nums) < 0
+	 || atoi(nums)>1)
+  {
+	  printf("Raté ! Veuillez entrer un numéro entre 0 et 1");
+  }
+
+  return atoi(nums);
+}
 
 int choixVoiture(cgame g){
 
@@ -79,8 +93,8 @@ int choixDistance(cgame g){
 //-----------------------------------------------------------------//
 
 int main (){
-
-  game g = choixNiveaux();
+  int i = choixJeu();
+  game g = choixNiveaux(i);
 
   afficher(g);
 
