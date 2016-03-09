@@ -157,16 +157,34 @@ bool play_move(game g, int piece_num, dir d, int distance){
 	}
 	
 	// 2) On vérifie que la direction est compatible
-	if (is_horizontal(game_piece(g, piece_num))) {
+	if(d == RIGHT){
+	  if(!can_move_x(game_piece(g, piece_num))){ // Ensuite si la pièce peut effectuer ce mouvement
+	    return false ;
+	  }
+	} else if(d == LEFT){
+	  if(!can_move_x(game_piece(g, piece_num))){
+	    return false ;
+	  }
+	} else if(d == UP){
+	  if(!can_move_y(game_piece(g, piece_num))){
+	    return false ;
+	  }
+	} else { // d == DOWN
+	  if(!can_move_y(game_piece(g, piece_num))){
+	    return false ;
+	  }
+	}
+	
+	  /*if (is_horizontal(game_piece(g, piece_num))) {
 		if (d != RIGHT && d != LEFT)
 			return false ;
 	} else {
 		if (d != UP && d != DOWN)
 			return false ;
-	}
+	}*/
 	
 	// 3) Vérification des Intersections avec "bool intersect(cpiece p1, cpiece p2)"
-	piece p = new_piece_rh(0, 0, true, true) ;
+	piece p = new_piece(0, 0, 1, 1, true, true) ;
 	copy_piece(game_piece(g, piece_num), p) ;
 
 	for (int j = 0; j < distance; j++) {

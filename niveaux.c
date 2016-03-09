@@ -32,11 +32,11 @@ game choixNiveauxRH(){
 	//*(p+3) = new_piece(3,0,true, true) ;
 	*(p+3) = new_piece(3,0,2,1,true, false) ;
 	//*(p+4) = new_piece(3,3,false, false) ;
-	*(p+4) = new_piece(3,0,1,3,false, true) ;
+	*(p+4) = new_piece(3,3,1,3,false, true) ;
 	//*(p+5) = new_piece(5,1,false, false) ;
 	*(p+5) = new_piece(5,1,1,3,false, true) ;
 
-    break;
+	break;
   
   case 2 :
 
@@ -156,13 +156,14 @@ game choixNiveaux(int jeu){
   switch(jeu){
     case 1:
          return choixNiveauxRH();
-    break;
+	 break;
 
     case 0:
         return choixNiveauxAR();
-      break;
+	break;
       
     default:
     printf("choix du jeu incorrect");
+    return NULL ;
   }
 }

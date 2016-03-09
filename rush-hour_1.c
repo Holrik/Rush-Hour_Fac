@@ -19,13 +19,14 @@ int choixJeu(){
 	 || atoi(nums) < 0
 	 || atoi(nums)>1)
   {
-	  printf("Raté ! Veuillez entrer un numéro entre 0 et 1");
+	  printf("Raté ! Veuillez entrer un numéro entre 0 et 1:\n");
   }
 
   return atoi(nums);
 }
 
 int choixVoiture(cgame g){
+
 
   char nums[4] = "";
   printf("Veuillez entrer le numero de la voiture: ");
