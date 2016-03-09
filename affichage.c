@@ -38,11 +38,11 @@ void afficher(cgame g){
     for (int l = 0 ; l < game_nb_pieces(g) ; l++){
       int pieceW=  get_width(game_piece(g, l));
       int pieceH= get_height(game_piece(g, l));   
-      for (int k =0; k< pieceW; k++){
-	tab[get_y(game_piece(g, l))+k][get_x(game_piece(g, l))]=l;
+      for(int k=0; k< pieceW; k++){
+	tab[get_y(game_piece(g, l))][get_x(game_piece(g, l))+k]=l;
       }
-      for(int j= 0; j<pieceH; j++){
-	tab[get_y(game_piece(g, l))][get_x(game_piece(g, l)) +j]=l;
+      for(int k=0; k< pieceH; k++){
+	tab[get_y(game_piece(g, l))+k][get_x(game_piece(g, l)) ]=l;
       }
     } 
      for(int i = width -1; i >= 0; i--){
