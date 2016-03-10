@@ -1,5 +1,5 @@
-#ifndef _GAME_H_
-#define _GAME_H_
+#ifndef _MGAME_H_
+#define _MGAME_H_
 #include <stdbool.h>
 #include "piece.h"
 
