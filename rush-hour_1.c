@@ -7,6 +7,7 @@
 #include "game.h"
 #include "niveaux.h"
 #include "affichage.h"
+#include "mygame.h"
 
 
 int choixJeu(){
