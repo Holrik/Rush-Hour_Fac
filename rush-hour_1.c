@@ -1,5 +1,4 @@
 #include <stdlib.h>
-//#include <time.h> // A quoi ça sert ???
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -106,7 +105,7 @@ int main (){
   afficher(g);
 
 // Tant que ce n'est pas la fin, on fait le corps du programme
-  while (!game_over(g, i))
+  while (! game_over(g, i))
     {
       int i_cV = choixVoiture(g) ;
       int i_cDir = choixDirection(g) ;

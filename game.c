@@ -302,3 +302,27 @@ int game_square_piece (game g, int x, int y){
   delete_piece(p) ;
   return true ;
 }
+
+
+bool game_over_ar(cgame g){
+	return get_x(game_piece(g, 0)) == 1 && get_y(game_piece(g, 0))==0;
+}
+
+bool game_over(cgame g, int jeu){
+ // si jeu vaux 1  alors on lance le sélectionneur de niveau
+  // du Rush hour sinon si il vaux 0 c'est celui de l'âne rouge
+
+  switch(jeu){
+    case 1:
+         return game_over_hr(g);
+	 break;
+
+    case 0:
+      return game_over_ar(g);
+      break;
+      
+    default:
+      printf("choix du jeu incorrect");
+      return NULL ;
+  }
+}
