@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "piece.h"
 #include "game.h"
-#include "mygame.h"
 
 /**
  * @file game.c
@@ -139,16 +138,16 @@ bool game_over_hr(cgame g){
  * @return true if the move is valid, false otherwise.
 */
 
-void static real_move(game g, int piece_num, dir d, int distance){
+static void  real_move(game g, int piece_num, dir d, int distance){
 	move_piece((piece)game_piece(g, piece_num), d, distance) ;
 	g->nb_moves += distance ;
 }
 
-int static somme_target(piece p, int (*f)(piece p),int (*g)(piece p), int distance ) {
+static int somme_target(piece p, int (*f)(piece p),int (*g)(piece p), int distance ) {
   return end_target(f(p)+ g(p), distance);
 }
 
-int static end_target(int x, int y, int distance){
+static int end_target(int x, int y, int distance){
   return x+y+distance;
 }
 
@@ -300,26 +299,4 @@ int game_square_piece (game g, int x, int y){
   }
   delete_piece(p) ;
   return true ;
-}
-
-
-
-static bool game_over_ar(cgame g){
-  return get_x(game_piece(g, 0)) == 1 && get_y(game_piece(g, 0))==0 ;
-}
-
-bool game_over(cgame g, int jeu){
-switch(jeu){
-  case 1:
-    return game_over_hr(g);
-    break;
-
-  case 0:
-    return game_over_ar(g);
-    break;
-      
-  default:
-    printf("choix du jeu incorrect");
-    return NULL ;
-  }
 }
