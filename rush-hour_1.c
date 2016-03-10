@@ -105,7 +105,7 @@ int main (){
   afficher(g);
 
 // Tant que ce n'est pas la fin, on fait le corps du programme
-while (!game_over_hr(g))
+  while (!game_over(g, i))
     {
       int i_cV = choixVoiture(g) ;
       int i_cDir = choixDirection(g) ;
