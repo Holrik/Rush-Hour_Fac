@@ -105,11 +105,11 @@ void move_piece (piece p, dir d, int distance){ // On suppose que rien ne bloque
     }
   } else if(d == UP){
     if(can_move_y(p)){
-      p->x += distance;
+      p->y += distance;
     }
   } else if(d == DOWN){
     if(can_move_y(p)){
-      p->x -= distance;
+      p->y -= distance;
     }
   }
   

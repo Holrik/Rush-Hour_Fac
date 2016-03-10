@@ -73,7 +73,7 @@ int choixDirection(cgame g){
 
 //-----------------------------------------------------------------//
 
-int choixDistance(cgame g){
+int choixDistance(cgame g, dir d){
 
   char dists[4] = ""; // Distance déplacement en STRING
 
@@ -87,7 +87,11 @@ int choixDistance(cgame g){
 	|| (atoi(dists) >= game_width(g) && atoi(dists) >=game_height(g) )
 	)
   {
-    printf("Distance incorrecte. Veuillez entrer une distance de déplacement entre 1 et %d pour un déplacement un longueur et entre 1 et %d pour un déplacement en hauteur: ",game_width(g), game_height(g) );
+    printf("Distance incorrecte. Veuillez entrer une distance de déplacement entre ");
+    if (d==LEFT || d==RIGHT)
+      printf("1 et %d pour un déplacement en longueur: ", game_width(g) );
+    else
+      printf("1 et %d pour un déplacement en hauteur: ", game_height(g) );
   }
   return atoi(dists); 
 }
@@ -105,7 +109,7 @@ while (!game_over_hr(g))
     {
       int i_cV = choixVoiture(g) ;
       int i_cDir = choixDirection(g) ;
-      int i_cDis = choixDistance(g) ;
+      int i_cDis = choixDistance(g, i_cDir) ;
       
       play_move(g, i_cV, i_cDir, i_cDis);
             
