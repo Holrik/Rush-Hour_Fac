@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "piece.h"
 #include "game.h"
+#include "mygame.h"
 
 /**
  * @file game.c
