@@ -2,6 +2,7 @@
 #define _MGAME_H_
 #include <stdbool.h>
 #include "piece.h"
+#include "game.h"
 
 /**
  * @brief selectionne le game_over correspondant au game choisi.
