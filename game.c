@@ -149,6 +149,8 @@ static int end_target(int x, int y, int distance){
 }
 
 static int somme_target(cpiece p, int (*f)(cpiece p),int (*g)(cpiece p), int distance ) {
+  if (g == null)
+    return end_target(f(p), 0, distance);
   return end_target(f(p), g(p), distance);
 }
 
