@@ -130,7 +130,7 @@ bool intersect(cpiece p1, cpiece p2){
 	for(int x2 = get_x(p2); x2 < get_x(p2) + get_width(p2); x2++){ // x de p2
 
 	  if(x1 == x2 && y1 == y2){
-	    return false;
+	    return true;
 	  }
 	  
 	}
@@ -138,7 +138,7 @@ bool intersect(cpiece p1, cpiece p2){
     }
   }
 
-  return true;
+  return false;
 
   // V1
   /*

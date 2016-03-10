@@ -158,7 +158,7 @@ bool play_move(game g, int piece_num, dir d, int distance){
 	
 	// 2) On vérifie que la direction est compatible
 	if(d == RIGHT){
-	  if(!can_move_x(game_piece(g, piece_num))){ // Ensuite si la pièce peut effectuer ce mouvement
+	  if(!can_move_x(game_piece(g, piece_num))){ // Eon vérifie ensuite si la pièce peut effectuer ce mouvement
 	    return false ;
 	  }
 	} else if(d == LEFT){
@@ -191,8 +191,10 @@ bool play_move(game g, int piece_num, dir d, int distance){
 		move_piece(p, d, 1); // A chaque case traversée par la copie de notre pièce,
 		int i = 0;
 		while (i < game_nb_pieces(g)) {
-			if (intersect(p, game_piece(g, i)) && i != piece_num) // on vérifie pour chaque pièce du jeu si elle intersect la copie
+		        if (intersect(p, game_piece(g, i)) && i != piece_num) { // on vérifie pour chaque pièce du jeu si elle intersect la copie
+			        delete_piece(p) ;
 				return false;
+			}
 			i++;
 		}
 	}
