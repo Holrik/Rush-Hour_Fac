@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "piece.h"
+#include "mygame.h"
 #include "game.h"
 
 /**
@@ -143,21 +144,22 @@ static void  real_move(game g, int piece_num, dir d, int distance){
 	g->nb_moves += distance ;
 }
 
-static int somme_target(piece p, int (*f)(piece p),int (*g)(piece p), int distance ) {
-  return end_target(f(p)+ g(p), distance);
-}
-
 static int end_target(int x, int y, int distance){
   return x+y+distance;
 }
 
-bool static verification_one(piece p, dir d, int distance){
+static int somme_target(cpiece p, int (*f)(cpiece p),int (*g)(cpiece p), int distance ) {
+  return end_target(f(p), g(p), distance);
+}
+
+
+bool static verification_one(game g, cpiece p, dir d, int distance){
   	if (d == RIGHT) {
-	  if ( somme_target(p, get_x(), get_width(), distance) >game_width(g) ){
+	  if ( somme_target(p, get_x, get_width, distance) >game_width(g)){
 			return false ;
 	  }
 	}else if (d==LEFT){
-	  if 
+	  if (true){}
 	} 
   return true; 
 }
@@ -166,9 +168,9 @@ bool play_move(game g, int piece_num, dir d, int distance){
   if (distance < 1)
     return false ;
 
-  piece p = game_piece(g, piece_num);
+  cpiece p1 = game_piece(g, piece_num);
 	
-  /*  if(!verification_one(p,d,distance)){
+  /*  if(!verification_one(g,p1,d,distance)){
     return false;
   }
   */	
