@@ -1,18 +1,16 @@
 1) FAIT(99.9% sûr) - Vérifier que toutes les fonctions de piece.c fonctionnent.
    FAIT(presque sûr) - Vérifier que toutes les fonctions de game.c fonctionnent.
    FAIT - Vérifier que test-game.c fonctionne.
+   FAIT - rush_hour_1
+   FAIT - Partie 1
 
 
-2) - Compléter jeu_edition_1.c - UP/LEFT/DOWN/RIGHT
-   FAIT(manque initialisation game) - Modifier le main de jeu_edition_1.c pour le séparer en plusieurs fonctions.
-   - Vérifier que jeu_edition_1 fonctionne.
-
-
-3) PRESQUE FAIT - Générer Makefile qui fait tout ce qui est nécessaire(.o, .a, exécutables), (gérer arborescence)
+2) PRESQUE FAIT - Générer Makefile qui fait tout ce qui est nécessaire(.o, .a, exécutables), (gérer arborescence)
    - Faire CMAKE ?
-
-
-4) PARTIE 1 :
-- Générer bibliothèque libgame.a (implémentant les fonctions décrites dans piece.h et game.h)
-- Générer un exécutable permettant de jouer à Rush Hour dans la console
-- Déposer le code dans Moodle au plus tard ledimanche 6 mars sous la forme d'une archive <grp>_<nom1>_<nom2>_<nom3>.tar.gz
+   
+   
+3) - play_move (game.c) -> Simplification à terminer
+   - 3 niveaux pour Ane Rouge
+   - test_game à faire
+   
+   - Additionnel - COULEURS
