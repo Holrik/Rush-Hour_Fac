@@ -41,15 +41,27 @@ struct game_s{
  * @return a pointer toward the generated game
  */
 game new_game_hr (int nb_pieces, piece *pieces){
-  game g = malloc(sizeof(struct game_s)) ; // On alloue dynamiquement une structure game_s
-  g->pieces = malloc(nb_pieces * sizeof(piece)) ; // On alloue dynamiquement un tableau des pièces
-  if (g == NULL || g->pieces == NULL){ // Il faut vérifier que les allocations se sont faites correctement
+  // On alloue dynamiquement une structure game_s
+  game g = malloc(sizeof(struct game_s)) ;
+  // Il faut vérifier que l'allocation s'est faite correctement
+  if (g == NULL){
     fprintf(stderr, "probleme d'allocation\n");
     return NULL ;
   }
-  for (int i = 0 ; i < nb_pieces ; i++) { // On copie une à une les pièces données en paramètre vers la structure game_s
+  
+  // On alloue dynamiquement un tableau de pièces
+  g->pieces = malloc(nb_pieces * sizeof(piece)) ;
+  // Il faut vérifier que l'allocation s'est faite correctement
+  if (g->pieces == NULL){
+    fprintf(stderr, "probleme d'allocation\n");
+    return NULL ;
+  }
+  
+  // On copie une à une les pièces données en paramètre vers la structure game_s
+  for (int i = 0 ; i < nb_pieces ; i++) {
     *(g->pieces +i) = *(pieces+i) ;
   }
+  
   g->nb_pieces = nb_pieces ;
   g->nb_moves = 0 ;
   return g ;
@@ -72,26 +84,34 @@ void delete_game (game g){
  * @param dst the copied game.
  */
 void copy_game (cgame src, game dst){
-  if (game_nb_pieces(src) != game_nb_pieces(dst)) { // Si src et dst n'avaient pas le même nombre de pièces,
+  // Si src et dst n'avaient pas le même nombre de pièces,
+  if (game_nb_pieces(src) != game_nb_pieces(dst)) {
     int ecart_nb_pieces = game_nb_pieces(src) - game_nb_pieces(dst);
     int nb_pieces = game_nb_pieces(dst);
-    for (int i = 0 ; i < -ecart_nb_pieces ; i++){ // si dst est plus grand que src
+    
+    // Si dst est plus grand que src, on supprime les pièces en trop,
+    for (int i = 0 ; i < -ecart_nb_pieces ; i++){
       delete_piece(*(dst->pieces + nb_pieces + i));
     }
 		
-    dst->pieces = (piece*) realloc(dst->pieces , game_nb_pieces(src) * sizeof(piece)) ; // alors on réalloue de la mémoire pour copier les pièces.
-    if (dst->pieces == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
+    // et on réalloue de la mémoire de la taille de src pour copier ses pièces.
+    dst->pieces = (piece*) realloc(dst->pieces , game_nb_pieces(src) * sizeof(piece)) ;
+    // Il faut vérifier que l'allocation s'est faite correctement
+    if (dst->pieces == NULL){
       fprintf(stderr, "probleme d'allocation\n");
       return ;
     }
 		
-    for (int i = 0 ; i < ecart_nb_pieces ; i++){ // si dst était plus petit que src
-      *(dst->pieces + nb_pieces + i) = new_piece_rh(0, 0, true, true);
+    // Si dst était plus petit que src
+    for (int i = 0 ; i < ecart_nb_pieces ; i++){
+      *(dst->pieces + nb_pieces + i) = new_piece(0, 0, 1, 1, true, true);
     }
   }
+  
   dst->nb_pieces = game_nb_pieces(src) ;
   dst->nb_moves = game_nb_moves(src) ;
-  for (int i = 0 ; i < game_nb_pieces(dst) ; i++) { // On copie une à une les pièces données en paramètre vers la structure game_s
+  // On copie une à une les pièces données en paramètre vers la structure game_s
+  for (int i = 0 ; i < game_nb_pieces(dst) ; i++) {
     copy_piece( game_piece(src, i) , *(dst->pieces+i) ) ;
   }
 }
@@ -110,6 +130,7 @@ int game_nb_pieces(cgame g){
  * @param piece_num the num of the piece. This value must be between 0 and game_nb_pieces(g)-1.
  */
 cpiece game_piece(cgame g, int piece_num){
+  // Il faut vérifier que la pièce existe avant de la renvoyer
   if (piece_num >= game_nb_pieces(g) || piece_num < 0)
     return NULL ;
   return (cpiece) *(g->pieces + piece_num) ;
@@ -121,7 +142,8 @@ cpiece game_piece(cgame g, int piece_num){
  * @return true if the piece number 0 has coordinates (4,3)
  */
 bool game_over_hr(cgame g){
-  return get_x(game_piece(g, 0)) == 4 ; // A moins d'un bug, y vaut forcément 3, car la pièce est Horizontale et initialisée à x=0, y=3.
+  // A moins d'un bug, y vaut forcément 3, car la pièce est Horizontale et initialisée à x=0, y=3.
+  return get_x(game_piece(g, 0)) == 4 ;
 }
 
 
@@ -149,7 +171,7 @@ static int end_target(int x, int y, int distance){
 }
 
 static int somme_target(cpiece p, int (*f)(cpiece p),int (*g)(cpiece p), int distance ) {
-  if (g == null)
+  if (g == NULL)
     return end_target(f(p), 0, distance);
   return end_target(f(p), g(p), distance);
 }
@@ -182,39 +204,36 @@ bool play_move(game g, int piece_num, dir d, int distance){
 
   cpiece p1 = game_piece(g, piece_num);
 	
-    if(!verification_one(g,p1,d,distance)){
-      return false;
-      }
-    /*	
+  if(!verification_one(g,p1,d,distance)){
+    return false;
+  }
+  /*	
   // 1) Vérification que la pièce reste sur le plateau
   if (d == RIGHT) {
-    if (get_x(game_piece(g, piece_num)) + get_width(game_piece(g, piece_num)) + distance >game_width(g) )
-      return false ;
+  if (get_x(game_piece(g, piece_num)) + get_width(game_piece(g, piece_num)) + distance >game_width(g) )
+  return false ;
   } else if (d == LEFT) {
-    if (get_x(game_piece(g, piece_num)) - distance < 0)
-      return false ;
+  if (get_x(game_piece(g, piece_num)) - distance < 0)
+  return false ;
   } else if (d == UP) {
-    if (get_y(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > game_height(g))
-      return false ;
+  if (get_y(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > game_height(g))
+  return false ;
   } else { // d == DOWN
-    if (get_y(game_piece(g, piece_num)) - distance < 0)
-      return false ;
+  if (get_y(game_piece(g, piece_num)) - distance < 0)
+  return false ;
   }
-    */	
+  */
+  
   // 2) On vérifie que la direction est compatible
-  if(d == RIGHT){
-    if(!can_move_x(p1)){ // Eon vérifie ensuite si la pièce peut effectuer ce mouvement
+
+  // Si Droite ou Gauche, on vérifie horizontalement
+  if(d == RIGHT || d == LEFT){
+    if(!can_move_x(p1)){ 
       return false ;
     }
-  } else if(d == LEFT){
-    if(!can_move_x(p1)){
-      return false ;
-    }
-  } else if(d == UP){
-    if(!can_move_y(p1)){
-      return false ;
-    }
-  } else { // d == DOWN
+  // Sinon, verticalement
+  // On suppose que la vérification des directions a été faite correctement
+  } else {
     if(!can_move_y(p1)){
       return false ;
     }
@@ -233,17 +252,18 @@ bool play_move(game g, int piece_num, dir d, int distance){
   copy_piece(game_piece(g, piece_num), p) ;
 
   for (int j = 0; j < distance; j++) {
-    move_piece(p, d, 1); // A chaque case traversée par la copie de notre pièce,
+    // A chaque case traversée par la copie de notre pièce,
+    move_piece(p, d, 1);
     int i = 0;
     while (i < game_nb_pieces(g)) {
-      if (intersect(p, game_piece(g, i)) && i != piece_num) { // on vérifie pour chaque pièce du jeu si elle intersect la copie
+      // On vérifie pour chaque pièce du jeu si elle intersect la copie
+      if (intersect(p, game_piece(g, i)) && i != piece_num) {
 	delete_piece(p) ;
 	return false;
       }
       i++;
     }
   }
-
 
 
   delete_piece(p) ;
@@ -266,13 +286,25 @@ int game_nb_moves(cgame g){
 
 
 game new_game (int width, int height, int nb_pieces, piece *pieces){
-  game g = malloc(sizeof(struct game_s)) ; // On alloue dynamiquement une structure game_s
-  g->pieces = malloc(nb_pieces * sizeof(piece)) ; // On alloue dynamiquement un tableau des pièces
-  if (g == NULL || g->pieces == NULL){ // Il faut vérifier que les allocations se sont faites correctement
+  // On alloue dynamiquement une structure game_s
+  game g = malloc(sizeof(struct game_s)) ;
+  // Il faut vérifier que l'allocation s'est faite correctement
+  if (g == NULL){
     fprintf(stderr, "probleme d'allocation\n");
     return NULL ;
   }
-  for (int i = 0 ; i < nb_pieces ; i++) { // On copie une à une les pièces données en paramètre vers la structure game_s
+  
+  // On alloue dynamiquement un tableau de pièces
+  g->pieces = malloc(nb_pieces * sizeof(piece)) ;
+  // Il faut vérifier que l'allocation s'est faite correctement
+  if (g->pieces == NULL){
+    fprintf(stderr, "probleme d'allocation\n");
+    return NULL ;
+  }
+
+  
+  // On copie une à une les pièces données en paramètre vers la structure game_s
+  for (int i = 0 ; i < nb_pieces ; i++) {
     *(g->pieces +i) = *(pieces+i) ;
   }
   g->nb_pieces = nb_pieces ;
@@ -321,8 +353,9 @@ bool game_over_ar(cgame g){
 }
 
 bool game_over(cgame g, int jeu){
-  // si jeu vaux 1  alors on lance le sélectionneur de niveau
-  // du Rush hour sinon si il vaux 0 c'est celui de l'âne rouge
+  // jeu étant la valeur entrée par le joueur pour choisir le type de jeu,
+  // Si jeu vaut 1 alors on lance le sélectionneur de Game Over du Rush-Hour
+  // Sinon, si il vaut 0, on lance celui de l'Âne Rouge
 
   switch(jeu){
   case 1:
