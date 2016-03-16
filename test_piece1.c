@@ -15,6 +15,8 @@ bool test_equality_int(int expected, int value, char * msg) {
   return expected == value;
 }
 
+//-----------------------------------------------------------------//
+
 /**
  * @brief test if value is equal to expected; if not, displays an error message containing msg to standard error output 
  */
@@ -24,25 +26,33 @@ bool test_equality_bool(bool expected, bool value, char * msg) {
   return expected == value;
 }
 
+//-----------------------------------------------------------------//
+
 piece pieces[NB_PIECES];
 /* configue de test
-.....3
-.....3
-...003
-......
-...122
-...1..
- */
+   .....3
+   .....3
+   ...003
+   ......
+   ...122
+   ...1..
+*/
+
 void set_up() {
   pieces[0] = new_piece(3, 3, 2, 1, true, false);
   pieces[1] = new_piece(3, 0, 1, 2, false, true);
   pieces[2] = new_piece(4, 1, 2, 1, true, false);
   pieces[3] = new_piece(5, 3, 1, 3, false, true);
 }
+
+//-----------------------------------------------------------------//
+
 void tear_down() {
   for (int i = 0 ; i < NB_PIECES; i++)
     delete_piece(pieces[i]);
 }
+
+//-----------------------------------------------------------------//
 
 bool test_new_piece() {
   bool result = true;
@@ -81,12 +91,14 @@ bool test_new_piece() {
   return result;
 }
 
+//-----------------------------------------------------------------//
+
 bool test_intersect() {
   bool result = true;
   set_up();
   
-  for (int i=0; i < NB_PIECES; i++)
-    for (int j =0; j<NB_PIECES; j++) {
+  for (int i = 0; i < NB_PIECES; i++)
+    for (int j = 0; j < NB_PIECES; j++) {
       result = result && test_equality_bool(i==j, intersect(pieces[i], pieces[j]),"intersect");
     }
 
@@ -103,6 +115,8 @@ bool test_intersect() {
   
   return result;
 }
+
+//-----------------------------------------------------------------//
 
 bool test_move() {
   bool result = true;
@@ -149,13 +163,15 @@ bool test_move() {
       else
         result = result && test_equality_int(get_y(pieces[i]),get_y(p),"move DOWN");
 
-
     }
   
   tear_down();
   delete_piece(p);
+  
   return result;
 }
+
+//-----------------------------------------------------------------//
 
 bool test_copy() {
   bool result = true;
@@ -172,10 +188,14 @@ bool test_copy() {
     result = result && test_equality_bool(can_move_x(pieces[i]), can_move_x(p), "copy can_move_x");
     result = result && test_equality_bool(can_move_y(pieces[i]), can_move_y(p), "copy can_move_y");
   }
+  
   tear_down();
   delete_piece(p);
+  
   return result;
 }
+
+//-----------------------------------------------------------------//
 
 int main (int argc, char *argv[])
 {
