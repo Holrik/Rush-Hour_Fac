@@ -9,9 +9,10 @@
    - Faire CMAKE ?
    
    
-3) - play_move (game.c) -> Simplification à terminer
-   - Incrémentation identique dans tous les fichiers
-   - 3 niveaux pour Ane Rouge
-   - test_game à faire
+3) FAIT - play_move (game.c) -> Simplification à terminer
+   FAIT - Incrémentation identique dans tous les fichiers
+   FAIT - 3 niveaux pour Ane Rouge
+   FAIT - test_game à faire
+   - Niveaux à partir d'un fichier
    
    - Additionnel - COULEURS
