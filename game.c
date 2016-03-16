@@ -184,7 +184,7 @@ bool static verification_one(game g, cpiece p, dir d, int distance){
   
   //game_width(g) est la taille du plateau
   if (d == RIGHT) {
-    if (somme_target(p, get_x, get_width, distance) >game_width(g)){
+    if (somme_target(p, get_x, get_width, distance) > game_width(g)){
       return false ;
     }
   }else if (d==LEFT){
@@ -192,7 +192,7 @@ bool static verification_one(game g, cpiece p, dir d, int distance){
       return false;
     }
   }  else if (d == UP) {
-    if (somme_target(p, get_y, get_height, distance) >game_width(g)){
+    if (somme_target(p, get_y, get_height, distance) > game_height(g)){
       return false ;
     }
   } else { // d == DOWN
@@ -205,18 +205,18 @@ bool static verification_one(game g, cpiece p, dir d, int distance){
 
 //Vérifie que la direction est compatible
 static bool verification_two(cpiece p1, dir d){  
-   if(d == RIGHT || d == LEFT){
+  if(d == RIGHT || d == LEFT){
     if(!can_move_x(p1)){ 
       return false ;
     }
-  // Sinon, verticalement
-  // On suppose que la vérification des directions a été faite correctement
+    // Sinon, verticalement
+    // On suppose que la vérification des directions a été faite correctement
   } else {
     if(!can_move_y(p1)){
       return false ;
     }
   }
-   return true;
+  return true;
 }
 
 //Vérifie que la pièce ne croise aucune autres pièces
@@ -335,7 +335,8 @@ int game_height(cgame g){
 int game_square_piece (game g, int x, int y){
   piece p = new_piece(x, y, 1, 1, true, true) ;
   for (int i = 0 ; i < game_nb_pieces(g) ; i++) {
-    if (intersect(p, game_piece(g, i))) { // on vérifie pour chaque pièce du jeu si elle intersect la copie
+    // On vérifie pour chaque pièce du jeu si elle intersect la copie
+    if (intersect(p, game_piece(g, i))) {
       delete_piece(p) ;
       return false;
     }
