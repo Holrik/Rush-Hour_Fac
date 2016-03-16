@@ -178,6 +178,8 @@ static int somme_target(cpiece p, int (*f)(cpiece p),int (*g)(cpiece p), int dis
 
 
 bool static verification_one(game g, cpiece p, dir d, int distance){
+  // 1) Vérification que la pièce reste sur le plateau
+  //game_width(g) est la taille du plateau
   if (d == RIGHT) {
     if (somme_target(p, get_x, get_width, distance) >game_width(g)){
       return false ;
@@ -198,36 +200,9 @@ bool static verification_one(game g, cpiece p, dir d, int distance){
   return true; 
 }
 
-bool play_move(game g, int piece_num, dir d, int distance){
-  if (distance < 1)
-    return false ;
-
-  cpiece p1 = game_piece(g, piece_num);
-	
-  if(!verification_one(g,p1,d,distance)){
-    return false;
-  }
-  /*	
-  // 1) Vérification que la pièce reste sur le plateau
-  if (d == RIGHT) {
-  if (get_x(game_piece(g, piece_num)) + get_width(game_piece(g, piece_num)) + distance >game_width(g) )
-  return false ;
-  } else if (d == LEFT) {
-  if (get_x(game_piece(g, piece_num)) - distance < 0)
-  return false ;
-  } else if (d == UP) {
-  if (get_y(game_piece(g, piece_num)) + get_height(game_piece(g, piece_num)) + distance > game_height(g))
-  return false ;
-  } else { // d == DOWN
-  if (get_y(game_piece(g, piece_num)) - distance < 0)
-  return false ;
-  }
-  */
+static bool verification_two(cpiece p1){
   
-  // 2) On vérifie que la direction est compatible
-
-  // Si Droite ou Gauche, on vérifie horizontalement
-  if(d == RIGHT || d == LEFT){
+   if(d == RIGHT || d == LEFT){
     if(!can_move_x(p1)){ 
       return false ;
     }
@@ -238,16 +213,10 @@ bool play_move(game g, int piece_num, dir d, int distance){
       return false ;
     }
   }
-	
-  /*if (is_horizontal(game_piece(g, piece_num))) {
-    if (d != RIGHT && d != LEFT)
-    return false ;
-    } else {
-    if (d != UP && d != DOWN)
-    return false ;
-    }*/
-	
-  // 3) Vérification des Intersections avec "bool intersect(cpiece p1, cpiece p2)"
+   return true;
+}
+
+static bool verification_three(game g, int piece_num, dir d ,int distance){
   piece p = new_piece(0, 0, 1, 1, true, true) ;
   copy_piece(game_piece(g, piece_num), p) ;
 
@@ -267,6 +236,30 @@ bool play_move(game g, int piece_num, dir d, int distance){
 
 
   delete_piece(p) ;
+  return true;
+}
+
+
+
+bool play_move(game g, int piece_num, dir d, int distance){
+  if (distance < 1)
+    return false ;
+
+  cpiece p1 = game_piece(g, piece_num);
+	
+  if(!verification_one(g,p1,d,distance)){
+    return false;
+  }
+
+  if(!verification_two(p1)){
+    return false;
+  }
+
+	
+  // 3) Vérification des Intersections avec "bool intersect(cpiece p1, cpiece p2)"
+  if(!verification_three(g,piece_num,d,distance)){
+    return false;
+  }
   real_move(g, piece_num, d, distance);
   return true ;
 }
