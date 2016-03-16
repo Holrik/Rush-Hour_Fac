@@ -161,24 +161,27 @@ bool game_over_hr(cgame g){
  * @return true if the move is valid, false otherwise.
  */
 
+//bouge la piece dans la direction et incremente le nombre de mouvements
 static void  real_move(game g, int piece_num, dir d, int distance){
   move_piece((piece)game_piece(g, piece_num), d, distance) ;
   g->nb_moves += distance ;
 }
 
+//retourne la somme des nombres passés en paramètre
 static int end_target(int x, int y, int distance){
   return x+y+distance;
 }
 
+//applique les fonctions passées en paramètre au bonne variable
 static int somme_target(cpiece p, int (*f)(cpiece p),int (*g)(cpiece p), int distance ) {
   if (g == NULL)
     return end_target(f(p), 0, distance);
   return end_target(f(p), g(p), distance);
 }
 
-
+//Vérifie que la pièce reste sur le plateau
 bool static verification_one(game g, cpiece p, dir d, int distance){
-  // 1) Vérification que la pièce reste sur le plateau
+  
   //game_width(g) est la taille du plateau
   if (d == RIGHT) {
     if (somme_target(p, get_x, get_width, distance) >game_width(g)){
@@ -200,8 +203,8 @@ bool static verification_one(game g, cpiece p, dir d, int distance){
   return true; 
 }
 
-static bool verification_two(cpiece p1){
-  
+//Vérifie que la direction est compatible
+static bool verification_two(cpiece p1, dir d){  
    if(d == RIGHT || d == LEFT){
     if(!can_move_x(p1)){ 
       return false ;
@@ -216,6 +219,7 @@ static bool verification_two(cpiece p1){
    return true;
 }
 
+//Vérifie que la pièce ne croise aucune autres pièces
 static bool verification_three(game g, int piece_num, dir d ,int distance){
   piece p = new_piece(0, 0, 1, 1, true, true) ;
   copy_piece(game_piece(g, piece_num), p) ;
@@ -251,7 +255,7 @@ bool play_move(game g, int piece_num, dir d, int distance){
     return false;
   }
 
-  if(!verification_two(p1)){
+  if(!verification_two(p1,d)){
     return false;
   }
 
@@ -340,27 +344,3 @@ int game_square_piece (game g, int x, int y){
   return true ;
 }
 
-
-bool game_over_ar(cgame g){
-  return get_x(game_piece(g, 0)) == 1 && get_y(game_piece(g, 0))==0;
-}
-
-bool game_over(cgame g, int jeu){
-  // jeu étant la valeur entrée par le joueur pour choisir le type de jeu,
-  // Si jeu vaut 1 alors on lance le sélectionneur de Game Over du Rush-Hour
-  // Sinon, si il vaut 0, on lance celui de l'Âne Rouge
-
-  switch(jeu){
-  case 1:
-    return game_over_hr(g);
-    break;
-
-  case 0:
-    return game_over_ar(g);
-    break;
-      
-  default:
-    printf("choix du jeu incorrect");
-    return NULL ;
-  }
-}

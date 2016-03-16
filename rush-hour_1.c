@@ -3,10 +3,11 @@
 #include <string.h>
 #include <ctype.h>
 #include "piece.h"
+#include "mygame.h"
 #include "game.h"
 #include "niveaux.h"
 #include "affichage.h"
-#include "mygame.h"
+
 
 
 int choixJeu(){

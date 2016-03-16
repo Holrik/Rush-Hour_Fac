@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "piece.h"
 
+
 /**
  * @file game.h
  *
@@ -117,5 +118,4 @@ int game_height(cgame g);
  */
 int game_square_piece (game g, int x, int y);
 
-bool game_over(cgame g, int jeu);
 #endif
