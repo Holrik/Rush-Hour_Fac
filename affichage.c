@@ -2,7 +2,7 @@
 #include "game.h"
 
 //génére l'affichage dans la console
-void afficher(cgame g){
+void afficher(cgame g, int jeu){
   int width= game_width(g);
   int height= game_height(g);
   // Crée en mémoire un tableau rempli de -1 par défaut
@@ -42,7 +42,7 @@ void afficher(cgame g){
       }
     }
 	
-    if (i == 3)
+    if (i == 3 && jeu == 1)
       printf(" ->");
     printf("\n");
   }
@@ -50,6 +50,10 @@ void afficher(cgame g){
     
   for(int i=0; i < width ; i++){
     printf("****");
+  }
+  
+  if (jeu == 0) {
+    printf("\n       |SORTIE|\n       |______|");
   }
     
   printf("\n  ");

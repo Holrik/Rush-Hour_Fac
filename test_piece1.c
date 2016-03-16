@@ -37,10 +37,8 @@ piece pieces[NB_PIECES];
    ...122
    ...1..
 */
-<<<<<<< HEAD
 
-=======
->>>>>>> ba68c7eb9f643bbb1fc3cd191efdcc768a38883f
+
 void set_up() {
   pieces[0] = new_piece(3, 3, 2, 1, true, false);
   pieces[1] = new_piece(3, 0, 1, 2, false, true);

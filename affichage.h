@@ -5,7 +5,7 @@
 #include "game.h"
 
 
-void afficher(cgame g);
+void afficher(cgame g, int jeu);
 
 
 #endif

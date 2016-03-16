@@ -102,7 +102,7 @@ int main (){
   int i = choixJeu();
   game g = choixNiveaux(i);
 
-  afficher(g);
+  afficher(g, i);
 
   // Tant que ce n'est pas la fin, on fait le corps du programme
   while (! game_over(g, i))
@@ -113,7 +113,7 @@ int main (){
       
       play_move(g, i_cV, i_cDir, i_cDis);
             
-      afficher(g);
+      afficher(g, i);
         
     }
   printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
