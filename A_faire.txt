@@ -10,6 +10,7 @@
    
    
 3) - play_move (game.c) -> Simplification à terminer
+   - Incrémentation identique dans tous les fichiers
    - 3 niveaux pour Ane Rouge
    - test_game à faire
    
