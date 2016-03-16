@@ -15,13 +15,13 @@ int choixJeu(){
   char nums[4] = "";
   printf("Veuillez entrer le numéro du jeu choisi (0:ANE ROUGE, 1:RUSH_HOUR): ");
 
-  while (fgets(nums,4 , stdin) == NULL
+  while (fgets(nums, 4, stdin) == NULL
 	 || (!isdigit(nums[0]) || nums[1] != '\n') // Ne permet qu'un chiffre  AA
 	 || atoi(nums) < 0
 	 || atoi(nums)>1)
-  {
-	  printf("Raté ! Veuillez entrer un numéro entre 0 et 1:\n");
-  }
+    {
+      printf("\nRaté ! Veuillez entrer un numéro entre 0 et 1: ");
+    }
 
   return atoi(nums);
 }
@@ -36,9 +36,9 @@ int choixVoiture(cgame g){
 	 || (!isdigit(nums[0]) || nums[1] != '\n') // Ne permet qu'un chiffre dans le nombre de la voiture - AA
 	 || atoi(nums) < 0
 	 || atoi(nums) >= game_nb_pieces(g))
-  {
-	  printf("Raté ! Veuillez entrer un numéro entre 0 et %d : ", game_nb_pieces(g)-1);
-  }
+    {
+      printf("\nRaté ! Veuillez entrer un numéro entre 0 et %d : ", game_nb_pieces(g)-1);
+    }
 
   return atoi(nums);
   
@@ -66,7 +66,7 @@ int choixDirection(cgame g){
       return 3;
     }
 
-    printf("Veuillez saisir une direction correcte (UP/DOWN/LEFT/RIGHT) : ");
+    printf("\nVeuillez saisir une direction correcte (UP/DOWN/LEFT/RIGHT) : ");
 
   }
 
@@ -80,20 +80,19 @@ int choixDistance(cgame g, dir d){
 
   printf("Veuillez entrer la distance du déplacement: ");
 
-  // TODO - Vérifier entrées utilisateur
   while(fgets(dists, 4, stdin) == NULL
 	|| (!isdigit(dists[0])
-	|| dists[1] != '\n') // Ne permet qu'un chiffre dans le nombre de la distance (A améliorer ?)
+	    || dists[1] != '\n') // Ne permet qu'un chiffre dans le nombre de la distance (A améliorer ?)
 	|| atoi(dists) < 0
 	|| (atoi(dists) >= game_width(g) && atoi(dists) >=game_height(g) )
 	)
-  {
-    printf("Distance incorrecte. Veuillez entrer une distance de déplacement entre ");
-    if (d==LEFT || d==RIGHT)
-      printf("1 et %d pour un déplacement en longueur: ", game_width(g) );
-    else
-      printf("1 et %d pour un déplacement en hauteur: ", game_height(g) );
-  }
+    {
+      printf("\nDistance incorrecte. Veuillez entrer une distance de déplacement entre ");
+      if (d==LEFT || d==RIGHT)
+	printf("1 et %d pour un déplacement en longueur: ", game_width(g) );
+      else
+	printf("1 et %d pour un déplacement en hauteur: ", game_height(g) );
+    }
   return atoi(dists); 
 }
 
@@ -105,7 +104,7 @@ int main (){
 
   afficher(g);
 
-// Tant que ce n'est pas la fin, on fait le corps du programme
+  // Tant que ce n'est pas la fin, on fait le corps du programme
   while (! game_over(g, i))
     {
       int i_cV = choixVoiture(g) ;
@@ -116,8 +115,8 @@ int main (){
             
       afficher(g);
         
-      }
-   printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
-   delete_game(g) ;
+    }
+  printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
+  delete_game(g) ;
 }
 

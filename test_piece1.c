@@ -26,13 +26,13 @@ bool test_equality_bool(bool expected, bool value, char * msg) {
 
 piece pieces[NB_PIECES];
 /* configue de test
-.....3
-.....3
-...003
-......
-...122
-...1..
- */
+   .....3
+   .....3
+   ...003
+   ......
+   ...122
+   ...1..
+*/
 void set_up() {
   pieces[0] = new_piece(3, 3, 2, 1, true, false);
   pieces[1] = new_piece(3, 0, 1, 2, false, true);
