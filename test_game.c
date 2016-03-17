@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "piece.h"
 #include "game.h"
-#include "mygame.h"
+#include "gameover.h"
 
 // Retourne vrai si le game a bien été crée
 bool test_new_game (){

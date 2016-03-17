@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "piece.h"
-#include "mygame.h"
 #include "game.h"
+#include "gameover.h"
 
 /**
  * @file game.c

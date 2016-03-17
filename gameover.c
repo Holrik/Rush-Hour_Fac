@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "piece.h"
-#include "mygame.h"
 #include "game.h"
+#include "gameover.h"
 
 
 static bool game_over_ar(cgame g){

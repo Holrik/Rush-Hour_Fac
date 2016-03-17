@@ -3,8 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include "piece.h"
-#include "mygame.h"
 #include "game.h"
+#include "gameover.h"
 #include "niveaux.h"
 #include "affichage.h"
 
