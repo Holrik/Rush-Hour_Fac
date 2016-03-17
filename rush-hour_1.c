@@ -112,12 +112,12 @@ int main (){
       int i_cDis = choixDistance(g, i_cDir) ;
       
       if (play_move(g, i_cV, i_cDir, i_cDis))
-	    // Si le mouvement est effectué, on affiche le nouveau plateau.
-		afficher(g, i) ;
-	  else
-	    // Sinon, on affiche un message d'erreur.
-		// NB : La boucle se relance, puisque le Gave Over n'a forcément pas été atteint
-		// puisque aucune pièce n'a été déplacée depuis la précédente boucle.
+	// Si le mouvement est effectué, on affiche le nouveau plateau.
+	afficher(g, i) ;
+      else
+	// Sinon, on affiche un message d'erreur.
+	// NB : La boucle se relance, puisque le Gave Over n'a forcément pas été atteint
+	// puisque aucune pièce n'a été déplacée depuis la précédente boucle.
         printf("Ce mouvement ne peut pas être effectué. Veuillez réessayer.\n");
 	  
     }
