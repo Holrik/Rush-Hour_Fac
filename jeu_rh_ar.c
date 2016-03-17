@@ -30,7 +30,7 @@ int choixVoiture(cgame g){
 
 
   char nums[4] = "";
-  printf("Veuillez entrer le numero de la voiture: ");
+  printf("Veuillez entrer le numero de la pièce à déplacer: ");
 
   while (fgets(nums, 4, stdin) == NULL
 	 || (!isdigit(nums[0]) || nums[1] != '\n') // Ne permet qu'un chiffre dans le nombre de la voiture - AA
