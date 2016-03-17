@@ -12,7 +12,7 @@ DEPS=$(SRCS:.c=.d)
 all: libgame.a test_piece1 test_game rush-hour_1
 
 
-libgame.a: piece.o game.o
+libgame.a: piece.o game.o gameover.o
 	for i in $^ ; do \
 		ar -rs $@ $$i ; \
 	done
@@ -20,7 +20,7 @@ libgame.a: piece.o game.o
 test_piece1: test_piece1.o
 	$(CC) $^ $(LIBDIR) $(LDFLAGS)  -o $@
 
-test_game: test_game.o
+test_game: test_game.o 
 	$(CC) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 

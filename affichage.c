@@ -1,67 +1,67 @@
 #include "affichage.h"
+#include "game.h"
 
 //génére l'affichage dans la console
-void afficher(cgame g){
-    // Crée en mémoire un tableau rempli de -1 par défaut
-    int tab [TAILLE_PLATEAU][TAILLE_PLATEAU];
-    for(int i=0; i < TAILLE_PLATEAU ; i++){
-        for(int j=0; j < TAILLE_PLATEAU ; j++){
-            tab[i][j]= -1;
-        } 
-    }
+void afficher(cgame g, int jeu){
+  int width= game_width(g);
+  int height= game_height(g);
+  // Crée en mémoire un tableau rempli de -1 par défaut
+  int tab [height][width];
+  for(int i=0; i < height ; i++){
+    for(int j=0; j < width ; j++){
+      tab[i][j]= -1;
+    } 
+  }
    
-   // Met les voitures à leurs place dans le tableau
-    for (int l = 0 ; l < game_nb_pieces(g) ; l++){
-         int taille =0;
-	 if(is_horizontal(game_piece(g, l))){
-             taille = get_width(game_piece(g, l));
-        }else{
-            taille = get_height(game_piece(g, l));
-        }
-       for (int k=0; k<taille; k++ ){
-           
-	 if(is_horizontal(game_piece(g, l))){
-	   // On met y puis x car pour chaque ligne tab[y] du tableau on lira
-	   // sa case tab[y][x]
-                tab[get_y(game_piece(g, l))][get_x(game_piece(g, l)) +k]=l;
-         }else{
-                tab[get_y(game_piece(g, l)) +k][get_x(game_piece(g, l))]=l;
-         }
-       }
+  // Met les voitures à leur place dans le tableau
+
+    
+  for (int l = 0 ; l < game_nb_pieces(g) ; l++){
+    int pieceW= get_width(game_piece(g, l));
+    int pieceH= get_height(game_piece(g, l));   
+    for(int i=0; i< pieceW; i++){
+      for(int j=0; j< pieceH; j++){
+	tab[get_y(game_piece(g, l))+j][get_x(game_piece(g, l))+i]=l;
+      }
     }
-    
-     for(int i = TAILLE_PLATEAU -1; i >= 0; i--){
-        printf("   ");
+  } 
+  for(int i = height -1; i >= 0; i--){
+    printf("   ");
 	
-        for(int j=0; j < TAILLE_PLATEAU ; j++){
-            printf("****");
-        }
-	
-        printf("*\n%d: |", i);
-	
-        for(int j=0; j < TAILLE_PLATEAU ; j++){
-            if(tab[i][j]==-1){
-                printf("   |");
-            }else{
-                printf(" %d |", tab[i][j]);
-            }
-        }
-	
-        if (i == 3)
-            printf(" ->");
-        printf("\n");
+    for(int j=0; j < width ; j++){
+      printf("****");
     }
-    printf("   *");
-    
-    for(int i=0; i < TAILLE_PLATEAU ; i++){
-     printf("****");
+	
+    printf("*\n%d: |", i);
+	
+    for(int j=0; j < width ; j++){
+      if(tab[i][j]==-1){
+	printf("   |");
+      }else{
+	printf(" %d |", tab[i][j]);
+      }
     }
+	
+    if (i == 3 && jeu == 1)
+      printf(" ->");
+    printf("\n");
+  }
+  printf("   *");
     
-    printf("\n  ");
+  for(int i=0; i < width ; i++){
+    printf("****");
+  }
+  
+  if (jeu == 0) {
+    printf("\n       |SORTIE|\n       |______|");
+  }
     
-    for(int i = 0; i < TAILLE_PLATEAU ; i++){
-      printf("   %d", i);
-    }
+  printf("\n  ");
     
-    printf("\n\n");
+  for(int i = 0; i < width ; i++){
+    printf("   %d", i);
+  }
+    
+  printf("\n\n");
+
 }
