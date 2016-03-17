@@ -9,7 +9,7 @@ SRCS=$(wildcard *.c) # tous les .c
 OBJS=$(SRCS:.c=.o)
 DEPS=$(SRCS:.c=.d)
 
-all: libgame.a test_piece1 test_game rush-hour_1
+all: libgame.a test_piece1 test_game jeu_rh_ar
 
 
 libgame.a: piece.o game.o gameover.o
@@ -24,7 +24,7 @@ test_game: test_game.o
 	$(CC) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 
-rush-hour_1 : rush-hour_1.c niveaux.o affichage.o
+jeu_rh_ar : jeu_rh_ar.c niveaux.o affichage.o
 	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 %.d: %.c
@@ -34,6 +34,6 @@ rush-hour_1 : rush-hour_1.c niveaux.o affichage.o
 
 .PHONY: clean
 clean:
-	rm -f test_piece1 test_game rush-hour_1
+	rm -f test_piece1 test_game jeu_rh_ar
 	rm -f libgame.a
 	rm -f $(DEPS) $(OBJS)  *~
