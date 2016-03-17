@@ -37,6 +37,8 @@ void afficher(cgame g, int jeu){
     for(int j=0; j < width ; j++){
       if(tab[i][j]==-1){
 	printf("   |");
+      }else if(tab[i][j]==0){
+	  printf("\e[0;31m %d \e[0m|", tab[i][j]);
       }else{
 	printf(" %d |", tab[i][j]);
       }
