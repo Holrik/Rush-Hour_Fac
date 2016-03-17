@@ -9,7 +9,5 @@ Groupe A2_E - IN400A2
 - CHENE Emmanuel/Echene
 
 ####Options de compilation
-
--Pour compiler tous les fichiers nécessaires au jeu : `make`
-
--Pour les effacer : `make clean`
+- Pour compiler tous les fichiers nécessaires au jeu : `make`
+- Pour les effacer : `make clean`
