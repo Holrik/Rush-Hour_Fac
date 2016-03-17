@@ -149,6 +149,7 @@ game choixNiveauxAR(){
     
   default:
     printf("Niveau incorrect");
+    return NULL ;
   }
 
   game g = new_game (4,5, nb_pieces, p);
