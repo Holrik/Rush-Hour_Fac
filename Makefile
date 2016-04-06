@@ -1,7 +1,7 @@
 ROOT = .
 LIBS = game
 LIBDIR = -L $(ROOT)
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -ftest-coverage -fprofile-arcs
 CPPFLAGS = -I$(ROOT)
 LDFLAGS = -lgame
 

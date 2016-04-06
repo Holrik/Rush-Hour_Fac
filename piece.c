@@ -43,7 +43,6 @@ struct piece_s {
 // Version 1
 piece new_piece_rh (int x, int y, bool small, bool horizontal){
   int taille = 2 ;
-  bool move_x = horizontal ;
   if (!small) {
     taille = 3 ;
   }
