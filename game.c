@@ -41,30 +41,7 @@ struct game_s{
  * @return a pointer toward the generated game
  */
 game new_game_hr (int nb_pieces, piece *pieces){
-  // On alloue dynamiquement une structure game_s
-  game g = malloc(sizeof(struct game_s)) ;
-  // Il faut vérifier que l'allocation s'est faite correctement
-  if (g == NULL){
-    fprintf(stderr, "probleme d'allocation\n");
-    return NULL ;
-  }
-  
-  // On alloue dynamiquement un tableau de pièces
-  g->pieces = malloc(nb_pieces * sizeof(piece)) ;
-  // Il faut vérifier que l'allocation s'est faite correctement
-  if (g->pieces == NULL){
-    fprintf(stderr, "probleme d'allocation\n");
-    return NULL ;
-  }
-  
-  // On copie une à une les pièces données en paramètre vers la structure game_s
-  for (int i = 0 ; i < nb_pieces ; i++) {
-    *(g->pieces +i) = *(pieces+i) ;
-  }
-  
-  g->nb_pieces = nb_pieces ;
-  g->nb_moves = 0 ;
-  return g ;
+  return new_game(6, 6, nb_pieces, pieces) ;
 }
 
 /**

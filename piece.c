@@ -42,22 +42,14 @@ struct piece_s {
  */
 // Version 1
 piece new_piece_rh (int x, int y, bool small, bool horizontal){
-  /*
-    piece p = malloc(sizeof(struct piece_s)); // On alloue dynamiquement une structure piece_s
-	
-    if (p == NULL){ // Il faut vérifier que l'allocation s'est faite correctement
-    fprintf(stderr, "probleme d'allocation\n");
-    return NULL ;
-    }
-	
-    // Tout s'est bien passé, on définit donc la pièce
-    p->x = x ;
-    p->y = y ;
-    p->small = small;
-    p->horizontal = horizontal;
-  */	
-  return NULL ;
-
+  int taille = 2 ;
+  bool move_x = horizontal ;
+  if (!small) {
+    taille = 3 ;
+  }
+  if(horizontal)
+    return new_piece(x, y, taille, 1, true, false) ;
+  return new_piece(x, y, 1, taille, false, true) ;
 }
 
 //-----------------------------------------------------------------//

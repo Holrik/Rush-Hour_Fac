@@ -19,9 +19,9 @@ int choixJeu(){
 	 || (!isdigit(nums[0]) || nums[1] != '\n') // Ne permet qu'un chiffre  AA
 	 || atoi(nums) < 0
 	 || atoi(nums)>1)
-    {
-      printf("\nRaté ! Veuillez entrer un numéro entre 0 et 1: ");
-    }
+  {
+    printf("\nRaté ! Veuillez entrer un numéro entre 0 et 1: ");
+  }
 
   return atoi(nums);
 }
