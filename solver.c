@@ -6,21 +6,28 @@
 #include "game.h"
 #include "gameover.h"
 
-struct instance_Du_Jeu{
-  instance pere ;
-  game jeu_instance ;
-  instance* fils ;
+struct configuration_Du_Jeu{
+  configuration pere ;
+  game jeu_config ;
+  configuration* fils ;
 };
 
-typedef struct instance_Du_Jeu* instance ;
+typedef struct configuration_Du_Jeu* configuration ;
 
 
-static instance instanceInitiale(game g) {
-  instance ins = malloc(sizeof(struct instance_Du_Jeu));
-  ins->pere = NULL ;
-  ins->fils = NULL ;
+static configuration configurationInitiale(game g) {
+  configuration conf = malloc(sizeof(struct configuration_Du_Jeu));
+  conf->pere = NULL ;
+  conf->fils = NULL ;
   game tmp = new_game(game_width(g), game_height(g), 0, NULL) ;
   copy_game(g, tmp) ;
-  ins->jeu_instance = tmp ;
-  return ins ;
+  conf->jeu_config = tmp ;
+  return conf ;
+}
+
+
+int randomSolver(game g) {
+  while (!gameover)
+    play_move(g, rand()%game_nb_pieces(g), rand()%4, 1) ;
+  return game_nb_moves(g);
 }
