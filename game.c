@@ -49,6 +49,8 @@ game new_game_hr (int nb_pieces, piece *pieces){
  * @param g the game to destroy
  */
 void delete_game (game g){
+  if (g == NULL)
+    return ;
   for (int i = 0 ; i < game_nb_pieces(g) ; i++)
     delete_piece(*(g->pieces+i)) ;
   free(g->pieces) ;
