@@ -6,7 +6,7 @@
 int creation_interface(cgame g){
 
   // création de la surface
- SDL_Surface surf =  SDL_CreateRGBSurface(0, 640, 480, 32, 0, 0, 0, 0);
+ SDL_Surface *surf =  SDL_CreateRGBSurface(0, 640, 480, 32, 0, 0, 0, 0);
 
     SDL_Rect position;
 
@@ -19,24 +19,24 @@ int creation_interface(cgame g){
                                                                   480,
 			       SDL_WINDOW_SHOWN);
     //création du tableau de suface contenant toutes les surfaces des pieces
-    SDL_Surface *sPieces= {NULL};
-    sPieces = malloc(g->nb_pieces * sizeof(SDL_Surface));
+    SDL_Surface **sPieces= {NULL};
+    sPieces =(SDL_Surface**) malloc(game_nb_pieces(g) * sizeof(SDL_Surface*));
     if(sPieces==NULL){
       return EXIT_FAILURE;
     }
     //remplissage
-    for (i = 0 ; i < g->nb_pieces ; i++){
+    for (i = 0 ; i <game_nb_pieces(g) ; i++){
       sPieces[i]= SDL_CreateRGBSurface(0, 640, 480, 32, 50, 50,50, 0);
     }
 
     //affectation des surfaces à la surface mère
-    for (i = 0 ; i < g->nb_pieces ; i++)
+    for (i = 0 ; i < game_nb_pieces(g) ; i++)
 
     {
       
-      position.x =g->height- g->pieces[i]->x; // Les lignes sont à gauche (abscisse de 0)
+      position.x =game_height(g)- get_x(game_piece(g,i)); // Les lignes sont à gauche (abscisse de 0)
 
-      position.y =g->width - g->pieces[i]->y; // La position verticale dépend du numéro de la ligne
+      position.y = game_width(g) -get_y(game_piece(g,i)); // La position verticale dépend du numéro de la ligne
 
       if(i==0){
 	SDL_FillRect(sPieces[i], NULL, SDL_MapRGB(surf->format,255 ,64,64));
@@ -53,7 +53,7 @@ int creation_interface(cgame g){
     SDL_RenderCopy(pRenderer, pTexture, NULL,NULL);
     SDL_RenderPresent(pRenderer);
 
-    for (i = 0 ; i <= g->nb_pieces ; i++) //free des surfaces
+    for (i = 0 ; i < game_nb_pieces(g) ; i++) //free des surfaces
         SDL_FreeSurface(sPieces[i]);
 
     SDL_Quit();
