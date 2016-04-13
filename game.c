@@ -89,6 +89,8 @@ void copy_game (cgame src, game dst){
   
   dst->nb_pieces = game_nb_pieces(src) ;
   dst->nb_moves = game_nb_moves(src) ;
+  dst->width = game_width(src) ;
+  dst->height = game_height(src) ;
   // On copie une à une les pièces données en paramètre vers la structure game_s
   for (int i = 0 ; i < game_nb_pieces(dst) ; i++) {
     copy_piece( game_piece(src, i) , *(dst->pieces+i) ) ;

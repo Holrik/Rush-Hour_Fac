@@ -1,7 +1,7 @@
 ROOT = .
 LIBS = game
 LIBDIR = -L $(ROOT)
-CFLAGS = -g -Wall -ftest-coverage -fprofile-arcs
+CFLAGS = -g -Wall
 CPPFLAGS = -I$(ROOT)
 LDFLAGS = -lgame
 
@@ -18,10 +18,10 @@ libgame.a: piece.o game.o gameover.o
 	done
 
 test_piece1: test_piece1.o
-	$(CC) $^ $(LIBDIR) $(LDFLAGS)  -o $@
+	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS)  -o $@
 
 test_game: test_game.o 
-	$(CC) $^ $(LIBDIR) $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 
 jeu_rh_ar : jeu_rh_ar.c niveaux.o affichage.o
@@ -30,9 +30,15 @@ jeu_rh_ar : jeu_rh_ar.c niveaux.o affichage.o
 %.d: %.c
 	$(CC) -MM $(CPPFLAGS) $< > $@
 
+
 -include $(DEPS)
 
-.PHONY: clean
+.PHONY: clean test
+
+test: libgame.a test_piece1 test_game
+	./test_piece1
+	./test_game
+
 clean:
 	rm -f test_piece1 test_game jeu_rh_ar
 	rm -f libgame.a
