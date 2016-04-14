@@ -19,9 +19,9 @@ int choixJeu(){
 	 || (!isdigit(nums[0]) || nums[1] != '\n') // Ne permet qu'un chiffre  AA
 	 || atoi(nums) < 0
 	 || atoi(nums)>1)
-  {
-    printf("\nRaté ! Veuillez entrer un numéro entre 0 et 1: ");
-  }
+    {
+      printf("\nRaté ! Veuillez entrer un numéro entre 0 et 1: ");
+    }
 
   return atoi(nums);
 }
@@ -97,31 +97,47 @@ int choixDistance(cgame g, dir d){
 }
 
 //-----------------------------------------------------------------//
+//-----------------------------------------------------------------//
 
-int main (){
-  int i = choixJeu();
-  game g = choixNiveaux(i);
+int main (int argc, char *argv[]){
+  
+  char* typeJeu = argv[1];
 
-  afficher(g, i);
+  int jeu = 1;
 
-  // Tant que ce n'est pas la fin, on fait le corps du programme
-  while (! game_over(g, i))
-    {
-      int i_cV = choixVoiture(g) ;
-      int i_cDir = choixDirection(g) ;
-      int i_cDis = choixDistance(g, i_cDir) ;
-      
-      if (play_move(g, i_cV, i_cDir, i_cDis))
-	// Si le mouvement est effectué, on affiche le nouveau plateau.
-	afficher(g, i) ;
-      else
-	// Sinon, on affiche un message d'erreur.
-	// NB : La boucle se relance, puisque le Gave Over n'a forcément pas été atteint
-	// puisque aucune pièce n'a été déplacée depuis la précédente boucle.
-        printf("Ce mouvement ne peut pas être effectué. Veuillez réessayer.\n");
-	  
+  if (!strcmp(typeJeu, "a") || !strcmp(typeJeu, "r")) {
+
+    if (!strcmp(typeJeu, "a")) {
+      jeu = 0;
     }
-  printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
-  delete_game(g) ;
+  
+    game g = new_game_from_file(typeJeu, argv[2]);
+  
+    afficher(g, jeu);
+
+    // Tant que ce n'est pas la fin, on fait le corps du programme
+    while (! game_over(g, jeu))
+      {
+	int i_cV = choixVoiture(g) ;
+	int i_cDir = choixDirection(g) ;
+	int i_cDis = choixDistance(g, i_cDir) ;
+      
+	if (play_move(g, i_cV, i_cDir, i_cDis))
+	  // Si le mouvement est effectué, on affiche le nouveau plateau.
+	  afficher(g, jeu) ;
+	else
+	  // Sinon, on affiche un message d'erreur.
+	  // NB : La boucle se relance, puisque le Gave Over n'a forcément pas été atteint
+	  // puisque aucune pièce n'a été déplacée depuis la précédente boucle.
+	  printf("Ce mouvement ne peut pas être effectué. Veuillez réessayer.\n");
+      }
+    printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
+    delete_game(g) ;
+    
+  } else {
+
+    printf("Le type de jeu entré est incorrect\n");
+
+  }
 }
 

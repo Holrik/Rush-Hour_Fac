@@ -1,3 +1,4 @@
+#define TAILLE_MAX 1000
 #include "niveaux.h"
 
 
@@ -178,4 +179,61 @@ game choixNiveaux(int jeu){
     printf("choix du jeu incorrect");
     return NULL ;
   }
+}
+
+//--------------------------------------------------------------------//
+//--------------------------------------------------------------------//
+
+piece* new_pieces_array(FILE* fichier, int nb_pieces) {
+
+  piece* p = NULL;
+  p = realloc(p, nb_pieces*sizeof(piece));
+  int scanPiece[6] = {0};
+  
+  for (int i = 0; i < nb_pieces; i++) {
+
+    fscanf(fichier, "%d %d %d %d %d %d",
+	   scanPiece,
+	   scanPiece+1,
+	   scanPiece+2,
+	   scanPiece+3,
+	   scanPiece+4,
+	   scanPiece+5);
+
+    *(p+i) = new_piece(scanPiece[0], scanPiece[1], scanPiece[2], scanPiece[3], scanPiece[4], scanPiece[5]);
+      
+  }
+
+  return p;
+}
+
+game new_game_from_file(char* typeGame, char* fichier) {
+
+  FILE* file = fopen(fichier, "r");
+  
+  int scanGame[2] = {0};
+  int nb_pieces = 0;
+  game g = NULL;
+
+  if (file != NULL) {
+
+    fscanf(file, "%d %d", scanGame, scanGame+1);
+    
+    fscanf(file, "%d", &nb_pieces);
+
+    g = new_game(scanGame[0], scanGame[1], nb_pieces, new_pieces_array(file, nb_pieces));
+
+    fclose(file);
+    
+    return g;
+
+  } else {
+        
+    printf("Impossible de lire le fichier");
+    
+  }
+
+  fclose(file);
+
+  return 0;
 }

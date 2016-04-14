@@ -1,10 +1,12 @@
 #include "affichage.h"
 #include "game.h"
+#include <string.h>
 
 //génére l'affichage dans la console
 void afficher(cgame g, int jeu){
   int width= game_width(g);
   int height= game_height(g);
+  
   // Crée en mémoire un tableau rempli de -1 par défaut
   int tab [height][width];
   for(int i=0; i < height ; i++){
@@ -14,8 +16,6 @@ void afficher(cgame g, int jeu){
   }
    
   // Met les voitures à leur place dans le tableau
-
-    
   for (int l = 0 ; l < game_nb_pieces(g) ; l++){
     int pieceW= get_width(game_piece(g, l));
     int pieceH= get_height(game_piece(g, l));   
@@ -38,7 +38,7 @@ void afficher(cgame g, int jeu){
       if(tab[i][j]==-1){
 	printf("   |");
       }else if(tab[i][j]==0){
-	  printf("\e[0;31m %d \e[0m|", tab[i][j]);
+	printf("\e[0;31m %d \e[0m|", tab[i][j]);
       }else{
 	printf(" %d |", tab[i][j]);
       }

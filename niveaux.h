@@ -9,5 +9,6 @@
 game choixNiveaux(int jeu);
 game choixNiveauxRH();
 game choixNiveauxAR();
+game new_game_from_file(char* typeJeu, char* fichier);
 
 #endif
