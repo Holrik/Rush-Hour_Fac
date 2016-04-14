@@ -100,44 +100,46 @@ int choixDistance(cgame g, dir d){
 //-----------------------------------------------------------------//
 
 int main (int argc, char *argv[]){
+  if (argc != 3) {
+    printf("Mauvais nombre d'arguments : Il en faut deux !\n");
+    return EXIT_FAILURE ;
+  }
   
   char* typeJeu = argv[1];
 
   int jeu = 1;
 
-  if (!strcmp(typeJeu, "a") || !strcmp(typeJeu, "r")) {
-
-    if (!strcmp(typeJeu, "a")) {
-      jeu = 0;
-    }
-  
-    game g = new_game_from_file(typeJeu, argv[2]);
-  
-    afficher(g, jeu);
-
-    // Tant que ce n'est pas la fin, on fait le corps du programme
-    while (! game_over(g, jeu))
-      {
-	int i_cV = choixVoiture(g) ;
-	int i_cDir = choixDirection(g) ;
-	int i_cDis = choixDistance(g, i_cDir) ;
-      
-	if (play_move(g, i_cV, i_cDir, i_cDis))
-	  // Si le mouvement est effectué, on affiche le nouveau plateau.
-	  afficher(g, jeu) ;
-	else
-	  // Sinon, on affiche un message d'erreur.
-	  // NB : La boucle se relance, puisque le Gave Over n'a forcément pas été atteint
-	  // puisque aucune pièce n'a été déplacée depuis la précédente boucle.
-	  printf("Ce mouvement ne peut pas être effectué. Veuillez réessayer.\n");
-      }
-    printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
-    delete_game(g) ;
-    
-  } else {
-
+  if (strcmp(typeJeu, "a") && strcmp(typeJeu, "r")) {
     printf("Le type de jeu entré est incorrect\n");
-
+    return EXIT_FAILURE ;
   }
+
+  if (!strcmp(typeJeu, "a")) {
+    jeu = 0;
+  }
+  
+  game g = new_game_from_file(typeJeu, argv[2]);
+  
+  afficher(g, jeu);
+
+  // Tant que ce n'est pas la fin, on fait le corps du programme
+  while (! game_over(g, jeu))
+    {
+      int i_cV = choixVoiture(g) ;
+      int i_cDir = choixDirection(g) ;
+      int i_cDis = choixDistance(g, i_cDir) ;
+      
+      if (play_move(g, i_cV, i_cDir, i_cDis))
+	// Si le mouvement est effectué, on affiche le nouveau plateau.
+	afficher(g, jeu) ;
+      else
+	// Sinon, on affiche un message d'erreur.
+	// NB : La boucle se relance, puisque le Gave Over n'a forcément pas été atteint
+	// puisque aucune pièce n'a été déplacée depuis la précédente boucle.
+	printf("Ce mouvement ne peut pas être effectué. Veuillez réessayer.\n");
+    }
+  printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
+  delete_game(g) ;
+  
 }
 

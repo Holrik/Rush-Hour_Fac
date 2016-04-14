@@ -3,7 +3,7 @@
 
 
 
-game choixNiveauxRH(){
+/*game choixNiveauxRH(){
 
   char s_niv[4] = "";
 
@@ -179,7 +179,7 @@ game choixNiveaux(int jeu){
     printf("choix du jeu incorrect");
     return NULL ;
   }
-}
+}*/
 
 //--------------------------------------------------------------------//
 //--------------------------------------------------------------------//
