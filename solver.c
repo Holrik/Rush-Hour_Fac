@@ -106,7 +106,7 @@ static void delete_config_Array(config* c_array, int taille) {
 // Resizes c_played_moves if the number of configs inside is equal its size
 static void c_played_resize() {
   if (c_played_actual == c_played_size) {
-    c_played_size = (c_played_size +1) *2 ;
+    c_played_size = c_played_size*2 +1 ;
     c_played_moves = realloc(c_played_moves, c_played_size*sizeof(config)) ;
   }
 }
@@ -173,8 +173,9 @@ static bool games_are_equals(cgame g1, cgame g2) {
 
 // We determine the possible fils depending on each piece of the game and its movements
 // And we check after each movement if the state of the new game is different of moves already dones
-// TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-static void determine_fils(config c) {
+
+// Version find_best_path of the function(uses the "fils" array)
+static void best_determine_fils(config c) {
   game g = c->jeu_config ;
   for(int i = 0 ; i < game_nb_pieces(g) ; i++) {
     // We do it once per direction, the directions being defined from 0 to 3
@@ -183,12 +184,36 @@ static void determine_fils(config c) {
       copy_game(g, g_tmp) ;
       bool b = play_move(g_tmp, i, d, 1);
       for (int i = 0 ; b && i < c_played_actual ; i++) {
-	b = b && !(games_are_equals( g_tmp, config_game(*(c_played_moves +i)) )) ;
+        b = b && !(games_are_equals( g_tmp, config_game(*(c_played_moves +i)) )) ;
       }
       if (b) {
-	config c_tmp = new_config(g_tmp, config_game_type(c));
-	c_played_add_c(c_tmp) ;
-	config_add_fils(c, c_tmp);
+        config c_tmp = new_config(g_tmp, config_game_type(c));
+        c_played_add_c(c_tmp) ;
+        config_add_fils(c, c_tmp);
+      }
+    }
+  }
+}
+
+
+// We determine the possible fils depending on each piece of the game and its movements
+// And we check after each movement if the state of the new game is different of moves already dones
+
+// Version find_shortest_path of the function(doesn't use the "fils" array)
+static void best_determine_fils(config c) {
+  game g = c->jeu_config ;
+  for(int i = 0 ; i < game_nb_pieces(g) ; i++) {
+    // We do it once per direction, the directions being defined from 0 to 3
+    for( int d = 0 ; d < 4 ; d++) {
+      game g_tmp = new_game(game_width(g), game_height(g), 0, NULL) ;
+      copy_game(g, g_tmp) ;
+      bool b = play_move(g_tmp, i, d, 1);
+      for (int i = 0 ; b && i < c_played_actual ; i++) {
+        b = b && !(games_are_equals( g_tmp, config_game(*(c_played_moves +i)) )) ;
+      }
+      if (b) {
+        config c_tmp = new_config(g_tmp, config_game_type(c));
+        c_played_add_c(c_tmp) ;
       }
     }
   }
@@ -202,7 +227,7 @@ static void determine_fils(config c) {
  * Delete all the other config*, and return the best one, or, if there is no "best", a NULL
 */
 static config* find_best_path(config c, int nb_moves) {
-  printf("best_find_path, %d\n", nb_moves);
+  printf("find_best_path, %d\n", nb_moves);
   if (c == NULL)
     return NULL ;
   
@@ -215,7 +240,7 @@ static config* find_best_path(config c, int nb_moves) {
     // At the end of this loop, c = NULL
     return path_taken ;
   }
-  determine_fils(c);
+  best_determine_fils(c);
   
   int nbF = config_nb_fils(c) ;
   if (nbF == 0)
@@ -271,9 +296,42 @@ static void afficher_game(cgame g) {
 
 int solver_best_path(game g, int game_type) {
   c_played_moves = new_config_Array(100) ;
-  config c_actuelle = new_config(g, game_type) ;
+  config c_beginning = new_config(g, game_type) ;
   c_played_add_c(c_actuelle);
   config* c_resultat = find_best_path(c_actuelle, 0) ;
+  afficher_game(config_game(*(c_resultat -1+sizeof(c_resultat)/sizeof(config))));
+  return sizeof(c_resultat)/sizeof(config) ;
+}
+
+
+config* find_shortest_path(void) {
+  // Variable that points to the next config to read in c_played_moves.
+  // played = c_played_moves +i
+  config* played = c_played_moves ;
+  while(played != NULL && *played != NULL
+      && !has_game_over(*played)) {
+    determine_fils(*played);
+	played++ ;
+  }
+  // Copy this part from find_best_path
+  if (played == NULL || *played == NULL)
+    return NULL;
+  
+  config* path_taken = new_config_Array(game_nb_moves(config_game(*played)) +1) ;
+  for (int i = nb_moves ; i >= 0 ; i++) {
+    *(path_taken + i) = c ;
+    c = c->pere ;
+  }
+  // At the end of this loop, c = NULL
+  return path_taken ;
+}
+
+
+int solver_shortest_path(game g, int game_type) {
+  c_played_moves = new_config_Array(100) ;
+  c_played_add_c(new_config(g, game_type));
+  
+  config* c_resultat = find_shortest_path() ;
   afficher_game(config_game(*(c_resultat -1+sizeof(c_resultat)/sizeof(config))));
   return sizeof(c_resultat)/sizeof(config) ;
 }
@@ -299,7 +357,7 @@ int main(int argc, char *argv[]){
   
   game g = new_game_from_file(typeJeu, argv[2]);
 
-  printf("%d\n", solver_best_path(g, jeu));
+  printf("%d\n", solver_shortest_path(g, jeu));
   return EXIT_SUCCESS ;
   
 }
