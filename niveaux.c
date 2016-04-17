@@ -235,5 +235,5 @@ game new_game_from_file(char* typeGame, char* fichier) {
 
   fclose(file);
 
-  return 0;
+  return NULL;
 }

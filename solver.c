@@ -163,8 +163,8 @@ static void shortest_determine_fils(config c) {
         config c_tmp = new_config(g_tmp, config_game_type(c));
         c_played_add_c(c_tmp) ;
         c_tmp->pere = c ;
-      } else
-        delete_game(g_tmp);
+      }
+      delete_game(g_tmp);
     }
   }
 }
@@ -216,6 +216,7 @@ int solver_shortest_path(game g, int game_type) {
   afficher(config_game(*(c_resultat +nb_moves)), game_type);
   
   delete_config_Array(c_played_moves, c_played_size);
+  free(c_resultat);
   return nb_moves+1 ;
 }
 
@@ -240,7 +241,8 @@ int main(int argc, char *argv[]){
   
   game g = new_game_from_file(typeJeu, argv[2]);
 
-  printf("%d\n", solver_shortest_path(g, jeu));
+  printf("Nombre de coups optimal pour gagner avec cette configuration initiale : %d\n\n", solver_shortest_path(g, jeu));
+  delete_game(g);
   return EXIT_SUCCESS ;
   
 }
