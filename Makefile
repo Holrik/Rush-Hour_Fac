@@ -9,7 +9,7 @@ SRCS=$(wildcard *.c) # tous les .c
 OBJS=$(SRCS:.c=.o)
 DEPS=$(SRCS:.c=.d)
 
-all: libgame.a test_piece1 test_game jeu_rh_ar
+all: libgame.a test_piece1 test_game jeu_rh_ar solver
 
 
 libgame.a: piece.o game.o gameover.o
@@ -24,7 +24,11 @@ test_game: test_game.o
 	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 
-jeu_rh_ar : jeu_rh_ar.c niveaux.o affichage.o
+jeu_rh_ar: jeu_rh_ar.c niveaux.o affichage.o
+	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS) -o $@
+
+
+solver: solver.o niveaux.o affichage.o
 	$(CC) $(CFLAGS) $^ $(LIBDIR) $(LDFLAGS) -o $@
 
 %.d: %.c
@@ -40,6 +44,6 @@ test: libgame.a test_piece1 test_game
 	./test_game
 
 clean:
-	rm -f test_piece1 test_game jeu_rh_ar
+	rm -f test_piece1 test_game jeu_rh_ar solver
 	rm -f libgame.a
 	rm -f $(DEPS) $(OBJS)  *~

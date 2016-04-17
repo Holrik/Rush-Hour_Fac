@@ -5,6 +5,7 @@
 #include "piece.h"
 #include "game.h"
 #include "gameover.h"
+#include "affichage.h"
 #include "niveaux.h"
 
 // Cell of a tree : Each cell has 1 père(father) ans nb_fils fils(sons), and corresponds to one particular configuration of a game
@@ -17,9 +18,15 @@ struct configuration_Du_Jeu{
 };
 
 
+// Array of the moves already played by the solver
+// c_played_size is the length of the full array,
+// and c_played_actual is the last added config in the array
 config* c_played_moves ;
 int c_played_size ;
 int c_played_actual ;
+
+// find_shortest_path defines and uses it and solver_shortest_path uses it too
+int nb_moves ;
 
 
 // Random mode of the solver : Should work somehow but the code's performance is disgusting
@@ -61,8 +68,6 @@ static config new_config(cgame g, int game_type) {
   return c ;
 }
 
-static void delete_config_Array(config* c_array, int taille);
-
 // Deletes the config given as a parameter and all the configs under it, in recursion with delete_config_Array
 static void delete_config(config c) {
   if (c == NULL)
@@ -70,7 +75,6 @@ static void delete_config(config c) {
   
   delete_game(c->jeu_config) ;
   
-  free(c->pere);
   free(c);
 }
 
@@ -159,22 +163,14 @@ static void shortest_determine_fils(config c) {
         config c_tmp = new_config(g_tmp, config_game_type(c));
         c_played_add_c(c_tmp) ;
         c_tmp->pere = c ;
-      }
+      } else
+        delete_game(g_tmp);
     }
   }
 }
 
 
-/* 
- * If it has a Game Over, return the moves done in a config*.
- * If no, check its fils
- * For all of the fils, find the one with the shortest path
- * Delete all the other config*, and return the best one, or, if there is no "best", a NULL
-*/
-
-
-
-static void afficher_piece(cpiece p) {
+/*static void afficher_piece(cpiece p) {
   printf("{ x=%d, y=%d, width=%d, height=%d }\n", get_x(p), get_y(p), get_width(p), get_height(p));
 }
 static void afficher_game(cgame g) {
@@ -184,30 +180,23 @@ static void afficher_game(cgame g) {
     afficher_piece(game_piece(g, i));
     printf("\n}\n");
   }
-}
+}*/
 
 
 config* find_shortest_path(void) {
   // Variable that points to the next config to read in c_played_moves.
-  // played = c_played_moves +i
   int i_actual = 0 ;
-  //config* played = c_played_moves ;
-  while(//played != NULL && *played != NULL
-      i_actual < c_played_actual && *(c_played_moves +i_actual) != NULL
-      //&& !has_game_over(*played)) {
+  // Until we find a game_over or there is no more playable move, we search the next possible moves
+  while(i_actual < c_played_actual && *(c_played_moves +i_actual) != NULL
       && !has_game_over(*(c_played_moves +i_actual))) {
-    //shortest_determine_fils(*played);
     shortest_determine_fils(*(c_played_moves +i_actual)) ;
-    //played++ ;
     i_actual++ ;
   }
-  // Copy this part from find_best_path
-  //if (played == NULL || *played == NULL)
   if (i_actual >= c_played_actual || *(c_played_moves +i_actual) == NULL)
     return NULL;
   
   config c_tmp = *(c_played_moves +i_actual) ;
-  int nb_moves = game_nb_moves(config_game(c_tmp)) ;
+  nb_moves = game_nb_moves(config_game(c_tmp)) ;
   config* path_taken = new_config_Array(nb_moves) ;
   for (int i = nb_moves ; i >= 0 ; i--) {
     *(path_taken + i) = c_tmp ;
@@ -223,11 +212,11 @@ int solver_shortest_path(game g, int game_type) {
   c_played_add_c(new_config(g, game_type));
   
   config* c_resultat = find_shortest_path() ;
-  int i = 0 ;
-  while (*(c_resultat +i) != NULL)
-    i++;
-  afficher_game(config_game(*(c_resultat +i-1)));
-  return i ;
+
+  afficher(config_game(*(c_resultat +nb_moves)), game_type);
+  
+  delete_config_Array(c_played_moves, c_played_size);
+  return nb_moves+1 ;
 }
 
 
