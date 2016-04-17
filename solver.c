@@ -170,19 +170,6 @@ static void shortest_determine_fils(config c) {
 }
 
 
-/*static void afficher_piece(cpiece p) {
-  printf("{ x=%d, y=%d, width=%d, height=%d }\n", get_x(p), get_y(p), get_width(p), get_height(p));
-}
-static void afficher_game(cgame g) {
-  printf("{ nb_moves=%d, pieces:\n", game_nb_moves(g));
-  for(int i = 0 ; i < game_nb_pieces(g) ; i++) {
-    printf("piece n°%d :", i);
-    afficher_piece(game_piece(g, i));
-    printf("\n}\n");
-  }
-}*/
-
-
 config* find_shortest_path(void) {
   // Variable that points to the next config to read in c_played_moves.
   int i_actual = 0 ;
@@ -213,7 +200,7 @@ int solver_shortest_path(game g, int game_type) {
   
   config* c_resultat = find_shortest_path() ;
 
-  afficher(config_game(*(c_resultat +nb_moves)), game_type);
+  //afficher(config_game(*(c_resultat +nb_moves)), game_type);
   
   delete_config_Array(c_played_moves, c_played_size);
   free(c_resultat);
@@ -241,7 +228,7 @@ int main(int argc, char *argv[]){
   
   game g = new_game_from_file(typeJeu, argv[2]);
 
-  printf("Nombre de coups optimal pour gagner avec cette configuration initiale : %d\n\n", solver_shortest_path(g, jeu));
+  printf("%d\n\n", solver_shortest_path(g, jeu));
   delete_game(g);
   return EXIT_SUCCESS ;
   
