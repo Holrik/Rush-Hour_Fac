@@ -6,7 +6,7 @@
 int creation_interface(cgame g){
 
   // création de la surface
-  SDL_Surface *surf =  SDL_CreateRGBSurface(0, 640, 480, 32, 0, 0, 0, 0);
+  SDL_Surface *surf =  SDL_CreateRGBSurface(0, game_height(g)*100, game_width(g)*100, 32, 0, 0, 0, 0);
 
   SDL_Rect position;
 
@@ -15,46 +15,28 @@ int creation_interface(cgame g){
   SDL_Window* pWindow = NULL;
   pWindow = SDL_CreateWindow("Rush_Hour",SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED,
-                            640,
-                            480,
+                            game_height(g)*100,
+                            game_width(g)*100,
                             SDL_WINDOW_SHOWN);
+  
+  
+  creation_plateau(surf, g);
+  
   //création du tableau de suface contenant toutes les surfaces des pieces
   SDL_Surface **sPieces= {NULL};
   sPieces =(SDL_Surface**) malloc(game_nb_pieces(g) * sizeof(SDL_Surface*));
   if(sPieces==NULL){
     return EXIT_FAILURE;
   }
-  //remplissage
-  for (i = 0 ; i <game_nb_pieces(g) ; i++){
-    sPieces[i]= SDL_CreateRGBSurface(0, 640, 480, 32, 50, 50,50, 0);
-  }
-
-  //affectation des surfaces à la surface mère
-  for (i = 0 ; i < game_nb_pieces(g) ; i++)
-
-  {
-      
-    position.x =game_height(g)- get_x(game_piece(g,i)); // Les lignes sont à gauche (abscisse de 0)
-
-    position.y = game_width(g) -get_y(game_piece(g,i)); // La position verticale dépend du numéro de la ligne
-
-    if(i==0){
-	    SDL_FillRect(sPieces[i], NULL, SDL_MapRGB(surf->format,255 ,64,64));
-    }else{
-	    SDL_FillRect(sPieces[i], NULL, SDL_MapRGB(surf->format,64 ,64,64));
-    }
-    SDL_BlitSurface(sPieces[i], NULL, surf, &position);
-
-  }
-
+  
+  remplissage(surf,sPieces,g);
+  
   //processus permettant d'obtenir une texture à partir d'une surface 
   SDL_Renderer *pRenderer = SDL_CreateRenderer(pWindow,-1,SDL_RENDERER_ACCELERATED);
   SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer,surf);
   SDL_RenderCopy(pRenderer, pTexture, NULL,NULL);
   SDL_RenderPresent(pRenderer);
 
-  for (i = 0 ; i < game_nb_pieces(g) ; i++) //free des surfaces
-    SDL_FreeSurface(sPieces[i]);
 
   SDL_Quit();
 
@@ -62,6 +44,46 @@ int creation_interface(cgame g){
   return EXIT_SUCCESS;
 }
 
+void creation_plateau(SDL_Surface* surf, cgame g){
+	//création du plateau                          
+  for (int i = 0 ; i < game_height(g) ; i++){
+    for (int j = 0 ; j < game_width(g) ; j++){
+      position.x =i; 
+      position.y =j;
+      SDL_BlitSurface(SDL_CreateRGBSurface(0, 100, 100, 32, 0, 0, 0, 0), NULL, surf, &position);
+    }
+  }
+}
+
+void remplissage(SDL_Surface *surf, SDL_Surface **sPieces, cgame g){
+   for (int i = 0 ; i <game_nb_pieces(g) ; i++){
+    int pieceW= get_width(game_piece(g, i));
+    int pieceH= get_height(game_piece(g, i));
+    sPieces[i]= SDL_CreateRGBSurface(0, 100*pieceH, 100*pieceW, 32, 0, 0,0, 0);
+  }
+
+  //affectation des surfaces à la surface mère
+  for (int i = 0 ; i < game_nb_pieces(g) ; i++) {
+    position.x =(game_height(g)*100)- (get_x(game_piece(g,i))*100); // Les lignes sont à gauche (abscisse de 0)
+    position.y =(game_width(g)*100) -(get_y(game_piece(g,i))*100); // La position verticale dépend du numéro de la ligne
+    if(i==0){
+	    SDL_FillRect(sPieces[i], NULL, SDL_MapRGB(surf->format,255 ,64,64));
+    }else{
+	    SDL_FillRect(sPieces[i], NULL, SDL_MapRGB(surf->format,64 ,64,64));
+    }
+    SDL_BlitSurface(sPieces[i], NULL, surf, &position);
+  }	
+}
+
+void free_surface(SDL_Surface **sPieces, cgame g){
+  for (int i = 0 ; i < game_nb_pieces(g) ; i++) //free des surfaces
+    SDL_FreeSurface(sPieces[i]);
+}
+
+void nettoyage(SDL_Renderer* renderer){
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
+  SDL_RenderClear(renderer);	
+}
 
 int main(void){
   piece* p = NULL ;
