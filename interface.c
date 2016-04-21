@@ -6,7 +6,7 @@
 int creation_interface(cgame g){
 
   // création de la surface
-  SDL_Surface *surf =  SDL_CreateRGBSurface(0, game_height(g)*100, game_width(g)*100, 32, 0, 0, 0, 0);
+  SDL_Surface *surf =  SDL_CreateRGBSurface(0, (game_height(g)+1)*100, (game_width(g)+1)*100, 32, 0, 0, 0, 0);
 
   SDL_Rect position;
 
@@ -37,7 +37,30 @@ int creation_interface(cgame g){
   SDL_RenderCopy(pRenderer, pTexture, NULL,NULL);
   SDL_RenderPresent(pRenderer);
 
-
+  SDL_Event event;
+  while (! game_over(g, jeu)){
+    SDL_WaitEvent(&event);
+      switch(event.type){
+        case SDL_MOUSEBUTTONUP && SDL_MOUSEMOTION:
+          //1) il faut savoir sur quelle voiture on est au moment du clic
+          //event.button.x && event.button.y
+          //2) il récupéré la postion final du déplacement de la souris en fonction des cases pour connaitre le déplacement
+          //grâce à ça 
+          // x = event.motion.x;
+	  // y = event.motion.y;
+	  //3) et pour finir déterminer la direction
+	  
+	  //4) puis l'appliquer
+	    nettoyage(pRenderer);
+	    remplissage(surf,sPieces,g);
+	    pTexture = SDL_CreateTextureFromSurface(pRenderer,surf);
+            SDL_RenderCopy(pRenderer, pTexture, NULL,NULL);
+            SDL_RenderPresent(pRenderer);
+            break;
+      }
+    
+  }
+  free_surface(sPieces,g);
   SDL_Quit();
 
 
