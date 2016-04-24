@@ -84,14 +84,23 @@ int creation_interface(cgame g){
   while (! game_over(g, jeu)){
     SDL_WaitEvent(&event);
       switch(event.type){
-        case SDL_MOUSEBUTTONUP && SDL_MOUSEMOTION:
+        case SDL_MOUSEBUTTONDOWN:
           // lien interessant pour la personne motivée http://loka.developpez.com/tutoriel/sdl/advanceEvent/
           //1) il faut savoir sur quelle voiture on est au moment du clic
           //event.button.x && event.button.y
+          // On prend l'endroit où le clic a été appuyé
+          // On vérifie que les x-y obtenus correspondent à une pièce du plateau
+          break;
+        case SDL_MOUSEBUTTONUP:
+          // Et l'endroit où le clic a été relaché
+          
           //2) il récupéré la postion final du déplacement de la souris en fonction des cases pour connaitre le déplacement
           //grâce à ça 
-          // x = event.motion.x;
-	  // y = event.motion.y;
+          // x = event.button.x;
+	  // y = event.button.y;
+	  
+	  // Il faut vérifier que les x-y obtenus correspondent à une case du plateau
+	  
 	  //3) et pour finir déterminer la direction
 	  
 	  //4) puis l'appliquer
