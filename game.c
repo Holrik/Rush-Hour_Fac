@@ -124,7 +124,7 @@ cpiece game_piece(cgame g, int piece_num){
  */
 bool game_over_hr(cgame g){
   // A moins d'un bug, y vaut forcément 3, car la pièce est Horizontale et initialisée à x=0, y=3.
-  return get_x(game_piece(g, 0)) == 4 ;
+  return get_x(game_piece(g, 0)) == game_width(g)-2 ;
 }
 
 

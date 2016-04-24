@@ -6,7 +6,7 @@
 
 
 static bool game_over_ar(cgame g){
-  return get_x(game_piece(g, 0)) == 1 && get_y(game_piece(g, 0))==0;
+  return get_x(game_piece(g, 0)) == (game_width(g)/2)-1 && get_y(game_piece(g, 0))==0;
 }
 
 bool game_over(cgame g, int jeu){
