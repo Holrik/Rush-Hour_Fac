@@ -11,8 +11,8 @@ void creation_plateau(SDL_Surface* surf, cgame g){
   //création graphique du plateau                          
   for (int i = 0 ; i < game_height(g) ; i++){
     for (int j = 0 ; j < game_width(g) ; j++){
-      position.x =i; 
-      position.y =j;
+      position.x =i*100; 
+      position.y =j*100;
       SDL_BlitSurface(SDL_CreateRGBSurface(0, 100, 100, 32, 0, 0, 0, 0), NULL, surf, &position);
     }
   }
