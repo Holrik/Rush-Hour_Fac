@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include "game.h"
 
+
 void creation_plateau(SDL_Surface* surf, cgame g){
-	//création du plateau                          
+	//création graphique du plateau                          
   for (int i = 0 ; i < game_height(g) ; i++){
     for (int j = 0 ; j < game_width(g) ; j++){
       position.x =i; 
@@ -14,6 +15,7 @@ void creation_plateau(SDL_Surface* surf, cgame g){
   }
 }
 
+//remplissage du tableau graphique
 void remplissage(SDL_Surface *surf, SDL_Surface **sPieces, cgame g){
    for (int i = 0 ; i <game_nb_pieces(g) ; i++){
     int pieceW= get_width(game_piece(g, i));
@@ -34,11 +36,13 @@ void remplissage(SDL_Surface *surf, SDL_Surface **sPieces, cgame g){
   }	
 }
 
+//libération des surfaces
 void free_surface(SDL_Surface **sPieces, cgame g){
   for (int i = 0 ; i < game_nb_pieces(g) ; i++) //free des surfaces
     SDL_FreeSurface(sPieces[i]);
 }
 
+//nettoie l'affichage pour éviter la super position
 void nettoyage(SDL_Renderer* renderer){
   SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
   SDL_RenderClear(renderer);	
@@ -120,6 +124,7 @@ int creation_interface(cgame g){
   return EXIT_SUCCESS;
 }
 
+//test
 int main(void){
   piece* p = NULL ;
   int nb_pieces ;
