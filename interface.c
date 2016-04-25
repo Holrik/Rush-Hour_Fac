@@ -53,7 +53,7 @@ void nettoyage(SDL_Renderer* renderer){
 int creation_interface(cgame g){
 
   // création de la surface
-  SDL_Surface *surf =  SDL_CreateRGBSurface(0, (game_height(g)+1)*100, (game_width(g)+1)*100, 32, 0, 0, 0, 0);
+  SDL_Surface *surf =  SDL_CreateRGBSurface(0, game_height(g)*100, game_width(g)*100, 32, 0, 0, 0, 0);
 
   SDL_Rect position;
 
@@ -88,39 +88,86 @@ int creation_interface(cgame g){
   while (! game_over(g, jeu)){
     SDL_WaitEvent(&event);
       switch(event.type){
+      	int xDown=0;
+      	int yDown=0;
         case SDL_MOUSEBUTTONDOWN:
           // lien interessant pour la personne motivée http://loka.developpez.com/tutoriel/sdl/advanceEvent/
           //1) il faut savoir sur quelle voiture on est au moment du clic
           //event.button.x && event.button.y
           // On prend l'endroit où le clic a été appuyé
-          // On vérifie que les x-y obtenus correspondent à une pièce du plateau
+          // On vérifie que les x-y obtenus correspondent à une pièce du plateau sinon le numéro de la voiture prend une valeur erroné par défaut
+          xDown = event.button.x;
+          xDown = event.button.y;
+          int i_cV  =-1;
+          for (int i = 0 ; i <game_nb_pieces(g) ; i++){
+            int xPiece= (game_height(g)*100) - (get_x(game_piece(g,i))*100);
+            int yPiece =(game_width(g)*100 ) - (get_y(game_piece(g,i))*100);
+            int pieceW= get_width(game_piece(g, i));
+    	    int pieceH= get_height(game_piece(g, i));
+            if( ( x > xPiece) && ( x < xPiece + pieceW ) && ( y > yPiece ) && ( y < yPiece + pieceH ) ){
+              i_cV  = i;
+            }
+          	
+          }
+          
           break;
         case SDL_MOUSEBUTTONUP:
           // Et l'endroit où le clic a été relaché
           
           //2) il récupéré la postion final du déplacement de la souris en fonction des cases pour connaitre le déplacement
           //grâce à ça 
-          // x = event.button.x;
-	  // y = event.button.y;
+           int xUp = event.button.x;
+	   int yUp = event.button.y;
 	  
-	  // Il faut vérifier que les x-y obtenus correspondent à une case du plateau
-	  
-	  //3) et pour finir déterminer la direction
+	  //3) et pour finir déterminer la direction et la distance
+	  int i_cDir=-1;
+	  int i_cDis=0;
+	  int xPiece= (game_height(g)*100) - (get_x(game_piece(g,i_cV))*100);
+          int yPiece =(game_width(g)*100 ) - (get_y(game_piece(g,i_cV))*100);
+          int pieceW= get_width(game_piece(g, i_cV));
+    	  int pieceH= get_height(game_piece(g, i_cV));
+    	  
+    	  // vérifie la direction et calcul la distance en fonction de la direction
+    	   if((yPiece - yUp)/100<0 ){
+	      i_cDir= 0;
+	      i_cDis=(yPiece - yUp)/100;
+	    } else if((xPiece-xUp)/100<0){
+	      i_cDir= 1;
+	      i_cDis=(xPiece-xUp)/100;
+	    } else if((yPiece+pieceH - yUp)/100>0 ){
+	      i_cDir= 2;
+	      i_cDis=(yPiece+pieceH - yUp)/100;
+	    } else if((xPiece+pieceW-xUp)/100>0){
+	      i_cDir= 3;
+	      i_cDis=(xPiece+pieceW-xUp)/100;
+	    }
 	  
 	  //4) puis l'appliquer
-	    nettoyage(pRenderer);
-	    remplissage(surf,sPieces,g);
-	    pTexture = SDL_CreateTextureFromSurface(pRenderer,surf);
-            SDL_RenderCopy(pRenderer, pTexture, NULL,NULL);
-            SDL_RenderPresent(pRenderer);
-            break;
+	  if(i_cV!=-1){
+		  if (play_move(g, i_cV, i_cDir, i_cDis)){
+	 	  // Si le mouvement est effectué, on affiche le nouveau plateau.
+		    nettoyage(pRenderer);
+		    remplissage(surf,sPieces,g);
+		    pTexture = SDL_CreateTextureFromSurface(pRenderer,surf);
+	            SDL_RenderCopy(pRenderer, pTexture, NULL,NULL);
+	            SDL_RenderPresent(pRenderer);
+          	}
+	  }else
+	// Sinon, on affiche un message d'erreur.
+	// NB : La boucle se relance, puisque le Gave Over n'a forcément pas été atteint
+	// puisque aucune pièce n'a été déplacée depuis la précédente boucle.
+	printf("Ce mouvement ne peut pas être effectué. Veuillez réessayer.\n");  
+
+          break;
       }
     
   }
   free_surface(sPieces,g);
   SDL_Quit();
-
-
+  
+  printf("Vous avez fini en %d coups.\n", game_nb_moves(g));
+  delete_game(g) ;
+  
   return EXIT_SUCCESS;
 }
 
