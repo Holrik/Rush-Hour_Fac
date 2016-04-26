@@ -97,6 +97,12 @@ int creation_interface(game g, int jeu_type){
     int yDown=0;
     int i_cV =-1;
     switch(event.type){
+    SDL_WINDOWEVENT_CLOSE:  {
+      free_surface(sPieces,g);
+      SDL_Quit();
+      delete_game(g) ;
+      return EXIT_FAILURE;
+    }
     case SDL_MOUSEBUTTONDOWN : {
       // lien interessant pour la personne motivée http://loka.developpez.com/tutoriel/sdl/advanceEvent/
       //1) il faut savoir sur quelle voiture on est au moment du clic
