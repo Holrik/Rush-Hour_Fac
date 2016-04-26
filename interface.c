@@ -136,15 +136,19 @@ int creation_interface(game g, int jeu_type){
       int pieceH= get_height(game_piece(g, i_cV));
     	  
       // vérifie la direction et calcul la distance en fonction de la direction
+      //UP
       if((yPiece - yUp)/100<0 ){
 	i_cDir= 0;
 	i_cDis=(yPiece - yUp)/100;
+      //LEFT
       } else if((xPiece-xUp)/100<0){
 	i_cDir= 1;
 	i_cDis=(xPiece-xUp)/100;
+      //DOWN
       } else if((yPiece+pieceH - yUp)/100>0 ){
 	i_cDir= 2;
 	i_cDis=(yPiece+pieceH - yUp)/100;
+      //RIGHT
       } else if((xPiece+pieceW-xUp)/100>0){
 	i_cDir= 3;
 	i_cDis=(xPiece+pieceW-xUp)/100;
