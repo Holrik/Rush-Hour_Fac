@@ -8,25 +8,27 @@
 SDL_Rect position;
 
 void creation_plateau(SDL_Surface* surf, cgame g){
-  //création graphique du plateau                          
+  //création graphique du plateau en mettant des surfaces pour représenter chaque cases                      
   for (int i = 0 ; i < game_height(g) ; i++){
     for (int j = 0 ; j < game_width(g) ; j++){
       position.x =i*100; 
       position.y =j*100;
+      //placement plus création des surfaces
       SDL_BlitSurface(SDL_CreateRGBSurface(0, 100, 100, 32, 0, 0, 0, 0), NULL, surf, &position);
     }
   }
 }
 
-//remplissage du tableau graphique
+//remplissage du tableau graphique 
 void remplissage(SDL_Surface *surf, SDL_Surface **sPieces, cgame g){
+	//création des surfaces correspondantes au pièces
   for (int i = 0 ; i <game_nb_pieces(g) ; i++){
     int pieceW= get_width(game_piece(g, i));
     int pieceH= get_height(game_piece(g, i));
     sPieces[i]= SDL_CreateRGBSurface(0, 100*pieceH, 100*pieceW, 32, 0, 0,0, 0);
   }
 
-  //affectation des surfaces à la surface mère
+  //affectation des surfaces à la surface mère en leur donnant une position sur la surface "mère"
   for (int i = 0 ; i < game_nb_pieces(g) ; i++) {
     position.x =(game_height(g) - get_x(game_piece(g,i)))*100; // Les lignes sont à gauche (abscisse de 0)
     position.y =(game_width(g) - get_y(game_piece(g,i)))*100; // La position verticale dépend du numéro de la ligne
