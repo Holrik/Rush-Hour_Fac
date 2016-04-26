@@ -30,8 +30,8 @@ void remplissage(SDL_Surface *surf, SDL_Surface **sPieces, cgame g){
 
   //affectation des surfaces à la surface mère en leur donnant une position sur la surface "mère"
   for (int i = 0 ; i < game_nb_pieces(g) ; i++) {
-    position.x =(game_width(g) - get_x(game_piece(g,i)))*100; // Les lignes sont à gauche (abscisse de 0)
-    position.y =(game_height(g) - get_y(game_piece(g,i)))*100; // La position verticale dépend du numéro de la ligne
+    position.x =get_x(game_piece(g,i)) *100; // Les lignes sont à gauche (abscisse de 0)
+    position.y =(game_height(g) - get_y(game_piece(g,i))) *100; // La position verticale dépend du numéro de la ligne
     if(i==0){
       SDL_FillRect(sPieces[i], NULL, SDL_MapRGB(surf->format,255 ,64,64));
     }else{
@@ -112,8 +112,8 @@ int creation_interface(game g, int jeu_type){
       xDown = event.button.x;
       yDown = event.button.y;
       for (int i = 0 ; i <game_nb_pieces(g) ; i++){
-	int xPiece= (game_width(g)*100) - (get_x(game_piece(g,i))*100);
-	int yPiece =(game_height(g)*100 ) - (get_y(game_piece(g,i))*100);
+	int xPiece= get_x(game_piece(g,i))*100;
+	int yPiece =(game_height(g) - get_y(game_piece(g,i))) *100;
 	int pieceW= get_width(game_piece(g, i));
 	int pieceH= get_height(game_piece(g, i));
 	if( ( xDown > xPiece) && ( xDown < xPiece + pieceW )
@@ -136,8 +136,8 @@ int creation_interface(game g, int jeu_type){
       //3) et pour finir déterminer la direction et la distance
       int i_cDir=-1;
       int i_cDis=0;
-      int xPiece= (game_width(g)*100) - (get_x(game_piece(g,i_cV))*100);
-      int yPiece =(game_height(g)*100 ) - (get_y(game_piece(g,i_cV))*100);
+      int xPiece= get_x(game_piece(g,i_cV))*100;
+      int yPiece =(game_height(g) - get_y(game_piece(g,i_cV))) *100;
       int pieceW= get_width(game_piece(g, i_cV));
       int pieceH= get_height(game_piece(g, i_cV));
     	  
