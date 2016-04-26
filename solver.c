@@ -170,7 +170,7 @@ static void shortest_determine_fils(config c) {
 }
 
 
-config* find_shortest_path(void) {
+void find_shortest_path(void) {
   // Variable that points to the next config to read in c_played_moves.
   int i_actual = 0 ;
   // Until we find a game_over or there is no more playable move, we search the next possible moves
@@ -180,17 +180,11 @@ config* find_shortest_path(void) {
     i_actual++ ;
   }
   if (i_actual >= c_played_actual || *(c_played_moves +i_actual) == NULL)
-    return NULL;
+    return;
   
   config c_tmp = *(c_played_moves +i_actual) ;
   nb_moves = game_nb_moves(config_game(c_tmp)) ;
-  config* path_taken = new_config_Array(nb_moves) ;
-  for (int i = nb_moves ; i >= 0 ; i--) {
-    *(path_taken + i) = c_tmp ;
-    c_tmp = c_tmp->pere ;
-  }
   // At the end of this loop, c_tmp = NULL
-  return path_taken ;
 }
 
 
@@ -198,13 +192,10 @@ int solver_shortest_path(game g, int game_type) {
   c_played_moves = new_config_Array(100) ;
   c_played_add_c(new_config(g, game_type));
   
-  config* c_resultat = find_shortest_path() ;
-
-  //afficher(config_game(*(c_resultat +nb_moves)), game_type);
+  find_shortest_path() ;
   
   delete_config_Array(c_played_moves, c_played_size);
-  free(c_resultat);
-  return nb_moves+1 ;
+  return nb_moves ;
 }
 
 
