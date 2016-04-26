@@ -28,8 +28,8 @@ void remplissage(SDL_Surface *surf, SDL_Surface **sPieces, cgame g){
 
   //affectation des surfaces à la surface mère
   for (int i = 0 ; i < game_nb_pieces(g) ; i++) {
-    position.x =(game_height(g)*100) - (get_x(game_piece(g,i))*100); // Les lignes sont à gauche (abscisse de 0)
-    position.y =(game_width(g)*100 ) - (get_y(game_piece(g,i))*100); // La position verticale dépend du numéro de la ligne
+    position.x =(game_height(g) - get_x(game_piece(g,i)))*100; // Les lignes sont à gauche (abscisse de 0)
+    position.y =(game_width(g) - get_y(game_piece(g,i)))*100; // La position verticale dépend du numéro de la ligne
     if(i==0){
       SDL_FillRect(sPieces[i], NULL, SDL_MapRGB(surf->format,255 ,64,64));
     }else{
