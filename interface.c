@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "game.h"
 #include "gameover.h"
+#include "niveaux.h"
 
 
 SDL_Rect position;
@@ -68,10 +69,11 @@ void free_surface(SDL_Surface **sPieces, cgame g){
 
 //nettoie l'affichage pour éviter la super position
 void nettoyage(SDL_Renderer* renderer){
-  SDL_Surface* s = SDL_CreateRGBSurface(0, 100, 100, 32, 0, 0, 0, 0) ;
+  /*SDL_Surface* s = SDL_CreateRGBSurface(0, 100, 100, 32, 0, 0, 0, 0) ;
   SDL_Texture* pTexture = SDL_CreateTextureFromSurface(renderer,s);
   SDL_RenderCopy(renderer, pTexture, NULL,NULL);
-  //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+  //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);*/
+  SDL_RenderClear(renderer);
   SDL_RenderFillRect(renderer, NULL);
   SDL_RenderPresent(renderer);
 }
@@ -116,6 +118,7 @@ int creation_interface(game g, int jeu_type){
   SDL_Event event;
   int i_cV =-1;
   while (SDL_WaitEvent(&event) >=0 && !game_over(g, jeu_type)){
+    SDL_RenderClear(pRenderer);
     remplissage(surf,sPieces,g);
     pTexture = SDL_CreateTextureFromSurface(pRenderer,surf);
     SDL_RenderCopy(pRenderer, pTexture, NULL,NULL);
@@ -214,26 +217,8 @@ int creation_interface(game g, int jeu_type){
 }
 
 //test
-int main(int argc, char *argv[]){
-  piece* p = NULL ;
-  int nb_pieces ;
-
-  nb_pieces = 10 ;
-  p = realloc(p, nb_pieces*sizeof(piece)) ;
-    
-  *p = new_piece(1,1, 2,2, true,true) ;
-  *(p+1) = new_piece(0,0, 1,1, true, true) ;
-  *(p+2) = new_piece(1,0, 1,1, true, true) ;
-  *(p+3) = new_piece(2,0, 1,1, true, true) ;
-  *(p+4) = new_piece(3,0, 1,1, true, true) ;
-  *(p+5) = new_piece(0,1, 1,2, true, true) ;
-  *(p+6) = new_piece(3,1, 1,2, true, true) ;
-  *(p+7) = new_piece(0,3, 2,1, true, true) ;
-  *(p+8) = new_piece(2,3, 2,1, true, true) ;
-  *(p+9) = new_piece(1,4, 2,1, true, true) ;
-
-  game g = new_game (4,5, nb_pieces, p);
-  /*if (argc != 3) {
+int main(int argc, char *argv[]){  
+  if (argc != 3) {
     printf("Mauvais nombre d'arguments : Il en faut deux !\n");
     return EXIT_FAILURE ;
   }
@@ -251,9 +236,9 @@ int main(int argc, char *argv[]){
     jeu = 0;
   }
   
-  game g = new_game_from_file(argv[2]);*/
+  game g = new_game_from_file(argv[2]);
   
-  creation_interface(g, 0);
+  creation_interface(g, jeu);
   return EXIT_SUCCESS;
 
 }
