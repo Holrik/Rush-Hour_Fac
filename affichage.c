@@ -43,8 +43,9 @@ void afficher(cgame g, int jeu){
 	printf(" %d |", tab[i][j]);
       }
     }
-	
-    if (i == 3 && jeu == 1)
+
+    int ligne_fin = get_y(game_piece(g, 0)) ;
+    if (i == ligne_fin && jeu == 1)
       printf(" ->");
     printf("\n");
   }
