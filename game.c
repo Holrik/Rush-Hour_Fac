@@ -41,30 +41,7 @@ struct game_s{
  * @return a pointer toward the generated game
  */
 game new_game_hr (int nb_pieces, piece *pieces){
-  // On alloue dynamiquement une structure game_s
-  game g = malloc(sizeof(struct game_s)) ;
-  // Il faut vérifier que l'allocation s'est faite correctement
-  if (g == NULL){
-    fprintf(stderr, "probleme d'allocation\n");
-    return NULL ;
-  }
-  
-  // On alloue dynamiquement un tableau de pièces
-  g->pieces = malloc(nb_pieces * sizeof(piece)) ;
-  // Il faut vérifier que l'allocation s'est faite correctement
-  if (g->pieces == NULL){
-    fprintf(stderr, "probleme d'allocation\n");
-    return NULL ;
-  }
-  
-  // On copie une à une les pièces données en paramètre vers la structure game_s
-  for (int i = 0 ; i < nb_pieces ; i++) {
-    *(g->pieces +i) = *(pieces+i) ;
-  }
-  
-  g->nb_pieces = nb_pieces ;
-  g->nb_moves = 0 ;
-  return g ;
+  return new_game(6, 6, nb_pieces, pieces) ;
 }
 
 /**
@@ -72,6 +49,8 @@ game new_game_hr (int nb_pieces, piece *pieces){
  * @param g the game to destroy
  */
 void delete_game (game g){
+  if (g == NULL)
+    return ;
   for (int i = 0 ; i < game_nb_pieces(g) ; i++)
     delete_piece(*(g->pieces+i)) ;
   free(g->pieces) ;
@@ -110,6 +89,8 @@ void copy_game (cgame src, game dst){
   
   dst->nb_pieces = game_nb_pieces(src) ;
   dst->nb_moves = game_nb_moves(src) ;
+  dst->width = game_width(src) ;
+  dst->height = game_height(src) ;
   // On copie une à une les pièces données en paramètre vers la structure game_s
   for (int i = 0 ; i < game_nb_pieces(dst) ; i++) {
     copy_piece( game_piece(src, i) , *(dst->pieces+i) ) ;
@@ -143,7 +124,7 @@ cpiece game_piece(cgame g, int piece_num){
  */
 bool game_over_hr(cgame g){
   // A moins d'un bug, y vaut forcément 3, car la pièce est Horizontale et initialisée à x=0, y=3.
-  return get_x(game_piece(g, 0)) == 4 ;
+  return get_x(game_piece(g, 0)) == game_width(g)-2 ;
 }
 
 
