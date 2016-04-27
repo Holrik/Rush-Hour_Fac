@@ -118,7 +118,7 @@ int main (int argc, char *argv[]){
     jeu = 0;
   }
   
-  game g = new_game_from_file(typeJeu, argv[2]);
+  game g = new_game_from_file(argv[2]);
   
   afficher(g, jeu);
 
